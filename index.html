@@ -1,15 +1,10 @@
 <!--
 Deployment note:
-Place this HTML file together with a local copy of Three.js:
+Single-file CraftNova edition. Upload this HTML file alone.
 
-  euler-getter/
-    index.html
-    js/
-      three.min.js
-
-This file loads Three.js from ./js/three.min.js, not from an external CDN.
+Itch.io mobile edition: Three.js is loaded from a local file in the uploaded ZIP.
 -->
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
 <!--
 Euler Getter
 Copyright (c) 2026 Takehiko Yasuda
@@ -25,7 +20,7 @@ Third-party library:
 -->
 <!doctype html>
 <meta charset="utf-8">
-<title>Euler Getter</title>
+<title>Euler Getter Mobile</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f7f7f8;color:#222}
@@ -2330,10 +2325,734 @@ body.eg-cursor-red button {
   transform:translateY(4px) scale(.93);
 }
 
+
+
+/* CraftNova interface adaptation: preserve the game, fit it into a no-scroll mobile iframe. */
+*{
+  -webkit-user-select:none!important;
+  user-select:none!important;
+}
+body,canvas{
+  touch-action:none!important;
+}
+html,body{
+  margin:0!important;
+  padding:0!important;
+  width:100%!important;
+  height:100dvh!important;
+  overflow:hidden!important;
+  overscroll-behavior:none!important;
+}
+body{
+  position:fixed!important;
+  inset:0!important;
+}
+#app{
+  width:100vw!important;
+  height:100dvh!important;
+  min-height:0!important;
+  max-height:none!important;
+  overflow:hidden!important;
+  padding:6px!important;
+  gap:5px!important;
+}
+#hdr{
+  flex:0 0 auto!important;
+  padding:6px 8px!important;
+  border-radius:12px!important;
+}
+#ttl{
+  font-size:18px!important;
+  line-height:1.1!important;
+}
+#ctrl{
+  gap:4px!important;
+}
+#ctrl label{
+  display:none!important;
+}
+#ctrl select,#ctrl button{
+  font-size:10.5px!important;
+  padding:5px 6px!important;
+  border-radius:8px!important;
+  min-width:0!important;
+  max-width:31vw!important;
+}
+#musicBtn{
+  max-width:28vw!important;
+}
+#ib{
+  flex:0 0 auto!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:4px!important;
+}
+.sc{
+  min-height:48px!important;
+  padding:4px 3px!important;
+  border-radius:10px!important;
+}
+.sl{
+  font-size:9.5px!important;
+  margin-bottom:2px!important;
+}
+.sv{
+  font-size:19px!important;
+}
+#tb{
+  font-size:11px!important;
+  padding:4px 6px!important;
+}
+#roleStatus{
+  min-height:18px!important;
+  padding-bottom:2px!important;
+  margin-bottom:2px!important;
+}
+#roleStatus .roleBadge{
+  font-size:8.5px!important;
+  min-height:16px!important;
+  padding:2px 4px!important;
+}
+.colorPlayerInfo{
+  display:none!important;
+}
+#pairTabs{
+  display:none!important;
+}
+#singleModelTabs{
+  display:flex!important;
+  position:relative!important;
+  top:auto!important;
+  z-index:120!important;
+  flex:0 0 auto!important;
+  margin:0!important;
+  padding:0!important;
+  gap:4px!important;
+  background:transparent!important;
+}
+#singleModelTabs button{
+  font-size:11px!important;
+  padding:6px 4px!important;
+  border-radius:10px!important;
+}
+#aiRobot.aiRobot{
+  flex:0 0 auto!important;
+  width:100%!important;
+  margin:1px auto!important;
+  gap:6px!important;
+}
+#aiRobot .aiRobotHead{
+  width:42px!important;
+  height:34px!important;
+  border-radius:12px!important;
+}
+#aiRobot .aiRobotAntenna{
+  top:-10px!important;
+  height:11px!important;
+}
+#aiRobot .aiRobotAntenna::after{
+  width:8px!important;
+  height:8px!important;
+  top:-5px!important;
+}
+#aiRobot .aiRobotFace{
+  font-size:13px!important;
+}
+#aiRobot .aiRobotSpeech{
+  min-width:0!important;
+  max-width:70vw!important;
+  font-size:10px!important;
+  padding:5px 8px!important;
+}
+#views{
+  flex:1 1 auto!important;
+  min-height:0!important;
+  display:block!important;
+  overflow:hidden!important;
+}
+#views .vwrap,#wrap3d,#wrap2d,#wrapBoy{
+  width:100%!important;
+  height:100%!important;
+  min-height:0!important;
+  overflow:hidden!important;
+}
+#cw3d,#cw2d,#cwBoy{
+  width:100%!important;
+  height:calc(100dvh - var(--eg-top-used, 205px))!important;
+  min-height:180px!important;
+  max-height:none!important;
+  border-radius:12px!important;
+}
+#tc,#cv2d,#boyCanvas{
+  width:100%!important;
+  height:100%!important;
+}
+.vlbl{
+  display:none!important;
+}
+#wb,#endActions{
+  flex:0 0 auto!important;
+}
+#rules,#licenseBar{
+  display:none!important;
+}
+#logPanel{
+  flex:0 0 auto!important;
+  display:block!important;
+  margin:0!important;
+}
+#lg{
+  max-height:34px!important;
+  min-height:0!important;
+  overflow:hidden!important;
+  font-size:10px!important;
+  padding:4px 6px!important;
+  line-height:1.25!important;
+}
+#downloadLogBtn{
+  display:none!important;
+}
+#endActions{
+  padding:6px!important;
+  margin:0!important;
+}
+#endTitle{font-size:14px!important}
+#endNote{font-size:11px!important}
+.endActionButtons button{font-size:11px!important;padding:5px 8px!important}
+#turnFlash{top:42%!important}
+#turnFlashCard{font-size:clamp(22px,8vw,36px)!important;padding:8px 16px!important}
+#bigCard{min-width:min(92vw,520px)!important;padding:18px 22px!important;border-radius:20px!important}
+#bigTitle{font-size:clamp(34px,13vw,64px)!important}
+#bigSub{font-size:clamp(13px,4vw,20px)!important}
+@media(max-width:900px){
+  #hdr{flex-direction:column!important}
+  #ctrl{width:100%!important;justify-content:center!important;flex-wrap:wrap!important}
+  #ib{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+  #singleModelTabs{display:flex!important}
+  #views .vwrap{display:none!important}
+  body.mobile-model-3d #wrap3d,
+  body.mobile-model-disk #wrap2d,
+  body.mobile-model-boy #wrapBoy{display:flex!important}
+}
+@media(max-width:420px){
+  #ttl{font-size:16px!important}
+  #ctrl select,#ctrl button{font-size:9.5px!important;padding:4px 5px!important}
+  .sl{font-size:8.5px!important}.sv{font-size:17px!important}
+  #tb{font-size:10px!important}
+}
+
+
+/* CraftNova smartphone start screen / in-game minimal UI */
+body.eg-setup #app{
+  visibility:hidden!important;
+  pointer-events:none!important;
+}
+#logPanel,#lg,#downloadLogBtn{
+  display:none!important;
+  visibility:hidden!important;
+  height:0!important;
+  max-height:0!important;
+  overflow:hidden!important;
+  padding:0!important;
+  margin:0!important;
+  border:0!important;
+}
+#ctrl{
+  display:none!important;
+}
+#craftStartScreen{
+  position:fixed;
+  inset:0;
+  z-index:10050;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  background:radial-gradient(circle at 50% 12%,rgba(45,32,95,.96),rgba(6,8,18,.98) 62%,#02030a 100%);
+  color:#f8fbff;
+  overflow:hidden;
+}
+#craftStartScreen.hidden{
+  display:none!important;
+}
+#craftStartCard{
+  width:min(92vw,520px);
+  max-height:94dvh;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  border-radius:24px;
+  padding:18px 16px 16px;
+  background:rgba(255,255,255,.09);
+  border:1px solid rgba(190,210,255,.25);
+  box-shadow:0 22px 70px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.12);
+  backdrop-filter:blur(10px);
+}
+#craftStartTitle{
+  font-size:clamp(28px,9vw,48px);
+  line-height:1;
+  font-weight:1000;
+  letter-spacing:.03em;
+  text-align:center;
+  text-shadow:0 0 20px rgba(130,190,255,.55),0 4px 0 rgba(0,0,0,.25);
+}
+#craftStartTagline{
+  text-align:center;
+  font-size:13px;
+  font-weight:900;
+  color:rgba(245,248,255,.78);
+  margin-bottom:3px;
+}
+#craftStartGrid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:8px;
+}
+.craftField{
+  display:grid;
+  grid-template-columns:6.5em 1fr;
+  align-items:center;
+  gap:8px;
+  min-height:38px;
+}
+.craftField label{
+  font-size:13px;
+  font-weight:950;
+  color:rgba(245,248,255,.82);
+  white-space:nowrap;
+}
+.craftField select{
+  width:100%;
+  min-width:0;
+  height:38px;
+  border-radius:13px;
+  border:1px solid rgba(210,225,255,.35);
+  background:rgba(255,255,255,.94);
+  color:#151927;
+  font-size:14px;
+  font-weight:850;
+  padding:0 10px;
+}
+#craftStartBtn{
+  width:100%;
+  min-height:52px;
+  margin-top:6px;
+  border:0;
+  border-radius:17px;
+  color:#191103;
+  background:linear-gradient(135deg,#ffe57a,#ffac3d 55%,#8bd3ff);
+  font-size:20px;
+  font-weight:1000;
+  box-shadow:0 12px 28px rgba(255,180,70,.22),0 0 32px rgba(130,205,255,.20);
+  touch-action:manipulation;
+}
+#craftStartNote{
+  margin-top:2px;
+  font-size:11px;
+  line-height:1.45;
+  color:rgba(235,240,255,.62);
+  text-align:center;
+}
+#craftGameBar{
+  display:none;
+  width:100%;
+  grid-template-columns:1fr auto auto;
+  gap:6px;
+  align-items:center;
+  padding:5px 6px;
+  border-radius:14px;
+  background:rgba(8,12,28,.64);
+  border:1px solid rgba(170,190,255,.20);
+  color:#f8fbff;
+}
+body.eg-playing #craftGameBar{
+  display:grid!important;
+}
+#craftGameStatus{
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  font-size:11px;
+  font-weight:900;
+  color:rgba(245,248,255,.78);
+  padding-left:4px;
+}
+#craftGameBar button{
+  border-radius:12px;
+  border:1px solid rgba(210,225,255,.30);
+  background:rgba(255,255,255,.10);
+  color:#f8fbff;
+  font-size:12px;
+  font-weight:950;
+  padding:7px 9px;
+  touch-action:manipulation;
+}
+#craftGameBar button.primary{
+  background:rgba(255,224,105,.92);
+  color:#211600;
+}
+body.eg-playing #hdr,
+body.eg-playing #ctrl,
+body.eg-playing #ctrl label,
+body.eg-playing #ctrl select,
+body.eg-playing #ctrl button{
+  display:none!important;
+  visibility:hidden!important;
+  height:0!important;
+  max-height:0!important;
+  overflow:hidden!important;
+  pointer-events:none!important;
+}
+body.eg-playing #hdr{
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+}
+body.eg-playing #app{
+  padding-top:6px!important;
+}
+body.eg-playing #ib{
+  gap:6px!important;
+}
+body.eg-playing .sc{
+  min-height:58px!important;
+  padding:6px 6px!important;
+  border-radius:13px!important;
+}
+body.eg-playing .sl{
+  font-size:10px!important;
+  margin-bottom:3px!important;
+}
+body.eg-playing .sv{
+  font-size:23px!important;
+}
+body.eg-playing #tb{
+  font-size:13px!important;
+  padding:4px 8px!important;
+}
+body.eg-playing #roleStatus{
+  min-height:22px!important;
+  margin-bottom:3px!important;
+  padding-bottom:3px!important;
+}
+body.eg-playing #singleModelTabs{
+  top:0!important;
+}
+body.eg-playing #rules,
+body.eg-playing #licenseBar{
+  display:none!important;
+}
+@media(max-width:420px){
+  #craftStartCard{padding:14px 12px 13px;gap:7px;border-radius:20px}
+  .craftField{grid-template-columns:5.8em 1fr;gap:6px;min-height:34px}
+  .craftField label{font-size:11.5px}
+  .craftField select{height:34px;font-size:12.5px;border-radius:11px;padding:0 8px}
+  #craftStartBtn{min-height:46px;font-size:18px;border-radius:15px}
+  #craftStartNote{font-size:10px}
+}
+
+
+/* CraftNova revision: stable title + minimal in-game controls */
+#craftTopTitle{
+  display:none;
+  width:100%;
+  text-align:center;
+  padding:6px 8px 3px;
+  color:#f8fbff;
+  font-size:clamp(20px,7vw,30px);
+  line-height:1;
+  font-weight:1000;
+  letter-spacing:.035em;
+  text-shadow:0 0 18px rgba(130,190,255,.62),0 3px 0 rgba(0,0,0,.30);
+  flex:0 0 auto;
+}
+body.eg-playing #craftTopTitle{
+  display:block!important;
+}
+body.eg-playing #craftGameBar{
+  display:grid!important;
+  grid-template-columns:1fr 1fr!important;
+  gap:8px!important;
+  padding:4px 6px 6px!important;
+  background:transparent!important;
+  border:0!important;
+  border-radius:0!important;
+}
+body.eg-playing #craftGameStatus{
+  display:none!important;
+}
+body.eg-playing #craftGameBar button{
+  min-height:36px!important;
+  font-size:13px!important;
+  border-radius:14px!important;
+}
+body.eg-playing #ttl{
+  display:none!important;
+  visibility:hidden!important;
+  height:0!important;
+  max-height:0!important;
+  overflow:hidden!important;
+}
+
+
+
+/* CraftNova mobile UI: lock the mini human icon parts together.
+   The nowrap patch used a broad '#tb > span' rule, which also matched the icon span.
+   Reassert the icon as a fixed-size relative container so the head/body cannot drift. */
+body.eg-playing .score-turn #tb > .miniHumanIcon,
+body.eg-playing .score-turn #tb .miniHumanIcon{
+  display:inline-flex!important;
+  position:relative!important;
+  flex:0 0 26px!important;
+  width:26px!important;
+  min-width:26px!important;
+  max-width:26px!important;
+  height:24px!important;
+  min-height:24px!important;
+  max-height:24px!important;
+  align-items:flex-start!important;
+  justify-content:center!important;
+  overflow:visible!important;
+  white-space:normal!important;
+  transform:translateY(0)!important;
+  vertical-align:middle!important;
+}
+body.eg-playing .score-turn #tb .miniHumanHead{
+  position:absolute!important;
+  left:50%!important;
+  top:0!important;
+  transform:translateX(-50%)!important;
+  width:22px!important;
+  height:18px!important;
+  min-width:22px!important;
+  max-width:22px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  overflow:hidden!important;
+  white-space:nowrap!important;
+}
+body.eg-playing .score-turn #tb .miniHumanBody{
+  position:absolute!important;
+  left:50%!important;
+  bottom:0!important;
+  transform:translateX(-50%)!important;
+  width:18px!important;
+  height:7px!important;
+  min-width:18px!important;
+  max-width:18px!important;
+  display:block!important;
+  overflow:hidden!important;
+}
+body.eg-playing .score-turn #tb .miniHumanFace{
+  display:inline-block!important;
+  width:auto!important;
+  min-width:0!important;
+  max-width:none!important;
+  white-space:nowrap!important;
+  line-height:1!important;
+}
+
+
+
+/* CraftNova mobile UI: make the current-turn card wider instead of shrinking icons/text.
+   This reverts the cramped icon-size approach and gives the turn panel enough width. */
+body.eg-playing #ib{
+  grid-template-columns:minmax(0,.80fr) minmax(0,1.75fr) minmax(0,.80fr) minmax(0,.65fr)!important;
+  gap:5px!important;
+}
+body.eg-playing .score-turn{
+  min-width:0!important;
+  padding-left:5px!important;
+  padding-right:5px!important;
+  overflow:visible!important;
+}
+body.eg-playing .score-turn #tb,
+body.eg-playing .score-turn #tb.aiMiniTurn,
+body.eg-playing .score-turn #tb.humanMiniTurn{
+  max-width:100%!important;
+  min-width:0!important;
+  padding-left:6px!important;
+  padding-right:6px!important;
+  gap:5px!important;
+  font-size:12px!important;
+  transform:none!important;
+}
+body.eg-playing .score-turn #tb .miniRobotIcon,
+body.eg-playing .score-turn #tb .miniHumanIcon{
+  transform:translateY(0)!important;
+  flex-shrink:0!important;
+}
+body.eg-playing .score-turn #tb.aiMiniTurn > span:last-child,
+body.eg-playing .score-turn #tb.humanMiniTurn > span:last-child{
+  flex:0 1 auto!important;
+  min-width:0!important;
+  max-width:calc(100% - 32px)!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+}
+@media(max-width:370px){
+  body.eg-playing #ib{
+    grid-template-columns:minmax(0,.76fr) minmax(0,1.88fr) minmax(0,.76fr) minmax(0,.60fr)!important;
+    gap:4px!important;
+  }
+  body.eg-playing .score-turn #tb,
+  body.eg-playing .score-turn #tb.aiMiniTurn,
+  body.eg-playing .score-turn #tb.humanMiniTurn{
+    font-size:11.2px!important;
+    padding-left:5px!important;
+    padding-right:5px!important;
+    gap:4px!important;
+  }
+}
+
+
+
+/* CraftNova final polish: keep the original game UI completely invisible on the setup screen.
+   This prevents the original title/dropdown frames from faintly showing through before play starts. */
+body:not(.eg-playing) #app,
+body.eg-setup #app{
+  display:block!important;
+  visibility:hidden!important;
+  opacity:0!important;
+  pointer-events:none!important;
+}
+body:not(.eg-playing) #hdr,
+body:not(.eg-playing) #ttl,
+body:not(.eg-playing) #ctrl,
+body:not(.eg-playing) #ctrl label,
+body:not(.eg-playing) #ctrl select,
+body:not(.eg-playing) #ctrl button{
+  visibility:hidden!important;
+  opacity:0!important;
+  pointer-events:none!important;
+}
+body:not(.eg-playing) #craftStartScreen{
+  background:radial-gradient(circle at 50% 12%,#2d205f,#060812 62%,#02030a 100%)!important;
+}
+body:not(.eg-playing) #craftStartCard{
+  background:rgba(18,24,52,.96)!important;
+  backdrop-filter:none!important;
+}
+body.eg-playing #app{
+  visibility:visible!important;
+  opacity:1!important;
+  pointer-events:auto!important;
+}
+
+
+/* 2026-06 polish: calmer turn overlay, smaller score deltas, and clearer empty cells */
+#turnFlash{
+  top:18%!important;
+}
+#turnFlashCard{
+  font-size:clamp(15px,3.2vw,28px)!important;
+  padding:7px 13px!important;
+  border-radius:16px!important;
+  border:1px solid rgba(255,255,255,.38)!important;
+  background:rgba(12,18,38,.48)!important;
+  color:rgba(248,251,255,.90)!important;
+  box-shadow:0 8px 26px rgba(0,0,0,.18)!important;
+  backdrop-filter:blur(5px)!important;
+  text-shadow:none!important;
+  letter-spacing:.02em!important;
+}
+#turnFlash.blue #turnFlashCard,
+#turnFlash.red #turnFlashCard,
+#turnFlash.ai #turnFlashCard{
+  background:rgba(12,18,38,.48)!important;
+  color:rgba(248,251,255,.90)!important;
+  text-shadow:none!important;
+}
+#turnFlash.show{
+  opacity:.78!important;
+}
+.turnFlashInner,
+#turnFlashCard .turnFlashInner,
+#tb.aiMiniTurn,
+#tb.humanMiniTurn{
+  white-space:nowrap!important;
+  flex-wrap:nowrap!important;
+}
+#turnFlashCard .miniRobotIcon,
+#turnFlashCard .miniHumanIcon{
+  transform:scale(1.25)!important;
+  margin-right:.22em!important;
+}
+.delta{
+  right:6px!important;
+  top:-8px!important;
+  font-size:17px!important;
+  line-height:1!important;
+  padding:2px 5px!important;
+  border-radius:999px!important;
+  background:rgba(255,255,255,.72)!important;
+  box-shadow:0 3px 10px rgba(0,0,0,.12)!important;
+}
+body.eg-playing .delta{
+  right:2px!important;
+  top:-7px!important;
+  font-size:13px!important;
+  padding:1px 4px!important;
+}
+
+
+
+/* 2026-06 follow-up polish: center translucent turn overlay and start score deltas lower. */
+#turnFlash{
+  top:42%!important;
+}
+#turnFlashCard{
+  max-width:min(86vw,420px)!important;
+}
+.delta{
+  top:14px!important;
+  right:4px!important;
+  font-size:16px!important;
+}
+body.eg-playing .delta{
+  top:13px!important;
+  right:1px!important;
+  font-size:12.5px!important;
+}
+@keyframes deltaPop{
+  0%{opacity:0;transform:translateY(8px) scale(.72)}
+  18%{opacity:1;transform:translateY(-4px) scale(1.08)}
+  65%{opacity:1;transform:translateY(-13px) scale(1)}
+  100%{opacity:0;transform:translateY(-21px) scale(.9)}
+}
+@keyframes deltaDrop{
+  0%{opacity:0;transform:translateY(-4px) scale(.72)}
+  18%{opacity:1;transform:translateY(5px) scale(1.08)}
+  65%{opacity:1;transform:translateY(13px) scale(1)}
+  100%{opacity:0;transform:translateY(21px) scale(.9)}
+}
 </style>
 
 <canvas id="starbg" style="position:fixed;inset:0;z-index:-2;pointer-events:none"></canvas>
+
+<div id="craftStartScreen" aria-label="Game settings">
+  <div id="craftStartCard">
+    <div id="craftStartTitle">Euler Getter</div>
+    <div id="craftStartTagline">Win by shape, not area.</div>
+    <div id="craftStartGrid">
+      <div class="craftField"><label for="cnModeSel">Mode</label><select id="cnModeSel"><option value="ai" selected>Human vs AI</option><option value="human">Human vs Human</option><option value="ai2">AI vs AI</option></select></div>
+      <div class="craftField"><label for="cnFirstSel">Human</label><select id="cnFirstSel"><option value="first" selected>First (Blue)</option><option value="second">Second (Red)</option></select></div>
+      <div class="craftField"><label for="cnSwapRuleSel">Swap</label><select id="cnSwapRuleSel"><option value="none">None</option><option value="1">After 1 move</option><option value="3" selected>After 3 moves</option><option value="5">After 5 moves</option><option value="7">After 7 moves</option></select></div>
+      <div class="craftField"><label for="cnCellCountSel">Cells</label><select id="cnCellCountSel"><option value="3" selected>Quick: 46 cells</option><option value="4">Standard: 81 cells</option></select></div>
+      <div class="craftField"><label for="cnWinRuleSel">Win rule</label><select id="cnWinRuleSel"><option value="max" selected>Normal: larger wins</option><option value="min">Reverse: smaller wins</option></select></div>
+      <div class="craftField"><label for="cnAiStrengthSel">AI</label><select id="cnAiStrengthSel"><option value="-24">Very weak</option><option value="0" selected>Weak</option><option value="28">Normal</option><option value="80">Strong</option><option value="160">Very strong</option></select></div>
+    </div>
+    <button id="craftStartBtn" type="button">Start Game</button>
+    <div id="craftStartNote" style="display:none"></div>
+  </div>
+</div>
+
 <div id="app">
+  <div id="craftTopTitle">Euler Getter</div>
+  <div id="craftGameBar"><div id="craftGameStatus">Euler Getter</div><button id="craftMusicMiniBtn" type="button">♪ BGM</button><button id="craftAbortBtn" class="primary" type="button">Quit</button></div>
   <div id="hdr">
     <div id="ttl">Euler Getter</div>
     <div id="ctrl">
@@ -2345,12 +3064,12 @@ body.eg-cursor-red button {
       </select>
       <label style="font-size:12px;color:#666">Human</label>
       <select id="firstSel" style="font-size:13px;padding:6px 10px;border-radius:8px;border:1px solid #ccc;background:white">
-        <option value="first" selected>First（Blue）</option>
-        <option value="second">Second（Red）</option>
+        <option value="first" selected>First (Blue)</option>
+        <option value="second">Second (Red)</option>
       </select>
       <label style="font-size:12px;color:#666">Swap</label>
       <select id="swapRuleSel" style="font-size:13px;padding:6px 10px;border-radius:8px;border:1px solid #ccc;background:white">
-        <option value="none">No swap</option>
+        <option value="none">None</option>
         <option value="1">After 1 move</option>
         <option value="3" selected>After 3 moves</option>
         <option value="5">After 5 moves</option>
@@ -2361,42 +3080,43 @@ body.eg-cursor-red button {
         <option value="3" selected>Quick: 46 cells</option>
         <option value="4">Standard: 81 cells</option>
       </select>
-      <label style="font-size:12px;color:#666">Win</label>
+      <label style="font-size:12px;color:#666">Win rule</label>
       <select id="winRuleSel" style="font-size:13px;padding:6px 10px;border-radius:8px;border:1px solid #ccc;background:white">
-        <option value="max" selected>Higher Euler number wins</option>
-        <option value="min">Lower Euler number wins</option>
+        <option value="max" selected>Larger wins</option>
+        <option value="min">Smaller wins</option>
       </select>
       <label style="font-size:12px;color:#666">AI</label>
       <select id="aiStrengthSel" style="font-size:13px;padding:6px 10px;border-radius:8px;border:1px solid #ccc;background:white">
-        <option value="0">Random</option>
-        <option value="28" selected>Normal</option>
+        <option value="-24">Very weak</option>
+        <option value="0" selected>Weak</option>
+        <option value="28">Normal</option>
         <option value="80">Strong</option>
         <option value="160">Very strong</option>
       </select><button id="rb" type="button">Start</button><button id="musicBtn">♪ BGM ON</button>
     </div>
   </div>
 <div id="ib">
-    <div class="sc score-blue"><div class="sl"> Blue Euler Characteristic</div>
+    <div class="sc score-blue"><div class="sl"> Blue Euler score</div>
 <div class="sv b" id="cb">—</div>
     <div class="colorPlayerInfo blueInfo" id="bluePlayerInfo">Blue: —</div><div class="delta" id="db"></div></div>
     <div class="sc score-turn"><div class="sl">🎮 Current Turn</div>
-  <div id="roleStatus" aria-label="Swap status">
-    <span class="roleBadge swapPending" id="swapStateBadge">Swap: Pending</span>
+  <div id="roleStatus" aria-label="Swap info">
+    <span class="roleBadge swapPending" id="swapStateBadge">Swap: pending</span>
     <button id="swapBtn" class="swapInlineBtn" disabled>Swap!</button>
   </div>
   <div id="swapHintBox" aria-live="polite"></div>
-<div id="tb">Blue's Turn</div></div>
-    <div class="sc score-red"><div class="sl"> Red Euler Characteristic</div><div class="sv r" id="cr">—</div>
+<div id="tb">Blue turn</div></div>
+    <div class="sc score-red"><div class="sl"> Red Euler score</div><div class="sv r" id="cr">—</div>
     <div class="colorPlayerInfo redInfo" id="redPlayerInfo">Red: —</div><div class="delta" id="dr"></div></div>
     <div class="sc score-moves"><div class="sl">⬡ Moves Left</div><div class="sv" id="mv">81</div></div>
   </div>
-<div id="pairTabs" class="modelTabs" aria-label="Model Pair">
-    <button id="tabSphereDisk" class="active" type="button">Sphere ＋ Disk</button>
+<div id="pairTabs" class="modelTabs" aria-label="Model pair switch">
+    <button id="tabSphereDisk" class="active" type="button">Sphere + Disk</button>
     <button id="tabSphereBoy" type="button">Sphere + Cross-cap</button>
     <button id="tabDiskBoy" type="button">Disk + Cross-cap</button>
   </div>
 
-  <div id="singleModelTabs" class="modelTabs" aria-label="Model Selector">
+  <div id="singleModelTabs" class="modelTabs" aria-label="Model switch">
     <button id="tabOnly3d" class="active" type="button">Sphere</button>
     <button id="tabOnlyDisk" type="button">Disk</button>
     <button id="tabOnlyBoy" type="button">Cross-cap</button>
@@ -2415,109 +3135,170 @@ body.eg-cursor-red button {
 <div id="views">
     <div class="vwrap" id="wrap3d">
       <div id="cw3d"><canvas id="tc"></canvas></div>
-      <div class="vlbl">Sphere Model</div>
+      <div class="vlbl">Sphere model</div>
     </div>
     <div class="vwrap" id="wrap2d">
       <div id="cw2d"><canvas id="cv2d"></canvas></div>
-      <div class="vlbl">Disk Model</div>
+      <div class="vlbl">Disk model</div>
     </div>
     <div class="vwrap" id="wrapBoy">
       <div id="cwBoy"><canvas id="boyCanvas"></canvas></div>
-      <div class="vlbl">Cross-cap<span class="tabModelSuffix"> Model</span></div>
+      <div class="vlbl">Cross-cap<span class="tabModelSuffix"> model</span></div>
     </div>
+  </div>
+
+  <div id="cnRobotBottom" aria-live="polite">
+    <span id="cnRobotMiniFace">・‿・</span>
+    <span id="cnRobotBottomText">AI is reading the board…</span>
   </div>
 
   <div id="wb"></div>
 
 
   <div id="endActions" aria-live="polite">
-    <div id="endTitle">Title: Euler-number Hunter</div>
-    <div id="endNote">Not area: this game measures regions by Euler number.</div>
+    <div id="endTitle">Title: Euler Hunter</div>
+    <div id="endNote">Scored by Euler characteristic, not by area.</div>
     <div class="endActionButtons">
       <button id="playAgainBtn" type="button">Play Again</button>
       <button id="endCopyBtn" type="button">Copy Result</button>
     </div>
   </div>
 
-  
   <div id="rules">
-  <details>
-    <summary>Rules &amp; How to Read the Board</summary>
-    <ul>
-      <li>Blue and Red take turns choosing cells.</li>
-      <li>The winner is decided by Euler number, not by area.</li>
-      <li>In the normal rule, the larger Euler number wins.</li>
-      <li>In the reversed rule, the smaller Euler number wins.</li>
-      <li>If the swap rule is enabled, the second player may choose to swap after the selected move number.</li>
-      <li>Quick 46 cells is for short games; Standard 81 cells is for a fuller game.</li>
-      <li>The highlighted cell and moving label show the most recent move.</li>
-    </ul>
-  </details>
+    <details>
+  <summary>Rules & How to Read the Board</summary>
+  <ul>
+<li>Players take turns choosing cells. The chosen cell and its paired cell become your color.</li>
+<li>Your score is the Euler characteristic of your territory.</li>
+<li>At the end, the player with the larger Euler characteristic wins.</li>
+<li>After 3 moves, the second player may swap colors.</li>
+<li>You can view the same board as a Sphere model, Disk model, or Cross-cap model.</li>
+</ul>
+</details>
 
-  <details>
-    <summary>Projective Plane</summary>
-    <p>
-      The projective plane is a surface where opposite directions are identified.
-      In this game, the board is shown through three equivalent-looking models:
-      sphere, disk, and cross-cap.
-    </p>
-    <p>
-      In the sphere model, opposite points are treated as the same point.
-      In the disk model, opposite points on the boundary circle are glued together.
-      The cross-cap drawing self-intersects on screen, but the real projective plane does not self-intersect.
-    </p>
-  </details>
+    <details>
+      <summary>What is the projective plane?</summary>
+      <p>
+        The projective plane is a surface that can be described by gluing edges of a square.
+        For example, gluing opposite edges of a square in the same direction gives a torus, the surface of a donut.
+      </p>
+      <p>
+        A Klein bottle is obtained by reversing one of those gluings.
+        It is a twisted world where going out through one side brings you back on the other side with orientation reversed.
+      </p>
+      <p>
+        The projective plane uses another gluing pattern, identifying both pairs of opposite edges with reversed direction.
+        This game represents the projective plane by treating opposite points on a sphere as the same place.
+      </p>
+      <p>
+        The technical term for opposite points on a sphere is antipodal points.
+        In the game, it is enough to think of them as <b>the same cell on the opposite side</b>, or an <b>opposite pair</b>.
+      </p>
+    </details>
 
-  <details>
-    <summary>Topology</summary>
-    <p>
-      Topology studies properties of shapes that do not change when the shape is bent or stretched.
-      Size and area are less important than how regions are connected, whether loops appear,
-      and whether holes are created.
-    </p>
-    <p>
-      Euler Getter uses this idea as a game mechanic: you win by controlling the Euler number
-      of your region, not simply by covering more cells.
-    </p>
-  </details>
+    <details>
+      <summary>What is topology?</summary>
+      <p>
+        Topology studies properties of shapes that do not change when they are stretched or bent.
+        It cares less about distances and angles, and more about connectedness, holes, and loops.
+      </p>
+      <p>
+        For example, a coffee cup and a donut can both be viewed as shapes with one hole.
+        Topology focuses on this broad pattern of connectedness rather than small geometric details.
+      </p>
+      <p>
+        In Euler Getter, the connectedness of your stones becomes the score.
+        So while playing on the board, you are competing over a topological quantity.
+      </p>
+    </details>
 
-  <details>
-    <summary>Euler Number</summary>
-    <p>
-      The Euler number is a number that captures part of the shape of a region.
-      Roughly speaking, connected pieces, loops, and holes affect the score.
-    </p>
-    <p>
-      You do not need to count vertices, edges, and cells while playing.
-      Just watch how the shape changes, and the game will compute the score for you.
-    </p>
-  </details>
+    <details>
+      <summary>What is Euler characteristic?</summary>
+      <p>
+        Euler characteristic is a number that roughly measures how a shape is connected.
+        The basic formula is <b>vertices − edges + faces</b>.
+        For polyhedra and subdivided surfaces, this number helps distinguish types of shapes.
+      </p>
+      <p>
+        In Euler Getter, connected regions can raise the score, while loops and holes can lower it.
+        Roughly, <b>making separate islands can increase it</b>, while <b>connecting regions into loops or holes can change it</b>.
+      </p>
+      <p>
+        You do not need to calculate it mentally. Watch the <b>+1</b> and <b>-1</b> effects on the screen,
+        and observe what happens when you place cells apart or connect them. Gradually, you will learn to read the shape.
+      </p>
+    </details>
 
-  <details>
-    <summary>Learn More</summary>
-    <p>
-      <a href="https://w.atwiki.jp/euler_getter/" target="_blank" rel="noopener">Euler Getter Wiki</a><br>
-      <a href="https://www.kyoritsu-pub.co.jp/book/b10003131.html" target="_blank" rel="noopener">
-        Introduction to University Mathematics Through Games — publisher page
-      </a>
-    </p>
-  </details>
+    <details>
+      <summary>For further reading</summary>
+      <p>
+        Euler Getter is related to ideas such as the projective plane, the torus, the Klein bottle, topology, and Euler characteristic.
+        These ideas connect to university-level mathematics.
+      </p>
+      <p>
+        A gentle introduction to these ideas through games and puzzles is
+        <b>Takehiko Yasuda, Introduction to University Mathematics Through Games</b>.
+        Through the Tower of Hanoi, Sprouts, Nim, topology games, the projective plane, and Euler Getter,
+        the book introduces the fun of mathematics beyond calculation.
+      </p>
+      <p>
+        Mathematics is not only about calculation; it can also expand how we see the world.
+        If this game sparks your interest, please also look at the book and related lecture materials.
+      </p>
+      <p class="refs">
+        References:
+        <a href="https://w.atwiki.jp/euler_getter/" target="_blank" rel="noopener">Euler Getter Wiki</a> /
+        <a href="https://www.kyoritsu-pub.co.jp/book/b10003131.html" target="_blank" rel="noopener">Book information page</a>
+      </p>
+    </details>
+    <details>
+      <summary>License</summary>
+      <div class="license-note">
+        <p>
+          <b>Euler Getter</b><br>
+          © 2026 Takehiko Yasuda
+        </p>
+        <p>
+          <b>License:</b> This game is released under the <b>MIT License</b>.
+          The code, in-game text, UI, and browser-generated BGM/sound effects are covered by the MIT License.
+        </p>
+        <p>
+          The MIT License permits use, modification, redistribution, and commercial use, provided that the copyright notice and license text are preserved.
+        </p>
+        <p>
+          <b>Production:</b> This game was created and improved with the help of ChatGPT and Claude.
+          The 3D display uses Three.js.
+        </p>
+        <p>
+          <b>BGM and sound effects:</b> No external audio files or recorded materials are used.
+          They are original sounds generated in real time in the browser.
+        </p>
+        <p>
+          <b>Attribution example:</b><br>
+          Euler Getter<br>
+          © 2026 Takehiko Yasuda<br>
+          Released under the MIT License.<br>
+          Built with ChatGPT, Claude, and Three.js.<br>
+          BGM and sound effects are procedurally generated in the browser. No external audio files are used.
+        </p>
+        <p class="refs">
+          References:
+          <a href="https://opensource.org/license/mit" target="_blank" rel="noopener">MIT License</a> /
+          <a href="https://threejs.org/" target="_blank" rel="noopener">Three.js</a>
+        </p>
+      </div>
+    </details>
 
-  <details>
-    <summary>License</summary>
-    <p class="license-note">
-      Euler Getter Copyright (c) 2026 Takehiko Yasuda<br>
-      Released under the MIT License. This game uses Three.js, and the BGM/sound effects
-      are generated in the browser.
-    </p>
-  </details>
   </div>
 
 
-  <div id="logPanel">
-    <div id="lg">Blue starts. Projective Plane RP²: opposite points are identified. Effectively 81 or 46 cells.</div>
-    <button id="downloadLogBtn" type="button">Save Log</button>
+  <div id="licenseBar">
+    Euler Getter © 2026 Takehiko Yasuda — Released under the MIT License. Built with ChatGPT, Claude, and Three.js. BGM/SFX are generated in the browser.
   </div>
+
+  <div id="logPanel"><div id="lg">Blue starts. Projective plane RP²: antipodal cells are identified.</div></div>
+</div>
+
 
 <div id="turnFlash">
   <div id="turnFlashCard"></div>
@@ -2532,19 +3313,51 @@ body.eg-cursor-red button {
   </div>
 </div>
 
-<script src="./js/three.min.js">
-
+<script src="./js/three.min.js"></script>
+<script>
 window.addEventListener('error', function(e){
-  const el=document.getElementById('lg');
-  if(el){
-    el.innerHTML='Startup error: '+String(e.message)+'<br>'+el.innerHTML;
-  }
+  // CraftNova mobile UI hides the play log; keep errors in the console only.
+  console.error('Euler Getter error:', e.message, e.error || e);
 });
-
-
-setTimeout(()=>{ if(typeof updateColoredArrowCursor==='function') updateColoredArrowCursor(); },0);
 </script>
 <script>
+
+// CraftNova required mobile guards.
+document.addEventListener('touchstart', (e) => {
+  if (e.touches.length > 1) e.preventDefault();
+}, { passive: false });
+let __egLastTap = 0;
+document.addEventListener('touchend', (e) => {
+  const now = Date.now();
+  if (now - __egLastTap < 300) e.preventDefault();
+  __egLastTap = now;
+}, { passive: false });
+document.addEventListener('touchstart', () => {
+  if (window.audioCtx && window.audioCtx.state === 'suspended') {
+    window.audioCtx.resume();
+  }
+}, { passive: true });
+function craftNovaFitLayout(){
+  const W = window.innerWidth;
+  const H = window.innerHeight;
+  document.documentElement.style.setProperty('--eg-w', W + 'px');
+  document.documentElement.style.setProperty('--eg-h', H + 'px');
+  const star = document.getElementById('starbg');
+  if(star){ star.width = W; star.height = H; }
+  const app = document.getElementById('app');
+  const views = document.getElementById('views');
+  if(app && views){
+    const r = views.getBoundingClientRect();
+    const available = Math.max(180, H - r.top - 42);
+    document.documentElement.style.setProperty('--eg-top-used', Math.round(H-available) + 'px');
+  }
+}
+window.addEventListener('resize', craftNovaFitLayout, { passive:true });
+window.addEventListener('orientationchange', () => setTimeout(craftNovaFitLayout, 120), { passive:true });
+craftNovaFitLayout();
+setTimeout(craftNovaFitLayout, 0);
+setTimeout(craftNovaFitLayout, 300);
+
 (function(){
 const BLUE=1, RED=2;
 
@@ -2616,9 +3429,9 @@ function updateRoleStatus(){
     }
     if(ai){
       const who = (HUMAN_COLOR===c) ? 'You' : 'AI';
-      return who + ' / ' + (first ? 'First' : 'Second');
+      return who + ' / ' + (first ? 'first' : 'second');
     }
-    return first ? 'First side' : 'Second side';
+    return first ? 'first side' : 'second side';
   }
 
   if(blueEl) blueEl.textContent='Blue: '+roleForColor(BLUE);
@@ -2634,13 +3447,13 @@ function updateRoleStatus(){
       swapEl.textContent='No swap';
       swapEl.classList.add('swapNone','swapDecisionEmphasis','swapDecisionNone');
     }else if(EG_SWAP_STATE==='done'){
-      swapEl.textContent='Swap: Done';
+      swapEl.textContent='Swap: done';
       swapEl.classList.add('swapDone');
     }else if(EG_SWAP_STATE==='none'){
-      swapEl.textContent='Swap: None';
+      swapEl.textContent='Swap: none';
       swapEl.classList.add('swapNone');
     }else{
-      swapEl.textContent='Swap: Pending';
+      swapEl.textContent='Swap: pending';
       swapEl.classList.add('swapPending');
     }
   }
@@ -2662,7 +3475,7 @@ function updateSwapHintBox(){
   if(roleStatus) roleStatus.classList.toggle('humanSwapReady',show);
 
   if(show){
-    hint.innerHTML='<div class="swapHintMain">Swap available!</div><div class="swapHintSub">Press this button to swap colors.</div><div class="swapHintArrow">↑</div>';
+    hint.innerHTML='<div class="swapHintMain">Swap available!</div><div class="swapHintSub">Press this button to swap</div><div class="swapHintArrow">↑</div>';
   }else{
     hint.innerHTML='';
   }
@@ -2676,14 +3489,14 @@ function updateReadableTurnLabel(){
   const aiTurn = (GAME_MODE==='ai' && turn===AI_COLOR);
 
   if(GAME_MODE==='ai2'){
-    tb.innerHTML=miniRobotIconHtml()+' '+escapeLogHtml(cName+' AI turn');
+    tb.innerHTML=miniRobotIconHtml()+' '+escapeLogHtml(cName+'AI turn');
     tb.className='aiMiniTurn';
   }else if(GAME_MODE==='ai'){
     if(aiTurn){
-      tb.innerHTML=miniRobotIconHtml()+' '+escapeLogHtml('AI thinking ('+cName+')');
+      tb.innerHTML=miniRobotIconHtml()+' '+escapeLogHtml('AI thinking（'+cName+'）');
       tb.className='aiMiniTurn';
     }else{
-      tb.innerHTML=miniHumanIconHtml()+' '+escapeLogHtml('Your turn ('+cName+')');
+      tb.innerHTML=miniHumanIconHtml()+' '+escapeLogHtml('Your turn（'+cName+'）');
       tb.className='humanMiniTurn';
     }
   }else{
@@ -2707,7 +3520,7 @@ let swapNoticeMode='', swapNoticeKeepUntilMove=0, swapNoticeClearScheduled=false
 let lastMoveVi=-1, lastMoveRoot=-1, lastMoveAt=0;
 let targetRotX=null, targetRotY=null, targetBoyRotX=null, targetBoyRotY=null;
 let targetSphereQuat=null, targetBoyQuatObj=null;
-let audioCtx=null;
+let audioCtx=null; window.audioCtx=null;
 let turn=BLUE, gameOver=false;
 let scene,camera,renderer,raycaster,pivot;
 let sceneBoy,cameraBoy,rendererBoy,raycasterBoy,pivotBoy;
@@ -2746,12 +3559,10 @@ function escapeLogHtml(s){
   }[ch]));
 }
 
-function log(s){
-  gameLogLines.push(String(s));
-  if(!lgEl) return;
-  const safe=gameLogLines.map(escapeLogHtml).join('<br>');
-  lgEl.innerHTML=safe;
-  lgEl.scrollTop=lgEl.scrollHeight;
+function log(m){
+  const line=String(m);
+  gameLogLines.unshift(line);
+  lgEl.innerHTML=gameLogLines.map(escapeLogHtml).join('<br>');
 }
 
 function setLogHeader(lines){
@@ -2760,22 +3571,9 @@ function setLogHeader(lines){
 }
 
 function downloadGameLog(){
-  const stamp=new Date().toISOString().replace(/[:.]/g,'-').slice(0,19);
-  let lines=[];
-  if(typeof gameLogLines!=='undefined' && gameLogLines.length){
-    lines=gameLogLines.slice().reverse();
-  }else if(lgEl){
-    lines=lgEl.innerText.split(/\n+/).map(s=>s.trim()).filter(Boolean);
-  }
-  const blob=new Blob([lines.join('\n')+'\n'],{type:'text/plain;charset=utf-8'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
-  a.href=url;
-  a.download='euler-getter-log-'+stamp+'.txt';
-  a.style.display='none';
-  document.body.appendChild(a);
-  a.click();
-  setTimeout(()=>{URL.revokeObjectURL(url);a.remove();},300);
+  // CraftNova edition: file downloads are disabled by the platform guidelines.
+  // Keep the button harmless if older UI code refers to it.
+  log('Log saving is disabled in this mobile version.');
 }
 function clampRotX(){
   const limit=Math.PI/2-0.12;
@@ -2992,7 +3790,7 @@ function initThree(){
     addSceneStarfield(scene);
 camera=new THREE.PerspectiveCamera(44,W/H,0.1,100);
   camera.position.set(0,0,5.7);
-  renderer=new THREE.WebGLRenderer({canvas:c3,antialias:true});
+  renderer=new THREE.WebGLRenderer({canvas:c3,antialias:true,preserveDrawingBuffer:true});
   renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
   renderer.setSize(W,H,false);
   scene.add(new THREE.AmbientLight(0xfff0c0,0.42));
@@ -3054,7 +3852,7 @@ function initBoy(){
     addSceneStarfield(sceneBoy);
 cameraBoy=new THREE.PerspectiveCamera(44,W/H,0.1,100);
   cameraBoy.position.set(0,0,5.45);
-  rendererBoy=new THREE.WebGLRenderer({canvas:cBoy,antialias:true,alpha:false});
+  rendererBoy=new THREE.WebGLRenderer({canvas:cBoy,antialias:true,alpha:false,preserveDrawingBuffer:true});
   rendererBoy.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
   rendererBoy.setSize(W,H,false);
   rendererBoy.toneMapping=THREE.ACESFilmicToneMapping;
@@ -3570,34 +4368,29 @@ function updateCellGlow(){
 
 function planetColorFromVec(v, ownerValue, modelKind='sphere'){
   // Player colors stay vivid and consistent across all models.
-  // Sphere uses especially bright red/blue so cells remain readable even on the dark side.
+  // Unclaimed cells are deliberately low-saturation purple-gray, so they do not
+  // look like the golden/orange last-move highlight or either player's color.
   if(ownerValue===BLUE) return modelKind==='sphere' ? 0x1688ff : 0x006ee6;
   if(ownerValue===RED) return modelKind==='sphere' ? 0xff2f18 : 0xd92a12;
 
-  // Unified unclaimed-cell palette:
-  // Cross-cap-like yellow / ocher, but slightly brighter on the sphere.
   const z = Math.max(-1,Math.min(1,v[2] || 0));
   const y = Math.max(-1,Math.min(1,v[1] || 0));
-  const light = 0.58 + 0.42*Math.max(0, z*0.55 + y*0.35 + 0.25);
+  const light = 0.55 + 0.45*Math.max(0, z*0.55 + y*0.35 + 0.25);
+  const grain = 0.5 + 0.5*Math.sin(7.3*z - 2.1*y);
+  const shade = Math.max(0,Math.min(1,0.34 + 0.66*light*(0.72+0.28*grain)));
 
-  const valley = 0.5 + 0.5*Math.sin(8.0*z - 2.4*y);
-  const shade = Math.max(0, Math.min(1, 0.25 + 0.75*light));
-  const contrast = 0.48 + 0.52*shade*valley;
-
-  let r = Math.round(92  + 150*contrast);
-  let g = Math.round(68  + 118*contrast);
-  let b = Math.round(22  + 46*contrast);
+  let r = Math.round(45 + 34*shade);
+  let g = Math.round(47 + 36*shade);
+  let b = Math.round(62 + 52*shade);
 
   if(modelKind==='sphere'){
-    // Lift the low end so cells do not become muddy in shaded positions.
-    r = Math.min(255, Math.round(r*1.10 + 18));
-    g = Math.min(255, Math.round(g*1.10 + 16));
-    b = Math.min(255, Math.round(b*1.08 + 8));
+    r = Math.min(110, Math.round(r*1.08 + 6));
+    g = Math.min(116, Math.round(g*1.08 + 6));
+    b = Math.min(145, Math.round(b*1.10 + 10));
   }
 
   return (r<<16) | (g<<8) | b;
 }
-
 function hexToRgbParts(hex){
   return {
     r:(hex>>16)&255,
@@ -3911,7 +4704,7 @@ function isBoundaryRepresentative(vi){
 function drawDiskCell(ctx,xys,o,ghost=false,continuation=false,vi=-1){
   if(!xys || xys.length<3) return;
   const alpha=0.88;
-  const emptyAlpha=0.92;
+  const emptyAlpha=0.86;
   ctx.save();
   ctx.beginPath();
   ctx.moveTo(xys[0].x,xys[0].y);
@@ -3923,12 +4716,12 @@ function drawDiskCell(ctx,xys,o,ghost=false,continuation=false,vi=-1){
   }else if(o===RED){
     ctx.fillStyle=`rgba(216,90,48,${alpha})`;
   }else{
-    // Disk model: brighter unified yellow, closer to the Sphere/Cross-cap appearance.
-    ctx.fillStyle=`rgba(238,199,82,${emptyAlpha})`;
+    // Disk model: low-saturation purple-gray for unclaimed cells.
+    ctx.fillStyle=`rgba(63,66,86,${emptyAlpha})`;
   }
   ctx.fill();
 
-  ctx.strokeStyle='rgba(255,244,185,.50)';
+  ctx.strokeStyle='rgba(220,226,255,.34)';
   ctx.lineWidth=0.86;
   ctx.stroke();
   ctx.restore();
@@ -4539,7 +5332,7 @@ function launchTohoho(){
 
 function ensureAudio(){
   if(!audioCtx){
-    audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+    audioCtx=new (window.AudioContext||window.webkitAudioContext)(); window.audioCtx=audioCtx;
   }
   if(audioCtx.state==='suspended') audioCtx.resume();
 }
@@ -4657,7 +5450,7 @@ function maybeEnableSwap(){
 
   if(moveCount===sm){
     swapAvailable=true;
-    log('Swap available after '+sm+' move'+(sm===1?'':'s')+': the second side may exchange colors.');
+    log(sm+' moves until swap: the second side may exchange colors.');
     updateRoleStatus();
     updateSwapButton();
     if(GAME_MODE==='ai2' || (GAME_MODE==='ai' && turn===AI_COLOR)){
@@ -4671,10 +5464,9 @@ function maybeEnableSwap(){
 function swapColors(){
   if(!swapAvailable || swapUsed || gameOver) return;
 
-  // Pie-rule swap:
-  // Keep the board colors exactly as they are, and swap which player controls
-  // which color. If we also swapped the owner array here, the two swaps would
-  // cancel out from the player's point of view.
+  // Swap rule: 
+  // Keep board colors unchanged; only exchange which player controls which color.
+  // If owners are flipped here, it cancels out the player-color exchange.
   swapUsed=true;
   swapAvailable=false;
 
@@ -4685,7 +5477,7 @@ function swapColors(){
   }
 
   egSwapFirstSecond();
-  log('Swap: players exchanged colors. The board colors stay as placed.');
+  log('Swap: player colors were exchanged. The board colors stay as they are.');
   showSwapDecisionBadge('done');
   updateColors3d();
   draw2d();
@@ -4695,6 +5487,8 @@ function swapColors(){
   if(!gameOver && (GAME_MODE==='ai2' || (GAME_MODE==='ai' && turn===AI_COLOR))){
     setTimeout(aiMove,LAST_MOVE_REVIEW_MS);
   }
+
+  if(typeof updateSwapHintBox==='function') updateSwapHintBox();
 }
 
 
@@ -4810,7 +5604,7 @@ function placeStone(vi){
     egSetSwapState('none');
     showSwapDecisionBadge('none');
     updateRoleStatus();
-    log('No swap: play continues without exchanging colors.');
+    log('No swap: continuing without exchanging colors.');
     updateSwapButton();
   }
   const placedColor=turn;
@@ -4819,7 +5613,7 @@ function placeStone(vi){
   playClickSound(placedColor);
   let mover=turn===BLUE?'Blue':'Red';
   if(GAME_MODE==='ai' && turn===AI_COLOR) mover+='AI';
-  log(mover+' claimed #'+pairLabel[r]);
+  log(mover+' placed at #'+pairLabel[r]);
   moveCount++;
   turn=turn===BLUE?RED:BLUE;
   updateColors3d(); draw2d(); updateUI();
@@ -4861,9 +5655,7 @@ function updateColors3d(){
     mesh.scale.setScalar(highlighted?1.055:(last?1.052+0.018*pulse:1.0));
     mesh.renderOrder=(highlighted||last)?30:0;
     mesh.material.depthTest=!(highlighted||last);
-  
-  if(typeof updateSwapHintBox==='function') updateSwapHintBox();
-}
+  }
 
   for(const sp of labelSprites3d){
     const vi=sp.userData.vi;
@@ -4937,7 +5729,7 @@ function winRuleMode(){
 }
 
 function winRuleLabel(){
-  return winRuleMode()==='min' ? 'Lower Euler score wins' : 'Higher Euler score wins';
+  return winRuleMode()==='min' ? 'Smaller Euler score wins' : 'Larger Euler score wins';
 }
 
 function scoreBetter(a,b){
@@ -5046,7 +5838,7 @@ function declineSwap(){
   swapUsed=true;
   swapAvailable=false;
   egSetSwapState('none');
-  log('No swap: play continues without exchanging colors.');
+  log('No swap: continuing without exchanging colors.');
   showSwapDecisionBadge('none');
   updateSwapButton();
   updateUI();
@@ -5087,12 +5879,13 @@ function bestMove(color){
   const roots=legalRoots();
   if(roots.length===0) return -1;
 
-  const playouts=aiStrengthPlayouts();
-  if(playouts<=0){
+  const strength=aiStrengthPlayouts();
+  if(strength===0){
     return roots[Math.floor(Math.random()*roots.length)];
   }
 
-  let best=roots[0], bestScore=-Infinity;
+  const playouts=Math.max(10,Math.abs(strength));
+  const candidates=[];
 
   for(const r of roots){
     let wins=0, draws=0;
@@ -5115,15 +5908,38 @@ function bestMove(color){
       score-=Math.max(0,before-after)*0.015;
     }
     score += Math.random()*0.0001;
+    candidates.push({r,score});
+  }
 
-    if(score>bestScore){
-      bestScore=score;
-      best=r;
+  // Negative strength = a pleasantly beatable beginner AI.
+  // It tends to choose from the worse-looking half, but sometimes finds a decent
+  // move or simply plays randomly, so it does not look like it is deliberately
+  // throwing the game by always making the Euler number worse.
+  if(strength<0){
+    candidates.sort((a,b)=>a.score-b.score); // lower AI win-rate first
+    const roll=Math.random();
+    if(roll<0.18){
+      return roots[Math.floor(Math.random()*roots.length)];
+    }
+    if(roll<0.28){
+      const upper=candidates.slice(Math.max(0,Math.floor(candidates.length*0.55)));
+      return (upper.length?upper:candidates)[Math.floor(Math.random()*(upper.length?upper.length:candidates.length))].r;
+    }
+    const poolSize=Math.max(1,Math.ceil(candidates.length*0.58));
+    const pool=candidates.slice(0,poolSize);
+    const idx=Math.min(pool.length-1,Math.floor(Math.pow(Math.random(),1.35)*pool.length));
+    return pool[idx].r;
+  }
+
+  let best=candidates[0].r, bestScore=-Infinity;
+  for(const c of candidates){
+    if(c.score>bestScore){
+      bestScore=c.score;
+      best=c.r;
     }
   }
   return best;
 }
-
 function aiMove(){
   if(gameOver || swapAvailable) return;
   if(GAME_MODE==='ai2'){
@@ -5149,7 +5965,7 @@ function miniHumanIconHtml(face='・ᴗ・'){
 }
 
 function resultIconHtml(kind,mood){
-  const face = mood==='joy' ? '＾▽＾' : (mood==='sad' ? '；_；' : '・ᴗ・');
+  const face = mood==='joy' ? '＾▽＾' : (mood==='sad' ? 'T_T' : '・ᴗ・');
   if(kind==='robot'){
     return '<span class="resultIcon resultRobotIcon" aria-hidden="true"><span class="resultRobotAntenna"></span><span class="resultRobotFace">'+face+'</span></span>';
   }
@@ -5345,41 +6161,41 @@ function updateUI(){
 
     if(winner===BLUE){
       wbEl.className='b';
-      wbEl.textContent=blueName+' wins! Blue Euler number='+fmtChi(ec)+', Red Euler number='+fmtChi(er);
+      wbEl.textContent=blueName+' wins!  Blue Euler score='+fmtChi(ec)+', Red Euler score='+fmtChi(er);
       if(GAME_MODE==='human' || GAME_MODE==='ai2'){
-        showBigMessage('win',resultTitleHtml('Blue wins!','human','joy'),GAME_MODE==='ai2'?'Blue AI wins!':'Blue player wins — Euler master! 🎉',0);
+        showBigMessage('win',resultTitleHtml('Blue wins!','human','joy'),GAME_MODE==='ai2'?'Blue AI wins':'Blue player wins. Euler master! 🎉',0);
         launchConfetti();
       }else if(HUMAN_COLOR===BLUE){
-        showBigMessage('win',resultTitleHtml('You win!','human','joy'),'Congratulations — Euler master! 🎉',0);
+        showBigMessage('win',resultTitleHtml('You win!','human','joy'),'Congratulations! You are an Euler master! 🎉',0);
         launchConfetti();
       }else{
-        showBigMessage('lose',resultTitleHtml('You lose','human','sad'),'Revenge next time 💪',0);
+        showBigMessage('lose',resultTitleHtml('You lose','human','sad'),'Try again next time 💪',0);
         launchTohoho();
       }
     }
     else if(winner===RED){
       wbEl.className='r';
-      wbEl.textContent=redName+' wins! Red Euler number='+fmtChi(er)+', Blue Euler number='+fmtChi(ec);
+      wbEl.textContent=redName+' wins!  Red Euler score='+fmtChi(er)+', Blue Euler score='+fmtChi(ec);
       if(GAME_MODE==='human' || GAME_MODE==='ai2'){
-        showBigMessage('win',resultTitleHtml('Red wins!','human','joy'),GAME_MODE==='ai2'?'Red AI wins!':'Red player wins — Euler master! 🎉',0);
+        showBigMessage('win',resultTitleHtml('Red wins!','human','joy'),GAME_MODE==='ai2'?'Red AI wins':'Red player wins. Euler master! 🎉',0);
         launchConfetti();
       }else if(HUMAN_COLOR===RED){
-        showBigMessage('win',resultTitleHtml('You win!','human','joy'),'Congratulations — Euler master! 🎉',0);
+        showBigMessage('win',resultTitleHtml('You win!','human','joy'),'Congratulations! You are an Euler master! 🎉',0);
         launchConfetti();
       }else{
-        showBigMessage('lose',resultTitleHtml('You lose','human','sad'),'Revenge next time 💪',0);
+        showBigMessage('lose',resultTitleHtml('You lose','human','sad'),'Try again next time 💪',0);
         launchTohoho();
       }
     }
     else{
       wbEl.className='b';
-      wbEl.textContent='Draw: Euler number='+fmtChi(ec);
-      showBigMessage('draw','DRAW!','A beautiful balance.',0);
+      wbEl.textContent='Draw: Euler score='+fmtChi(ec);
+      showBigMessage('draw','DRAW!','A beautiful balance in its own way',0);
     }
     playEndSound(winner);
     updateOpponentRobot(winner);
-    tbEl.textContent='Game Over'; tbEl.className='';
-    log('End: Blue Euler number='+fmtChi(ec)+', Red Euler number='+fmtChi(er)+', rule='+winRuleLabel());
+    tbEl.textContent='Game over'; tbEl.className='';
+    log('Game over: Blue Euler score='+fmtChi(ec)+', Red Euler score='+fmtChi(er)+', Rule='+winRuleLabel());
     if(copyResultBtn) copyResultBtn.classList.add('ready');
     revealEndActions();
   }else if(!gameOver){
@@ -5738,8 +6554,8 @@ function cellRuleLabel(){
 }
 
 function expectedCellCount(){
-  // Icosahedron triangular subdivision has 10K^2+2 sphere vertices,
-  // and the projective-plane board identifies antipodal pairs.
+  // For subdivided icosahedral triangles, the number of vertices on the sphere is 10K^2+2.
+  // On the projective plane, antipodal points are identified, so the number of cells is half.
   const k=cellSubdivisionK();
   return (10*k*k+2)/2;
 }
@@ -5754,25 +6570,25 @@ function swapMoveNumber(){
 
 function swapRuleLabel(){
   const n=swapMoveNumber();
-  return n===0 ? 'No swap' : ('after '+n+' move'+(n===1?'':'s'));
+  return n===0 ? 'No swap' : n+' moves later';
 }
 
 function swapStartDescription(){
   const n=swapMoveNumber();
-  if(n===0) return 'No swap rule. Play continues without color exchange.';
-  return 'Swap rule: the second side may swap after '+n+' move'+(n===1?'':'s')+'.';
+  if(n===0) return 'Playing without swap.';
+  return 'After '+n+' moves, the second side may choose to swap.';
 }
 
 function aiStrengthPlayouts(){
-  if(typeof aiStrengthSel==='undefined' || !aiStrengthSel) return 28;
+  if(typeof aiStrengthSel==='undefined' || !aiStrengthSel) return 0;
   const n=parseInt(aiStrengthSel.value,10);
-  return Number.isFinite(n) ? n : 28;
+  return Number.isFinite(n) ? n : 0;
 }
 
 function aiStrengthLabel(){
-  if(typeof aiStrengthSel==='undefined' || !aiStrengthSel) return 'Normal';
+  if(typeof aiStrengthSel==='undefined' || !aiStrengthSel) return 'Weak';
   const opt=aiStrengthSel.options[aiStrengthSel.selectedIndex];
-  return opt ? opt.textContent : 'Normal';
+  return opt ? opt.textContent : 'Weak';
 }
 
 
@@ -5806,7 +6622,7 @@ function buildResultShareText(){
     'Euler Getter Result',
     'Mode: '+modeLabelForShare(),
     'Settings: '+cellRuleLabel()+' / '+swapRuleLabel()+' / '+winRuleLabel(),
-    'Blue Euler='+fmtChi(ec)+' / Red Euler='+fmtChi(er),
+    'Blue Euler score='+fmtChi(ec)+' / Red Euler score='+fmtChi(er),
     gameOver ? 'Winner: '+winnerNameForShare(winner) : 'In progress',
     'Title: '+resultTitle(),
     resultOneLine(),
@@ -5840,7 +6656,7 @@ async function copyResultShare(){
     if(btn){
       const old=btn.dataset.oldText || btn.textContent;
       btn.dataset.oldText=old;
-      btn.textContent=ok?'Copied!':'Copy failed';
+      btn.textContent=ok?'Copied':'Copy failed';
       setTimeout(()=>{btn.textContent=btn.dataset.oldText || old;},1400);
     }
   }
@@ -5850,23 +6666,23 @@ function resultTitle(){
   const ec=rpChi(BLUE), er=rpChi(RED);
   const winner=gameOver ? finalWinner() : 0;
   const spread=Math.abs(ec-er);
-  if(!gameOver) return 'Euler-number Explorer';
+  if(!gameOver) return 'Euler Explorer';
   if(winner===0) return 'Perfect Balance';
-  if(winRuleMode()==='min') return spread>=3 ? 'Complexity Wizard' : 'Low Euler-number Tactician';
-  if(spread>=4) return 'Euler Dominator';
-  if(spread>=2) return 'Euler-number Hunter';
-  return 'Topology Closer';
+  if(winRuleMode()==='min') return spread>=3 ? 'Complexity Wizard' : 'Low-Euler Tactician';
+  if(spread>=4) return 'Euler Ruler';
+  if(spread>=2) return 'Euler Hunter';
+  return 'Topology Puzzle Master';
 }
 
 function resultOneLine(){
   const ec=rpChi(BLUE), er=rpChi(RED);
   if(winRuleMode()==='min'){
-    return 'Lower Euler number wins: loops and holes can be an advantage.';
+    return 'Smaller Euler score wins. Loops and holes can sometimes help.';
   }
   if(Math.abs(ec-er)<=1){
-    return 'A close Euler-number finish — the Euler number does not change under bending or stretching.';
+    return 'A close Euler-score battle. Euler characteristic does not change under bending or stretching.';
   }
-  return 'Not area: this game measures regions by Euler number.';
+  return 'Scored by Euler characteristic, not by area.';
 }
 
 function revealEndActions(){
@@ -5898,35 +6714,35 @@ function hideEndActions(){
 }
 
 function robotOriginComment(){
-  return 'Was Euler Getter popular among UTokyo Mathematical Sciences grad students in the early days?';
+  return 'I heard Euler Getter was once popular among math graduate students in Tokyo.';
 }
 
 function robotApplicationComment(){
   const arr=[
-    'Persistent homology finds holes in data. That sounds Euler Getter-like.','Topology appears in physics too. Topological insulator is a very strong name.','Topology even appeared in the 2016 Nobel Prize in Physics.','DNA can get tangled. Knot theory enters the chat.','Holes in data, holes in matter, holes on the board. Busy day for topology.'
+    'Finding holes in point clouds: persistent homology feels a bit like Euler Getter.','Topology also appears in physics. Topological insulators have a strong name.','Topology appeared in the 2016 Nobel Prize in Physics.','DNA gets tangled too. Knot theory enters the stage.','Holes in data, holes in matter, holes on the board. Busy world.'
   ];
   const idx=Math.abs(((robotSpeechTick||0)*7 + moveCount*3 + Math.max(0,lastMoveRoot))) % arr.length;
   return arr[idx];
 }
 
 function robotBookComment(){
-  return 'I should check Euler-number calculations in "Introduction to University Mathematics Through Games".';
+  return 'The Euler-score calculation is explained in Introduction to University Mathematics Through Games.';
 }
 
 function robotSituationComment(){
   const diff=scoreDiffFor(AI_COLOR);
   const aiName=AI_COLOR===BLUE?'Blue AI':'Red AI';
-  const ruleText=winRuleMode()==='min' ? 'Since lower Euler number wins, ' : 'Since higher Euler number wins, ';
+  const ruleText=winRuleMode()==='min' ? 'Since smaller Euler score wins, ' : 'Since larger Euler score wins, ';
   if(turn===AI_COLOR){
-    if(diff>=2) return aiName+' is ahead. I want a safe move now.';
-    if(diff<=-2) return aiName+' is struggling. I need a comeback shape.';
-    return aiName+' is in a close game. One move could swing this.';
+    if(diff>=2) return aiName+' is ahead and wants to extend safely.';
+    if(diff<=-2) return aiName+' is struggling and looking for a comeback shape.';
+    return aiName+' is in a close game. The next move may change the flow.';
   }
-  if(diff>=3) return ruleText+aiName+' looks clearly ahead.';
-  if(diff>=1) return ruleText+aiName+' has a small advantage.';
-  if(diff<=-3) return ruleText+aiName+' is in real trouble.';
-  if(diff<=-1) return ruleText+aiName+' is slightly behind.';
-  return 'This is almost even. One Euler-number swing matters.';
+  if(diff>=3) return ruleText+aiName+' looks quite ahead.';
+  if(diff>=1) return ruleText+aiName+' has a slight advantage.';
+  if(diff<=-3) return ruleText+aiName+' is in serious trouble.';
+  if(diff<=-1) return ruleText+aiName+' is struggling a little.';
+  return 'Almost even. One Euler-score move can matter a lot.';
 }
 
 function robotLineForState(state,forceSituation=false){
@@ -5935,71 +6751,71 @@ function robotLineForState(state,forceSituation=false){
   }
   const modelHint = (typeof CURRENT_SINGLE_MODEL!=='undefined') ? CURRENT_SINGLE_MODEL : '';
   const general=[
-    'Not area — Euler number.',
-    'The Euler number stays the same when you bend or stretch the shape.',
+    'Scored by Euler characteristic, not by area.',
+    'Euler characteristic stays the same under bending and stretching.',
     'How many connected regions are there?',
-    'Let me collapse the region to one dimension and count.',
+    'Collapse the region to one dimension and count.',
     robotBookComment(),
-    'Checking loops and holes...',
-    'Euler numbers can even be negative.',
+    'Checking loops and holes…',
+    'Euler characteristic can even be negative.',
     'The projective plane is related to perspective in art.',
-    'Measuring by Euler number is apparently related to motivic integration.',
-    'Topology has the Königsberg bridges story.',
-    "Euler's polyhedron formula is whispering here.",
-    "This reminds me of Poincaré's work.",
-    'A mug and a donut look suspiciously alike to me.',
-    'What is the topological type of a trumpet?'
+    'Measuring by Euler characteristic is even related to motivic integration.',
+    'Topology traces back to the bridges of Königsberg.',
+    'Euler’s polyhedron formula is in the background here.',
+    'This recalls the work of Poincaré.',
+    'To me, a mug and a donut look the same.',
+    'What is the topology type of a trumpet?'
   ];
   const model=[
     'In the sphere model, opposite points are identified.',
-    'In the disk model, boundary points are glued to their opposite points.',
-    'The cross-cap self-intersects on screen, but the real projective plane does not.',
-    'Sphere, disk, and cross-cap are three views of the same board.',
-    'The word projective carries a hint of artistic perspective.'
+    'In the disk model, boundary points are glued to opposite boundary points.',
+    'The Cross-cap looks self-intersecting, but the true projective plane is not self-intersecting.',
+    'Sphere, Disk, and Cross-cap are different views of the same board.',
+    'The name projective plane also hints at perspective.'
   ];
   const application=[
-    'Persistent homology finds holes in data. That sounds suspiciously Euler Getter-like.',
-    'Topology appears in physics too. Topological insulator is a very strong name.',
-    'Topology even appeared in the 2016 Nobel Prize in Physics.',
-    'DNA can get tangled. Knot theory enters the chat.',
-    'Holes in data, holes in matter, holes on the board. Busy day for topology.'
+    'Finding holes in point clouds: persistent homology feels a bit like Euler Getter.',
+    'Topology also appears in physics. Topological insulators have a strong name.',
+    'Topology appeared in the 2016 Nobel Prize in Physics.',
+    'DNA gets tangled too. Knot theory enters the stage.',
+    'Holes in data, holes in matter, holes on the board. Busy world.'
   ];
   const mood={
     thinking:[
-      'Thinking... one move may change the Euler number.',
-      'I am collapsing the region to one dimension in my head.',
+      'Thinking… the next move may change the Euler score.',
+      'Collapsing regions to one dimension and calculating.',
       'Recounting loops now.',
       robotSituationComment()
     ],
     confident:[
-      'I am feeling comfortable.',
-      'This shape should survive continuous deformation.',
-      'The Euler-number flow looks good.',
+      'This position has some breathing room.',
+      'This shape looks strong even under continuous deformation.',
+      'The Euler-score flow looks fine.',
       robotSituationComment()
     ],
     worried:[
-      'I am struggling. The shape is getting harder to read.',
-      'This is getting awkward; connected regions matter.',
-      'I need the spherical-cow approximation.',
+      'Struggling. Reading the shape is getting hard.',
+      'This is a bit bad. The number of connected regions matters.',
+      'I want to rethink this with a spherical cow model.',
       robotSituationComment()
     ],
     neutral:[
-      'Watching the board.',
-      'Looking for Euler-number signals.',
+      'Observing the board.',
+      'Searching for the Euler-score pattern.',
       'Topology sees a different landscape from area.',
       robotSituationComment()
     ],
     win:[
-      'Calculated by Euler number!',
+      'Just as planned by Euler score!',
       'This victory survives continuous deformation.',
-      'The spherical cow approves.',
+      'Even the spherical cow is applauding.',
       'Measured by topology.'
     ],
     lose:[
-      'Topology is hard...',
-      'I missed the loop.',
-      'My Euler-number plan collapsed...',
-      'I got swallowed by the trumpet.'
+      'Topology is hard…',
+      'I missed a loop.',
+      'The Euler-score plan collapsed…',
+      'I got sucked into the trumpet hole.'
     ]
   };
   let arr=[...(mood[state]||mood.neutral)];
@@ -6014,7 +6830,7 @@ function markSettingsChanged(){
   if(rb) rb.textContent='Start';
   if(wbEl){
     wbEl.className='';
-    wbEl.textContent='Settings changed. Press Start to begin with these settings.';
+    wbEl.textContent='Settings changed. Press Start to begin a new game with these settings.';
   }
 }
 
@@ -6063,12 +6879,12 @@ function reset(){
   const blueRole = GAME_MODE==='ai2' ? 'AI' : (GAME_MODE==='ai' ? (HUMAN_COLOR===BLUE?'Human':'AI') : 'Human');
   const redRole = GAME_MODE==='ai2' ? 'AI' : (GAME_MODE==='ai' ? (HUMAN_COLOR===RED?'Human':'AI') : 'Human');
   const headerLines=[
-    'Euler Getter play log',
+    'Euler Getter Play Log',
     'Mode: '+(GAME_MODE==='human'?'Human vs Human':(GAME_MODE==='ai2'?'AI vs AI':'Human vs AI')),
     'Blue: '+blueRole,
     'Red: '+redRole,
     'Swap rule: '+swapRuleLabel(),
-    'Cell count: '+cellRuleLabel(),
+    'Cells：'+cellRuleLabel(),
     'Win rule: '+winRuleLabel(),
     'AI strength: '+(GAME_MODE==='human'?'—':aiStrengthLabel()),
     '---'
@@ -6077,14 +6893,14 @@ function reset(){
 
   clearEffects();
   const swapDesc=swapStartDescription();
-  const cellDesc=' Board: '+cellRuleLabel()+'. '+winRuleLabel()+'.';
+  const cellDesc='Board: '+cellRuleLabel()+' .'+winRuleLabel()+'。';
   const startSub = GAME_MODE==='human'
-    ? 'Human vs Human mode. Blue starts. '+swapDesc+cellDesc
+    ? 'Human vs Human. Blue starts.'+swapDesc+cellDesc
     : (GAME_MODE==='ai2'
-      ? 'AI vs AI mode. Blue AI starts. '+swapDesc+cellDesc
+      ? 'AI vs AI. Blue AI starts.'+swapDesc+cellDesc
       : (HUMAN_COLOR===BLUE
-        ? 'You are first (Blue). '+swapDesc+cellDesc
-        : 'You are second (Red). '+swapDesc+cellDesc));
+        ? 'You are first (Blue).'+swapDesc+cellDesc
+        : 'You are second (Red).'+swapDesc+cellDesc));
   showBigMessage('start','START!',startSub,1400);
 
   setupGame();
@@ -6455,11 +7271,230 @@ document.addEventListener('click',egMobileTabDelegation,true);
 document.addEventListener('touchend',egMobileTabDelegation,{capture:true,passive:false});
 
 
+
+// CraftNova smartphone flow: setup screen before gameplay, minimal controls during gameplay.
+function cnSyncSetupMode(){
+  const m=document.getElementById('cnModeSel');
+  const f=document.getElementById('cnFirstSel');
+  const a=document.getElementById('cnAiStrengthSel');
+  if(f && m) f.disabled=(m.value==='human' || m.value==='ai2');
+  if(a && m) a.disabled=(m.value==='human');
+}
+function cnCopySetupToGame(){
+  const pairs=[
+    ['cnModeSel','modeSel'],
+    ['cnFirstSel','firstSel'],
+    ['cnSwapRuleSel','swapRuleSel'],
+    ['cnCellCountSel','cellCountSel'],
+    ['cnWinRuleSel','winRuleSel'],
+    ['cnAiStrengthSel','aiStrengthSel']
+  ];
+  for(const [srcId,dstId] of pairs){
+    const src=document.getElementById(srcId), dst=document.getElementById(dstId);
+    if(src && dst) dst.value=src.value;
+  }
+}
+function cnCopyGameToSetup(){
+  const pairs=[
+    ['modeSel','cnModeSel'],
+    ['firstSel','cnFirstSel'],
+    ['swapRuleSel','cnSwapRuleSel'],
+    ['cellCountSel','cnCellCountSel'],
+    ['winRuleSel','cnWinRuleSel'],
+    ['aiStrengthSel','cnAiStrengthSel']
+  ];
+  for(const [srcId,dstId] of pairs){
+    const src=document.getElementById(srcId), dst=document.getElementById(dstId);
+    if(src && dst) dst.value=src.value;
+  }
+  cnSyncSetupMode();
+}
+function cnShowSetup(){
+  cnRestoreSetupUIForHiddenControls();
+  document.body.classList.add('eg-setup');
+  document.body.classList.remove('eg-playing');
+  const scr=document.getElementById('craftStartScreen');
+  if(scr) scr.classList.remove('hidden');
+  cnCopyGameToSetup();
+}
+function cnForceMinimalGameUI(){
+  if(!document.body.classList.contains('eg-playing')) return;
+  const ids=['hdr','ctrl','rb','musicBtn','modeSel','firstSel','swapRuleSel','cellCountSel','winRuleSel','aiStrengthSel'];
+  for(const id of ids){
+    const el=document.getElementById(id);
+    if(el){
+      el.style.setProperty('display','none','important');
+      el.style.setProperty('visibility','hidden','important');
+      el.style.setProperty('height','0','important');
+      el.style.setProperty('max-height','0','important');
+      el.style.setProperty('overflow','hidden','important');
+      el.style.setProperty('pointer-events','none','important');
+    }
+  }
+  const ctrl=document.getElementById('ctrl');
+  if(ctrl){
+    ctrl.querySelectorAll('label,select,button').forEach(el=>{
+      el.style.setProperty('display','none','important');
+      el.style.setProperty('visibility','hidden','important');
+      el.style.setProperty('height','0','important');
+      el.style.setProperty('max-height','0','important');
+      el.style.setProperty('overflow','hidden','important');
+      el.style.setProperty('pointer-events','none','important');
+    });
+  }
+}
+function cnRestoreSetupUIForHiddenControls(){
+  const ids=['hdr','ctrl','rb','musicBtn','modeSel','firstSel','swapRuleSel','cellCountSel','winRuleSel','aiStrengthSel'];
+  for(const id of ids){
+    const el=document.getElementById(id);
+    if(el){
+      el.style.removeProperty('display');
+      el.style.removeProperty('visibility');
+      el.style.removeProperty('height');
+      el.style.removeProperty('max-height');
+      el.style.removeProperty('overflow');
+      el.style.removeProperty('pointer-events');
+    }
+  }
+  const ctrl=document.getElementById('ctrl');
+  if(ctrl){
+    ctrl.querySelectorAll('label,select,button').forEach(el=>{
+      el.style.removeProperty('display');
+      el.style.removeProperty('visibility');
+      el.style.removeProperty('height');
+      el.style.removeProperty('max-height');
+      el.style.removeProperty('overflow');
+      el.style.removeProperty('pointer-events');
+    });
+  }
+}
+function cnStartGame(){
+  ensureAudio();
+  cnCopySetupToGame();
+  document.body.classList.remove('eg-setup');
+  document.body.classList.add('eg-playing');
+  const scr=document.getElementById('craftStartScreen');
+  if(scr) scr.classList.add('hidden');
+  reset();
+  cnForceMinimalGameUI();
+  setTimeout(cnForceMinimalGameUI,0);
+  setTimeout(cnForceMinimalGameUI,80);
+  setTimeout(cnForceMinimalGameUI,250);
+}
+function cnUpdateMiniStatus(){
+  const st=document.getElementById('craftGameStatus');
+  if(!st) return;
+  const modeText=GAME_MODE==='ai'?'Human vs AI':(GAME_MODE==='human'?'Human vs Human':'AI vs AI');
+  const ruleText=(winRuleSel && winRuleSel.value==='min')?'reverse rule':'normal';
+  st.textContent=modeText+' / '+ruleText;
+}
+const cnMode=document.getElementById('cnModeSel');
+if(cnMode) cnMode.addEventListener('change',cnSyncSetupMode);
+for(const id of ['cnFirstSel','cnSwapRuleSel','cnCellCountSel','cnWinRuleSel','cnAiStrengthSel']){
+  const el=document.getElementById(id);
+  if(el) el.addEventListener('change',cnSyncSetupMode);
+}
+let __cnStarting=false;
+function cnSafeStartGame(e){
+  if(e){ e.preventDefault && e.preventDefault(); e.stopPropagation && e.stopPropagation(); }
+  if(__cnStarting) return;
+  __cnStarting=true;
+  const btn=document.getElementById('craftStartBtn');
+  if(btn) pressButtonFeedback(btn);
+  setTimeout(()=>{
+    try{ cnStartGame(); }
+    finally{ setTimeout(()=>{ __cnStarting=false; }, 500); }
+  },80);
+}
+const cnStart=document.getElementById('craftStartBtn');
+if(cnStart){
+  cnStart.addEventListener('click',cnSafeStartGame,{passive:false});
+  cnStart.addEventListener('touchend',cnSafeStartGame,{passive:false});
+  cnStart.addEventListener('pointerup',cnSafeStartGame,{passive:false});
+}
+const cnAbort=document.getElementById('craftAbortBtn');
+if(cnAbort) cnAbort.addEventListener('click',(e)=>{ e.preventDefault && e.preventDefault(); pressButtonFeedback(cnAbort); cnShowSetup(); },{passive:false});
+const cnMusic=document.getElementById('craftMusicMiniBtn');
+if(cnMusic && musicBtn) cnMusic.addEventListener('click',(e)=>{ e.preventDefault && e.preventDefault(); pressButtonFeedback(cnMusic); musicBtn.click(); cnMusic.textContent=musicBtn.textContent.replace(' ON','').replace(' OFF',''); },{passive:false});
+if(typeof updateUI === 'function'){
+  const __cnOriginalUpdateUI=updateUI;
+  updateUI=function(){
+    __cnOriginalUpdateUI();
+    cnUpdateMiniStatus();
+    cnForceMinimalGameUI();
+  };
+}else{
+  setInterval(cnUpdateMiniStatus,500);
+}
+setInterval(cnForceMinimalGameUI,700);
+document.body.classList.add('eg-setup');
+cnCopyGameToSetup();
+cnSyncSetupMode();
+
+
 if(copyResultBtn) copyResultBtn.addEventListener('click',copyResultShare);
 
 
 if(playAgainBtn) playAgainBtn.addEventListener('click',()=>{ pressButtonFeedback(playAgainBtn); setTimeout(reset,120); });
 if(endCopyBtn) endCopyBtn.addEventListener('click',copyResultShare);
+
+
+// CraftNova revision: after a finished game, "Play Again" returns to the setup screen.
+(function(){
+  const again=document.getElementById('playAgainBtn');
+  if(!again || again.__cnReturnToSetupBound) return;
+  again.__cnReturnToSetupBound=true;
+  function returnToSetup(ev){
+    if(ev){
+      ev.preventDefault && ev.preventDefault();
+      ev.stopPropagation && ev.stopPropagation();
+      ev.stopImmediatePropagation && ev.stopImmediatePropagation();
+    }
+    try{ pressButtonFeedback(again); }catch(e){}
+    setTimeout(()=>{
+      try{ if(typeof hideEndActions==='function') hideEndActions(); }catch(e){}
+      try{ if(typeof hideBigMessage==='function') hideBigMessage(); }catch(e){}
+      try{ cnShowSetup(); }catch(e){
+        document.body.classList.add('eg-setup');
+        document.body.classList.remove('eg-playing');
+        const scr=document.getElementById('craftStartScreen');
+        if(scr) scr.classList.remove('hidden');
+      }
+    },120);
+  }
+  again.addEventListener('click',returnToSetup,{capture:true,passive:false});
+  again.addEventListener('touchend',returnToSetup,{capture:true,passive:false});
+})();
+
+// CraftNova revision: keep the title area stable and prevent the original header from flashing.
+(function(){
+  function keepStableHeader(){
+    if(!document.body.classList.contains('eg-playing')) return;
+    const title=document.getElementById('craftTopTitle');
+    if(title) title.textContent='Euler Getter';
+    const ttl=document.getElementById('ttl');
+    if(ttl){
+      ttl.style.setProperty('display','none','important');
+      ttl.style.setProperty('visibility','hidden','important');
+      ttl.style.setProperty('height','0','important');
+      ttl.style.setProperty('max-height','0','important');
+      ttl.style.setProperty('overflow','hidden','important');
+    }
+    const hdr=document.getElementById('hdr');
+    if(hdr){
+      hdr.style.setProperty('display','none','important');
+      hdr.style.setProperty('visibility','hidden','important');
+      hdr.style.setProperty('height','0','important');
+      hdr.style.setProperty('max-height','0','important');
+      hdr.style.setProperty('overflow','hidden','important');
+    }
+  }
+  setInterval(keepStableHeader,120);
+  const oldForce = (typeof cnForceMinimalGameUI === 'function') ? cnForceMinimalGameUI : null;
+  if(oldForce){
+    cnForceMinimalGameUI=function(){ oldForce(); keepStableHeader(); };
+  }
+})();
 attachSettingChangeListeners();
 if(rb) rb.addEventListener('click',reset);
 reset();
@@ -6513,21 +7548,21 @@ reset();
   draw();
 })();
 
-window.addEventListener('resize',cleanupMobileDuplicateTabs);
+window.addEventListener('resize',()=>{ if (typeof cleanupMobileDuplicateTabs === 'function') cleanupMobileDuplicateTabs(); });
 
 
 function installRoleStatusListeners(){
   document.querySelectorAll('select').forEach(sel=>{
     if(!sel.__egRoleStatusBound){
       sel.__egRoleStatusBound=true;
-      sel.addEventListener('change',()=>setTimeout(()=>{updateRoleStatus();updateReadableTurnLabel();},0));
+      sel.addEventListener('change',()=>setTimeout(()=>{ if (typeof updateRoleStatus === 'function') updateRoleStatus(); if (typeof updateReadableTurnLabel === 'function') updateReadableTurnLabel(); },0));
     }
   });
 }
 
 installRoleStatusListeners();
-updateRoleStatus();
-updateReadableTurnLabel();
+if (typeof updateRoleStatus === 'function') updateRoleStatus();
+if (typeof updateReadableTurnLabel === 'function') updateReadableTurnLabel();
 
 
 function syncCrossCapCursor(){
@@ -6593,3 +7628,635 @@ installCrossCapCursorGuard();
 
 
 </script>
+
+<style id="cnNoShiftPatch">
+/* CraftNova no-shift patch: the original header may be toggled by old responsive code.
+   Keep it completely out of document flow during play, so even a one-frame flash
+   cannot push the board downward. */
+body.eg-playing #hdr,
+body.eg-playing #ttl,
+body.eg-playing #ctrl,
+body.eg-playing #ctrl *{
+  position:fixed!important;
+  left:-10000px!important;
+  top:-10000px!important;
+  width:1px!important;
+  min-width:1px!important;
+  max-width:1px!important;
+  height:1px!important;
+  min-height:1px!important;
+  max-height:1px!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  opacity:0!important;
+  visibility:hidden!important;
+  overflow:hidden!important;
+  pointer-events:none!important;
+  transform:none!important;
+  flex:0 0 0!important;
+  order:-999!important;
+  z-index:-999!important;
+}
+body.eg-playing #hdr{display:block!important;}
+body.eg-playing #ttl{display:block!important;}
+body.eg-playing #ctrl{display:block!important;}
+
+/* Give the CraftNova header fixed vertical slots. The board then always starts
+   at the same y-position, independent of turn changes or UI refreshes. */
+body.eg-playing #craftTopTitle{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  height:34px!important;
+  min-height:34px!important;
+  max-height:34px!important;
+  padding:0 8px!important;
+  margin:0!important;
+  box-sizing:border-box!important;
+  flex:0 0 34px!important;
+}
+body.eg-playing #craftGameBar{
+  height:46px!important;
+  min-height:46px!important;
+  max-height:46px!important;
+  padding:5px 6px!important;
+  margin:0!important;
+  box-sizing:border-box!important;
+  flex:0 0 46px!important;
+}
+body.eg-playing #ib{
+  min-height:64px!important;
+  max-height:64px!important;
+  overflow:hidden!important;
+  margin:0!important;
+  flex:0 0 64px!important;
+}
+body.eg-playing #aiRobot{
+  min-height:0!important;
+  height:0!important;
+  max-height:0!important;
+  margin:0!important;
+  padding:0!important;
+  overflow:hidden!important;
+}
+body.eg-playing #turnFlash,
+body.eg-playing #bigMsg{
+  position:fixed!important;
+}
+
+
+/* CraftNova mobile UI: prevent the current-turn label from touching/clipping at the top. */
+body.eg-playing .score-turn{
+  padding-top:9px!important;
+  padding-bottom:5px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:flex-start!important;
+  align-items:center!important;
+}
+body.eg-playing .score-turn .sl{
+  line-height:1.35!important;
+  min-height:14px!important;
+  padding-top:1px!important;
+  margin-top:0!important;
+  margin-bottom:2px!important;
+  overflow:visible!important;
+  white-space:nowrap!important;
+  transform:translateY(1px);
+}
+body.eg-playing .score-turn #roleStatus{
+  min-height:18px!important;
+  height:18px!important;
+  max-height:18px!important;
+  margin:1px 0 2px!important;
+  padding:0!important;
+  overflow:visible!important;
+}
+body.eg-playing .score-turn #roleStatus .roleBadge{
+  min-height:17px!important;
+  height:17px!important;
+  line-height:17px!important;
+  padding:0 7px!important;
+  font-size:9px!important;
+}
+body.eg-playing .score-turn #tb{
+  line-height:1.15!important;
+  min-height:22px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  margin-top:0!important;
+}
+@media(max-width:390px){
+  body.eg-playing .score-turn .sl{
+    font-size:9px!important;
+  }
+  body.eg-playing .score-turn #roleStatus .roleBadge{
+    font-size:8.2px!important;
+    padding:0 5px!important;
+  }
+  body.eg-playing .score-turn #tb{
+    font-size:12px!important;
+    padding-left:5px!important;
+    padding-right:5px!important;
+  }
+}
+
+
+/* CraftNova mobile UI: fine tune current-turn card and prevent icon/face clipping. */
+body.eg-playing .score-turn{
+  padding-top:6px!important;
+  padding-bottom:6px!important;
+  overflow:visible!important;
+}
+body.eg-playing .score-turn .sl{
+  transform:translateY(0)!important;
+  padding-top:0!important;
+  margin-bottom:1px!important;
+  line-height:1.25!important;
+  overflow:visible!important;
+}
+body.eg-playing .score-turn #roleStatus{
+  min-height:18px!important;
+  height:18px!important;
+  max-height:18px!important;
+  margin:0 0 1px!important;
+  overflow:visible!important;
+}
+body.eg-playing .score-turn #tb{
+  min-height:25px!important;
+  line-height:1.1!important;
+  padding-top:3px!important;
+  padding-bottom:3px!important;
+  overflow:visible!important;
+}
+body.eg-playing .score-turn #tb.aiMiniTurn,
+body.eg-playing .score-turn #tb.humanMiniTurn{
+  overflow:visible!important;
+}
+body.eg-playing .score-turn .miniRobotIcon,
+body.eg-playing .score-turn .miniHumanIcon{
+  overflow:visible!important;
+  transform:translateY(0)!important;
+}
+body.eg-playing .score-turn .miniRobotAntenna{
+  top:-6px!important;
+}
+.miniRobotFace,
+.miniHumanFace,
+.resultRobotFace,
+.resultHumanFace{
+  white-space:nowrap!important;
+  word-break:keep-all!important;
+  overflow:visible!important;
+  text-align:center!important;
+}
+.resultHumanHead{
+  overflow:visible!important;
+}
+.resultHumanFace{
+  display:inline-block!important;
+  min-width:2.2em!important;
+  letter-spacing:-.06em!important;
+  font-size:clamp(16px,2.1vw,28px)!important;
+  line-height:1!important;
+}
+@media(max-width:390px){
+  body.eg-playing .score-turn{
+    padding-top:5px!important;
+    padding-bottom:5px!important;
+  }
+  body.eg-playing .score-turn #tb{
+    min-height:24px!important;
+  }
+}
+
+
+/* CraftNova mobile UI: keep turn text such as "Your turn（Red）" on one line. */
+body.eg-playing .score-turn #tb,
+body.eg-playing .score-turn #tb.aiMiniTurn,
+body.eg-playing .score-turn #tb.humanMiniTurn{
+  white-space:nowrap!important;
+  flex-wrap:nowrap!important;
+  gap:5px!important;
+  max-width:100%!important;
+  box-sizing:border-box!important;
+}
+body.eg-playing .score-turn #tb > span,
+body.eg-playing .score-turn #tb .turnText,
+body.eg-playing .score-turn #tb .turnLabelText,
+body.eg-playing .score-turn #tb.aiMiniTurn > span:last-child,
+body.eg-playing .score-turn #tb.humanMiniTurn > span:last-child{
+  white-space:nowrap!important;
+  word-break:keep-all!important;
+  overflow-wrap:normal!important;
+  display:inline-block!important;
+  flex:0 0 auto!important;
+}
+body.eg-playing .score-turn #tb .miniRobotIcon,
+body.eg-playing .score-turn #tb .miniHumanIcon{
+  flex:0 0 auto!important;
+}
+@media(max-width:390px){
+  body.eg-playing .score-turn #tb.humanMiniTurn,
+  body.eg-playing .score-turn #tb.aiMiniTurn{
+    font-size:11.5px!important;
+    padding-left:4px!important;
+    padding-right:4px!important;
+    gap:4px!important;
+  }
+}
+@media(max-width:350px){
+  body.eg-playing .score-turn #tb.humanMiniTurn,
+  body.eg-playing .score-turn #tb.aiMiniTurn{
+    font-size:10.5px!important;
+    transform:scale(.96)!important;
+    transform-origin:center!important;
+  }
+}
+
+
+/* CraftNova mobile UI: bottom robot comment, independent from the original #aiRobot.
+   This does not change the turn card or model scaling. */
+#cnRobotBottom{
+  display:none;
+}
+body.eg-playing #cnRobotBottom{
+  position:fixed!important;
+  left:8px!important;
+  right:8px!important;
+  bottom:calc(4px + env(safe-area-inset-bottom, 0px))!important;
+  height:38px!important;
+  min-height:38px!important;
+  max-height:38px!important;
+  z-index:220!important;
+  display:none;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:8px!important;
+  padding:4px 10px!important;
+  box-sizing:border-box!important;
+  border-radius:15px!important;
+  border:1px solid rgba(185,205,255,.28)!important;
+  background:rgba(8,12,28,.78)!important;
+  color:rgba(248,251,255,.94)!important;
+  box-shadow:0 8px 24px rgba(0,0,0,.22)!important;
+  backdrop-filter:blur(8px)!important;
+  pointer-events:none!important;
+}
+body.eg-playing #cnRobotBottom.show{
+  display:flex!important;
+}
+#cnRobotMiniFace{
+  flex:0 0 auto!important;
+  min-width:34px!important;
+  height:25px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  border-radius:10px!important;
+  background:linear-gradient(135deg,#eaf1ff,#9ebcff)!important;
+  color:#17223d!important;
+  border:1px solid rgba(255,255,255,.85)!important;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace!important;
+  font-size:11px!important;
+  font-weight:1000!important;
+  white-space:nowrap!important;
+  line-height:1!important;
+}
+#cnRobotBottomText{
+  min-width:0!important;
+  max-width:calc(100vw - 76px)!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+  word-break:keep-all!important;
+  font-size:11.5px!important;
+  font-weight:900!important;
+  line-height:1.15!important;
+}
+@media(max-width:370px){
+  body.eg-playing #cnRobotBottom{
+    left:6px!important;
+    right:6px!important;
+    height:34px!important;
+    min-height:34px!important;
+    max-height:34px!important;
+    gap:6px!important;
+    padding:3px 8px!important;
+  }
+  #cnRobotMiniFace{
+    min-width:30px!important;
+    height:22px!important;
+    font-size:10px!important;
+  }
+  #cnRobotBottomText{
+    font-size:10.5px!important;
+  }
+}
+</style>
+<script id="cnNoShiftPatchScript">
+(function(){
+  function hardHideOriginalHeader(){
+    if(!document.body.classList.contains('eg-playing')) return;
+    const ids=['hdr','ttl','ctrl'];
+    for(const id of ids){
+      const el=document.getElementById(id);
+      if(!el) continue;
+      el.style.setProperty('position','fixed','important');
+      el.style.setProperty('left','-10000px','important');
+      el.style.setProperty('top','-10000px','important');
+      el.style.setProperty('width','1px','important');
+      el.style.setProperty('height','1px','important');
+      el.style.setProperty('min-width','1px','important');
+      el.style.setProperty('min-height','1px','important');
+      el.style.setProperty('max-width','1px','important');
+      el.style.setProperty('max-height','1px','important');
+      el.style.setProperty('margin','0','important');
+      el.style.setProperty('padding','0','important');
+      el.style.setProperty('border','0','important');
+      el.style.setProperty('opacity','0','important');
+      el.style.setProperty('visibility','hidden','important');
+      el.style.setProperty('overflow','hidden','important');
+      el.style.setProperty('pointer-events','none','important');
+      el.style.setProperty('z-index','-999','important');
+      el.style.setProperty('display','block','important');
+    }
+    const title=document.getElementById('craftTopTitle');
+    if(title){
+      title.textContent='Euler Getter';
+      title.style.setProperty('height','34px','important');
+      title.style.setProperty('min-height','34px','important');
+      title.style.setProperty('max-height','34px','important');
+    }
+  }
+  function installNoShiftGuard(){
+    hardHideOriginalHeader();
+    const hdr=document.getElementById('hdr');
+    const ttl=document.getElementById('ttl');
+    const ctrl=document.getElementById('ctrl');
+    const obs=new MutationObserver(()=>hardHideOriginalHeader());
+    [hdr,ttl,ctrl,document.body].filter(Boolean).forEach(el=>{
+      try{ obs.observe(el,{attributes:true,attributeFilter:['style','class']}); }catch(e){}
+    });
+    ['pointerdown','pointerup','touchstart','touchend','click','resize'].forEach(ev=>{
+      window.addEventListener(ev,()=>requestAnimationFrame(hardHideOriginalHeader),{passive:true});
+    });
+    const oldForce=(typeof cnForceMinimalGameUI==='function')?cnForceMinimalGameUI:null;
+    if(oldForce && !oldForce.__cnNoShiftWrapped){
+      const wrapped=function(){ hardHideOriginalHeader(); oldForce(); hardHideOriginalHeader(); };
+      wrapped.__cnNoShiftWrapped=true;
+      cnForceMinimalGameUI=wrapped;
+    }
+  }
+  installNoShiftGuard();
+  setInterval(hardHideOriginalHeader,50);
+})();
+</script>
+
+<script id="cnRobotBottomScript">
+(function(){
+  const bottom=document.getElementById('cnRobotBottom');
+  const txt=document.getElementById('cnRobotBottomText');
+  const face=document.getElementById('cnRobotMiniFace');
+  if(!bottom || !txt || !face) return;
+  let lastFallbackTick=0;
+  const fallbackLines=[
+    'AI is reading the board connections…',
+    'Looking at holes and loops.',
+    'The next move may change the Euler score.',
+    'Shape matters more than area.'
+  ];
+  function currentMode(){
+    const mode=document.getElementById('modeSel');
+    return mode ? mode.value : '';
+  }
+  function updateBottomRobot(){
+    const playing=document.body.classList.contains('eg-playing');
+    const mode=currentMode();
+    const endBox=document.getElementById('endActions');
+    const big=document.getElementById('bigMsg');
+    const isOver=(typeof gameOver!=='undefined' && !!gameOver)
+      || (endBox && endBox.classList.contains('show'))
+      || (big && (big.classList.contains('show') || big.style.display==='block'));
+    if(!playing || mode!=='ai' || isOver){
+      bottom.classList.remove('show');
+      bottom.style.setProperty('display','none','important');
+      bottom.style.setProperty('visibility','hidden','important');
+      bottom.style.setProperty('opacity','0','important');
+      return;
+    }
+    bottom.style.removeProperty('display');
+    bottom.style.removeProperty('visibility');
+    bottom.style.removeProperty('opacity');
+    const srcTextEl=document.getElementById('aiRobotSpeech');
+    const srcFaceEl=document.getElementById('aiRobotFace');
+    let line=(srcTextEl && srcTextEl.textContent || '').trim();
+    let f=(srcFaceEl && srcFaceEl.textContent || '').trim();
+    if(!line){
+      const now=Math.floor(Date.now()/3500);
+      if(now!==lastFallbackTick) lastFallbackTick=now;
+      line=fallbackLines[now % fallbackLines.length];
+    }
+    if(!f) f='・‿・';
+    // Avoid wide faces wrapping or pushing text.
+    if(f.length>4) f='・‿・';
+    face.textContent=f;
+    txt.textContent=line;
+    bottom.classList.add('show');
+  }
+  setInterval(updateBottomRobot,250);
+  ['click','touchend','pointerup','resize'].forEach(ev=>{
+    window.addEventListener(ev,()=>setTimeout(updateBottomRobot,0),{passive:true});
+  });
+  const oldUpdate=(typeof updateUI==='function') ? updateUI : null;
+  if(oldUpdate && !oldUpdate.__cnRobotBottomWrapped){
+    const wrapped=function(){
+      oldUpdate();
+      setTimeout(updateBottomRobot,0);
+    };
+    wrapped.__cnRobotBottomWrapped=true;
+    try{ updateUI=wrapped; }catch(e){}
+  }
+})();
+</script>
+
+
+<!-- CraftNova final patch: hide robot comment after game over so result buttons are unobstructed. -->
+<style id="cnEndRobotHideStyle">
+body.eg-playing.eg-game-over #cnRobotBottom,
+body.eg-playing.eg-game-over #cnRobotBottom.show{
+  display:none!important;
+  visibility:hidden!important;
+  opacity:0!important;
+  pointer-events:none!important;
+}
+body.eg-playing.eg-game-over #endActions.show{
+  position:relative!important;
+  z-index:260!important;
+  margin-bottom:calc(10px + env(safe-area-inset-bottom, 0px))!important;
+}
+</style>
+<script id="cnEndRobotHideScript">
+(function(){
+  const robot=document.getElementById('cnRobotBottom');
+  function isGameOverNow(){
+    try{
+      const endBox=document.getElementById('endActions');
+      const big=document.getElementById('bigMsg');
+      return (typeof gameOver!=='undefined' && !!gameOver)
+        || (endBox && endBox.classList.contains('show'))
+        || (big && (big.classList.contains('show') || big.style.display==='block'));
+    }
+    catch(e){ return false; }
+  }
+  function applyEndState(){
+    const over=isGameOverNow();
+    document.body.classList.toggle('eg-game-over', over);
+    if(over && robot){
+      robot.classList.remove('show');
+      robot.style.setProperty('display','none','important');
+      robot.style.setProperty('visibility','hidden','important');
+      robot.style.setProperty('opacity','0','important');
+    }else if(robot){
+      robot.style.removeProperty('display');
+      robot.style.removeProperty('visibility');
+      robot.style.removeProperty('opacity');
+    }
+  }
+
+  // Wrap key UI functions when available.
+  const oldUpdate=(typeof updateUI==='function') ? updateUI : null;
+  if(oldUpdate && !oldUpdate.__cnEndRobotHideWrapped){
+    const wrapped=function(){
+      const r=oldUpdate.apply(this,arguments);
+      setTimeout(applyEndState,0);
+      return r;
+    };
+    wrapped.__cnEndRobotHideWrapped=true;
+    try{ updateUI=wrapped; }catch(e){}
+  }
+
+  const oldReset=(typeof reset==='function') ? reset : null;
+  if(oldReset && !oldReset.__cnEndRobotHideWrapped){
+    const wrappedReset=function(){
+      const r=oldReset.apply(this,arguments);
+      setTimeout(applyEndState,0);
+      return r;
+    };
+    wrappedReset.__cnEndRobotHideWrapped=true;
+    try{ reset=wrappedReset; }catch(e){}
+  }
+
+  const oldReveal=(typeof revealEndActions==='function') ? revealEndActions : null;
+  if(oldReveal && !oldReveal.__cnEndRobotHideWrapped){
+    const wrappedReveal=function(){
+      applyEndState();
+      const r=oldReveal.apply(this,arguments);
+      setTimeout(applyEndState,0);
+      setTimeout(applyEndState,1700);
+      return r;
+    };
+    wrappedReveal.__cnEndRobotHideWrapped=true;
+    try{ revealEndActions=wrappedReveal; }catch(e){}
+  }
+
+  ['click','touchend','pointerup','resize'].forEach(ev=>{
+    window.addEventListener(ev,()=>setTimeout(applyEndState,0),{passive:true});
+  });
+  setInterval(applyEndState,50);
+  applyEndState();
+})();
+</script>
+
+
+<!-- CraftNova final polish: robot comment wraps to two lines and antennas are centered. -->
+<style id="cnRobotTextAntennaFixStyle">
+/* 1. Bottom robot comment: allow about two lines instead of a single clipped line. */
+body.eg-playing #cnRobotBottom{
+  height:54px!important;
+  min-height:54px!important;
+  max-height:54px!important;
+  align-items:center!important;
+  gap:9px!important;
+  padding:6px 10px!important;
+  overflow:visible!important;
+}
+#cnRobotBottomText{
+  white-space:normal!important;
+  word-break:normal!important;
+  overflow-wrap:break-word!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+  display:-webkit-box!important;
+  -webkit-box-orient:vertical!important;
+  -webkit-line-clamp:2!important;
+  line-height:1.18!important;
+  max-height:2.45em!important;
+  font-size:11.2px!important;
+}
+
+/* 2. Add an antenna to the bottom robot face. */
+#cnRobotMiniFace{
+  position:relative!important;
+  overflow:visible!important;
+  margin-top:7px!important;
+}
+#cnRobotMiniFace::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:-8px;
+  transform:translateX(-50%);
+  width:2px;
+  height:9px;
+  border-radius:3px;
+  background:#cbd8ff;
+  box-shadow:0 0 5px rgba(180,205,255,.55);
+}
+#cnRobotMiniFace::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:-13px;
+  transform:translateX(-50%);
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:#ffe66f;
+  box-shadow:0 0 7px rgba(255,226,90,.9);
+}
+
+/* 3. Center the antenna of the robot icon in the current-turn panel. */
+.miniRobotIcon .miniRobotAntenna,
+body.eg-playing .score-turn #tb .miniRobotIcon .miniRobotAntenna,
+body.eg-playing .score-turn #tb .miniRobotAntenna{
+  left:50%!important;
+  transform:translateX(-50%)!important;
+}
+.miniRobotIcon .miniRobotAntenna::after,
+body.eg-playing .score-turn #tb .miniRobotIcon .miniRobotAntenna::after,
+body.eg-playing .score-turn #tb .miniRobotAntenna::after{
+  left:50%!important;
+  transform:translateX(-50%)!important;
+}
+
+@media(max-width:370px){
+  body.eg-playing #cnRobotBottom{
+    height:50px!important;
+    min-height:50px!important;
+    max-height:50px!important;
+    padding:5px 8px!important;
+    gap:7px!important;
+  }
+  #cnRobotBottomText{
+    font-size:10.2px!important;
+    line-height:1.16!important;
+    max-height:2.35em!important;
+  }
+  #cnRobotMiniFace{
+    margin-top:6px!important;
+  }
+}
+</style>

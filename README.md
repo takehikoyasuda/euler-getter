@@ -6,8 +6,8 @@ Players take turns claiming cells on a surface. Since both players move alternat
 
 ## Play
 
-- Play on itch.io: https://takehikoyasuda.itch.io/euler-getter
-- Play on GitHub Pages: https://takehikoyasuda.github.io/euler-getter/
+- English version: https://takehikoyasuda.github.io/euler-getter/
+- Japanese version: https://takehikoyasuda.github.io/euler-getter/jp/
 
 ## About the game
 

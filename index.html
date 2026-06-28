@@ -1,8 +1,8 @@
 <!--
 Deployment note:
-Single-file CraftNova edition. Upload this HTML file alone.
+GitHub Pages / self-hosted edition. Upload this index.html together with js/three.min.js.
 
-Itch.io mobile edition: Three.js is loaded from a local file in the uploaded ZIP.
+Three.js is loaded from the local file ./js/three.min.js.
 -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
 <!--
@@ -16,11 +16,11 @@ BGM and sound effects are procedurally generated in the browser.
 No external audio files are used.
 
 Third-party library:
-- Three.js is used via CDN and is distributed under the MIT License.
+- Three.js is loaded from ./js/three.min.js and is distributed under the MIT License.
 -->
 <!doctype html>
 <meta charset="utf-8">
-<title>Euler Getter Mobile</title>
+<title>Euler Getter</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f7f7f8;color:#222}
@@ -1494,9 +1494,9 @@ body.eg-cursor-red button {
 #swapHintBox{
   display:none;
   position:relative;
-  width:min(360px,96%);
-  margin:7px auto 5px;
-  padding:9px 14px 18px;
+  width:min(420px,98%);
+  margin:8px auto 6px;
+  padding:11px 16px 20px;
   border-radius:16px;
   border:2px solid rgba(255,220,80,.88);
   background:linear-gradient(135deg,rgba(255,248,182,.98),rgba(255,185,60,.96));
@@ -1511,12 +1511,14 @@ body.eg-cursor-red button {
   display:block;
 }
 #swapHintBox .swapHintMain{
-  font-size:15px;
-  line-height:1.15;
+  font-size:14px;
+  line-height:1.35;
+  white-space:nowrap;
+  overflow:visible;
 }
 #swapHintBox .swapHintSub{
-  margin-top:3px;
-  font-size:11px;
+  margin-top:4px;
+  font-size:10.5px;
   font-weight:900;
   opacity:.92;
 }
@@ -1553,12 +1555,12 @@ body.eg-cursor-red button {
 }
 @media(max-width:900px){
   #swapHintBox{
-    width:min(280px,94%);
-    padding:8px 10px 17px;
+    width:min(330px,98%);
+    padding:10px 12px 18px;
     margin-top:6px;
   }
-  #swapHintBox .swapHintMain{font-size:13px;}
-  #swapHintBox .swapHintSub{font-size:10px;}
+  #swapHintBox .swapHintMain{font-size:12.5px;line-height:1.35;white-space:nowrap;}
+  #swapHintBox .swapHintSub{font-size:9.5px;}
 }
 
 
@@ -3029,36 +3031,405 @@ body.eg-playing .delta{
   65%{opacity:1;transform:translateY(13px) scale(1)}
   100%{opacity:0;transform:translateY(21px) scale(.9)}
 }
+
+
+/* Help / Explanation modal for smartphone edition */
+#craftStartHelpRow{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:2px;
+}
+#craftStartHelpRow button,
+#craftHelpBtn{
+  touch-action:manipulation!important;
+}
+#craftStartHelpRow button{
+  min-height:42px;
+  border-radius:15px;
+  border:1px solid rgba(210,225,255,.34);
+  background:rgba(255,255,255,.13);
+  color:#f8fbff;
+  font-size:15px;
+  font-weight:1000;
+  box-shadow:0 8px 22px rgba(0,0,0,.16), inset 0 1px 0 rgba(255,255,255,.10);
+}
+#craftHelpOverlay{
+  position:fixed;
+  inset:0;
+  z-index:11000;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:12px;
+  background:rgba(2,3,10,.70);
+  color:#f8fbff;
+  pointer-events:auto;
+}
+#craftHelpOverlay.show{display:flex!important;}
+#craftHelpDialog{
+  width:min(94vw,620px);
+  max-height:92dvh;
+  display:flex;
+  flex-direction:column;
+  border-radius:22px;
+  background:linear-gradient(180deg,rgba(18,24,52,.98),rgba(8,12,28,.98));
+  border:1px solid rgba(190,210,255,.24);
+  box-shadow:0 24px 76px rgba(0,0,0,.52), inset 0 1px 0 rgba(255,255,255,.10);
+  overflow:hidden;
+}
+#craftHelpHeader{
+  flex:0 0 auto;
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:8px;
+  align-items:center;
+  padding:12px 13px 9px;
+  border-bottom:1px solid rgba(190,210,255,.16);
+}
+#craftHelpTitle{
+  min-width:0;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  font-size:18px;
+  font-weight:1000;
+  letter-spacing:.02em;
+}
+#craftHelpClose{
+  width:38px;
+  height:34px;
+  border-radius:12px;
+  border:1px solid rgba(210,225,255,.30);
+  background:rgba(255,255,255,.10);
+  color:#f8fbff;
+  font-size:20px;
+  font-weight:1000;
+  padding:0;
+}
+#craftHelpTabs{
+  flex:0 0 auto;
+  display:flex;
+  gap:6px;
+  padding:8px 10px;
+  border-bottom:1px solid rgba(190,210,255,.12);
+}
+#craftHelpTabs button{
+  flex:1 1 0;
+  min-width:0;
+  border-radius:999px;
+  border:1px solid rgba(210,225,255,.26);
+  background:rgba(255,255,255,.08);
+  color:rgba(245,248,255,.82);
+  font-size:13px;
+  font-weight:1000;
+  padding:8px 5px;
+}
+#craftHelpTabs button.active{
+  background:linear-gradient(135deg,rgba(255,225,120,.96),rgba(140,205,255,.94));
+  color:#10172a;
+}
+#craftHelpBody{
+  flex:1 1 auto;
+  min-height:0;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  touch-action:pan-y!important;
+  padding:12px 14px 16px;
+  line-height:1.72;
+  font-size:14px;
+  color:rgba(245,248,255,.86);
+}
+.craftHelpSection{display:none;}
+.craftHelpSection.active{display:block;}
+.craftHelpCard{
+  margin:0 0 10px;
+  padding:11px 12px;
+  border-radius:16px;
+  background:rgba(255,255,255,.075);
+  border:1px solid rgba(190,210,255,.13);
+}
+.craftHelpCard h3{
+  margin:0 0 5px;
+  font-size:15px;
+  color:#fff4ad;
+}
+.craftHelpCard p{margin:4px 0;}
+.craftHelpFormula{
+  display:inline-block;
+  margin:4px 0;
+  padding:3px 8px;
+  border-radius:999px;
+  background:rgba(255,255,255,.12);
+  font-weight:1000;
+  color:#ffffff;
+}
+#craftHelpBtn{
+  background:rgba(255,255,255,.14)!important;
+  color:#f8fbff!important;
+  min-width:42px!important;
+}
+body.eg-playing #craftGameBar{
+  grid-template-columns:1fr 1fr 1fr!important;
+}
+body.eg-playing #craftGameBar button{
+  min-width:0!important;
+  padding-left:6px!important;
+  padding-right:6px!important;
+}
+@media(max-width:420px){
+  #craftStartHelpRow{gap:7px;}
+  #craftStartHelpRow button{min-height:38px;font-size:13px;border-radius:13px;}
+  #craftHelpDialog{width:96vw;max-height:94dvh;border-radius:19px;}
+  #craftHelpTitle{font-size:16px;}
+  #craftHelpBody{font-size:13px;padding:10px 11px 14px;}
+  #craftHelpTabs button{font-size:12px;padding:7px 3px;}
+}
+
+
+
+/* v4 polish: make swap-available message fully readable on small mobile screens */
+body.eg-playing #swapHintBox{
+  display:none;
+  width:min(350px,98%)!important;
+  max-width:98%!important;
+  padding:9px 12px 17px!important;
+  margin:5px auto 5px!important;
+  overflow:visible!important;
+}
+body.eg-playing #swapHintBox.show{display:block!important;}
+body.eg-playing #swapHintBox .swapHintMain{
+  font-size:12px!important;
+  line-height:1.35!important;
+  white-space:nowrap!important;
+  overflow:visible!important;
+}
+body.eg-playing #swapHintBox .swapHintSub{font-size:9px!important;line-height:1.25!important;}
+@media(max-width:370px){
+  body.eg-playing #swapHintBox .swapHintMain{font-size:11px!important;}
+  body.eg-playing #swapHintBox .swapHintSub{font-size:8.5px!important;}
+}
+
+
+/* v14: place the swap notice far enough from the swap button so the guide arrow has room. */
+body.eg-playing #swapHintBox.show{
+  position:fixed!important;
+  left:50%!important;
+  top:clamp(170px, 30dvh, 245px)!important;
+  transform:translateX(-50%)!important;
+  display:block!important;
+  width:min(72vw, 280px)!important;
+  max-width:280px!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:8px 12px 9px!important;
+  border-radius:999px!important;
+  overflow:visible!important;
+  z-index:10020!important;
+  line-height:1.35!important;
+  pointer-events:none!important;
+}
+body.eg-playing #swapHintBox .swapHintMain{
+  font-size:13px!important;
+  line-height:1.35!important;
+  white-space:nowrap!important;
+  overflow:visible!important;
+}
+body.eg-playing #swapHintBox .swapHintSub{
+  display:none!important;
+}
+body.eg-playing .score-turn{
+  overflow:visible!important;
+}
+body.eg-playing #roleStatus{
+  overflow:visible!important;
+}
+body.eg-playing #swapBtn.swapInlineBtn{
+  min-height:24px!important;
+  line-height:1.35!important;
+  padding-top:5px!important;
+  padding-bottom:5px!important;
+}
+
+
+
+/* Model zoom controls */
+.modelZoomControls{
+  position:absolute;
+  right:8px;
+  top:8px;
+  z-index:20;
+  display:flex;
+  gap:4px;
+  padding:4px;
+  border-radius:999px;
+  background:rgba(5,7,15,.48);
+  border:1px solid rgba(210,225,255,.22);
+  backdrop-filter:blur(6px);
+  pointer-events:auto;
+}
+.modelZoomControls button{
+  width:30px;
+  height:30px;
+  min-width:30px;
+  padding:0!important;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.32);
+  background:rgba(255,255,255,.88);
+  color:#111827;
+  font-size:16px;
+  line-height:1;
+  font-weight:1000;
+  cursor:pointer!important;
+  touch-action:manipulation;
+}
+.modelZoomControls button.zoomResetBtn{
+  width:auto;
+  min-width:38px;
+  border-radius:999px;
+  font-size:11px;
+  padding:0 7px!important;
+}
+.modelZoomControls button:active{
+  transform:translateY(1px) scale(.96);
+}
+@media(max-width:900px){
+  .modelZoomControls{right:6px;top:6px;gap:3px;padding:3px}
+  .modelZoomControls button{width:28px;height:28px;min-width:28px;font-size:15px}
+  .modelZoomControls button.zoomResetBtn{min-width:34px;font-size:10px;padding:0 6px!important}
+}
+
+
+/* v8: pan controls for zoomed models */
+.modelPanControls{
+  position:absolute;
+  left:8px;
+  top:8px;
+  z-index:21;
+  width:88px;
+  height:88px;
+  pointer-events:auto;
+}
+.modelPanControls button{
+  position:absolute;
+  width:30px;
+  height:30px;
+  min-width:30px;
+  padding:0!important;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.32);
+  background:rgba(255,255,255,.88);
+  color:#111827;
+  font-size:17px;
+  line-height:1;
+  font-weight:1000;
+  box-shadow:0 4px 12px rgba(0,0,0,.18);
+  cursor:pointer!important;
+  touch-action:manipulation;
+}
+.modelPanControls button:active{transform:scale(.94)}
+.modelPanControls button:disabled{
+  opacity:.30;
+  filter:grayscale(1);
+  background:rgba(120,126,140,.58);
+  color:rgba(255,255,255,.55);
+  box-shadow:none;
+  cursor:default!important;
+}
+.modelPanControls button:disabled:active{transform:none}
+.modelPanControls .panUp{left:29px;top:0}
+.modelPanControls .panLeft{left:0;top:29px}
+.modelPanControls .panHome{left:29px;top:29px;font-size:13px}
+.modelPanControls .panRight{right:0;top:29px}
+.modelPanControls .panDown{left:29px;bottom:0}
+@media(max-width:900px){
+  .modelPanControls{left:6px;top:6px;width:82px;height:82px}
+  .modelPanControls button{width:28px;height:28px;min-width:28px;font-size:16px}
+  .modelPanControls .panUp{left:27px}.modelPanControls .panLeft{top:27px}.modelPanControls .panHome{left:27px;top:27px}.modelPanControls .panRight{top:27px}.modelPanControls .panDown{left:27px}
+}
+
+/* v16: keep the swap arrow just above the swap notice, with no overlap. */
+body.eg-playing #swapHintBox .swapHintArrow{
+  display:block!important;
+  position:absolute!important;
+  left:50%!important;
+  top:-34px!important;
+  transform:translateX(-50%) rotate(var(--swap-arrow-angle,90deg))!important;
+  transform-origin:center!important;
+  font-size:29px!important;
+  line-height:1!important;
+  color:#fff3a6!important;
+  text-shadow:0 2px 8px rgba(0,0,0,.60),0 0 14px rgba(255,220,80,.98)!important;
+  pointer-events:none!important;
+  z-index:10025!important;
+  animation:none!important;
+}
+@media(max-width:900px){
+  body.eg-playing .modelZoomControls,
+  body.eg-playing .modelPanControls{display:none!important;}
+  #cw3d,#cw2d,#cwBoy,#tc,#cv2d,#boyCanvas{touch-action:none!important;}
+}
+#endShareBtn{display:none}
+@media(max-width:900px){
+  #endShareBtn{display:inline-flex}
+}
+
 </style>
 
 <canvas id="starbg" style="position:fixed;inset:0;z-index:-2;pointer-events:none"></canvas>
 
-<div id="craftStartScreen" aria-label="Game settings">
+<div id="craftStartScreen" aria-label="Game Settings">
   <div id="craftStartCard">
     <div id="craftStartTitle">Euler Getter</div>
     <div id="craftStartTagline">Win by shape, not area.</div>
     <div id="craftStartGrid">
-      <div class="craftField"><label for="cnModeSel">Mode</label><select id="cnModeSel"><option value="ai" selected>Human vs AI</option><option value="human">Human vs Human</option><option value="ai2">AI vs AI</option></select></div>
+      <div class="craftField"><label for="cnModeSel">Mode</label><select id="cnModeSel"><option value="ai" selected>vs AI</option><option value="human">Human vs Human</option><option value="ai2">AI vs AI</option></select></div>
       <div class="craftField"><label for="cnFirstSel">Human</label><select id="cnFirstSel"><option value="first" selected>First (Blue)</option><option value="second">Second (Red)</option></select></div>
       <div class="craftField"><label for="cnSwapRuleSel">Swap</label><select id="cnSwapRuleSel"><option value="none">None</option><option value="1">After 1 move</option><option value="3" selected>After 3 moves</option><option value="5">After 5 moves</option><option value="7">After 7 moves</option></select></div>
       <div class="craftField"><label for="cnCellCountSel">Cells</label><select id="cnCellCountSel"><option value="3" selected>Quick: 46 cells</option><option value="4">Standard: 81 cells</option></select></div>
-      <div class="craftField"><label for="cnWinRuleSel">Win rule</label><select id="cnWinRuleSel"><option value="max" selected>Normal: larger wins</option><option value="min">Reverse: smaller wins</option></select></div>
-      <div class="craftField"><label for="cnAiStrengthSel">AI</label><select id="cnAiStrengthSel"><option value="-24">Very weak</option><option value="0" selected>Weak</option><option value="28">Normal</option><option value="80">Strong</option><option value="160">Very strong</option></select></div>
+      <div class="craftField"><label for="cnWinRuleSel">Result</label><select id="cnWinRuleSel"><option value="max" selected>Normal: larger wins</option><option value="min">Reverse: smaller wins</option></select></div>
+      <div class="craftField"><label for="cnAiStrengthSel">AI</label><select id="cnAiStrengthSel"><option value="-160">Very weak</option><option value="0" selected>Weak</option><option value="28">Normal</option><option value="80">Strong</option><option value="160">Very strong</option></select></div>
     </div>
     <button id="craftStartBtn" type="button">Start Game</button>
+    <div id="craftStartHelpRow"><button id="craftHowBtn" type="button">How to Play</button><button id="craftExplainBtn" type="button">Guide</button></div>
     <div id="craftStartNote" style="display:none"></div>
+  </div>
+</div>
+
+
+<div id="craftHelpOverlay" aria-hidden="true">
+  <div id="craftHelpDialog" role="dialog" aria-modal="true" aria-labelledby="craftHelpTitle">
+    <div id="craftHelpHeader"><div id="craftHelpTitle">How to Play</div><button id="craftHelpClose" type="button" aria-label="Close">×</button></div>
+    <div id="craftHelpTabs"><button id="craftHelpTabHow" type="button" data-help-tab="how">How to Play</button><button id="craftHelpTabExplain" type="button" data-help-tab="explain">Guide</button></div>
+    <div id="craftHelpBody">
+      <section id="craftHelpHow" class="craftHelpSection">
+        <div class="craftHelpCard"><h3>Goal</h3><p>Blue and Red take turns coloring cells. At the end, you win if your color has the better Euler number.</p><p>In the normal rule, the larger Euler number wins. In the reverse rule, the smaller Euler number wins.</p></div>
+        <div class="craftHelpCard"><h3>Euler number</h3><p><span class="craftHelpFormula">Euler number = vertices − edges + cells</span></p><p>Intuitively, the Euler number is the number of connected pieces minus the number of loops. The score depends on connections and holes, not just area.</p></div>
+        <div class="craftHelpCard"><h3>Swap</h3><p>To reduce first-move advantage, after the chosen number of moves the second player may swap Blue and Red.</p></div>
+        <div class="craftHelpCard"><h3>Cells with the same number</h3><p>Cells with the same number represent the same place on the projective plane. Coloring one also colors the corresponding place.</p></div>
+        <div class="craftHelpCard"><h3>Model selection</h3><p>You can view the same board as a Sphere model, Disk model, or Cross-cap model. Switch model tabs and choose the view you like.</p></div>
+        <div class="craftHelpCard"><h3>View controls</h3><p>On smartphones, use one finger to rotate the 3D model, pinch to zoom, and two fingers to move the view.</p><p>On PC, drag to rotate the 3D model. Use +, −, Reset, and arrow buttons in the view area to zoom and move the display.</p></div>
+      </section>
+      <section id="craftHelpExplain" class="craftHelpSection">
+        <div class="craftHelpCard"><h3>What is Euler Getter?</h3><p>Unlike ordinary territory games, just taking more area is not enough. The game is decided by the Euler number, which depends on the shape of your region.</p></div>
+        <div class="craftHelpCard"><h3>Projective plane</h3><p>The projective plane is a surface made by identifying opposite points on the boundary of a disk. In this game, numbered cells show that identification.</p></div>
+        <div class="craftHelpCard"><h3>Sphere model</h3><p>In the sphere model, opposite points on the sphere are treated as the same point. It is useful for seeing the whole connection in 3D.</p></div>
+        <div class="craftHelpCard"><h3>Disk model</h3><p>The disk model displays the projective plane in the plane. Each boundary point of the disk is identified with the opposite boundary point.</p><p>Corresponding boundary cells have the same number and are treated as the same place on the projective plane.</p></div>
+        <div class="craftHelpCard"><h3>Cross-cap model</h3><p>The Cross-cap is a model that shows the projective plane in 3D space. It has apparent self-intersections, but those are artifacts of the 3D display.</p><p>Self-intersections are ignored when calculating the Euler number. Cells that only look crossed are not counted as touching unless they truly share an edge or vertex.</p></div>
+      </section>
+    </div>
   </div>
 </div>
 
 <div id="app">
   <div id="craftTopTitle">Euler Getter</div>
-  <div id="craftGameBar"><div id="craftGameStatus">Euler Getter</div><button id="craftMusicMiniBtn" type="button">♪ BGM</button><button id="craftAbortBtn" class="primary" type="button">Quit</button></div>
+  <div id="craftGameBar"><div id="craftGameStatus">Euler Getter</div><button id="craftMusicMiniBtn" type="button">♪ BGM</button><button id="craftHelpBtn" type="button" title="Rules / Guide" aria-label="Open Rules / Guide">? Help</button><button id="craftAbortBtn" class="primary" type="button">Quit</button></div>
   <div id="hdr">
     <div id="ttl">Euler Getter</div>
     <div id="ctrl">
       <label style="font-size:12px;color:#666">Mode</label>
       <select id="modeSel" style="font-size:13px;padding:6px 10px;border-radius:8px;border:1px solid #ccc;background:white">
-        <option value="ai" selected>Human vs AI</option>
+        <option value="ai" selected>vs AI</option>
         <option value="human">Human vs Human</option>
         <option value="ai2">AI vs AI</option>
       </select>
@@ -3080,14 +3451,14 @@ body.eg-playing .delta{
         <option value="3" selected>Quick: 46 cells</option>
         <option value="4">Standard: 81 cells</option>
       </select>
-      <label style="font-size:12px;color:#666">Win rule</label>
+      <label style="font-size:12px;color:#666">Result</label>
       <select id="winRuleSel" style="font-size:13px;padding:6px 10px;border-radius:8px;border:1px solid #ccc;background:white">
         <option value="max" selected>Larger wins</option>
         <option value="min">Smaller wins</option>
       </select>
       <label style="font-size:12px;color:#666">AI</label>
       <select id="aiStrengthSel" style="font-size:13px;padding:6px 10px;border-radius:8px;border:1px solid #ccc;background:white">
-        <option value="-24">Very weak</option>
+        <option value="-160">Very weak</option>
         <option value="0" selected>Weak</option>
         <option value="28">Normal</option>
         <option value="80">Strong</option>
@@ -3096,27 +3467,27 @@ body.eg-playing .delta{
     </div>
   </div>
 <div id="ib">
-    <div class="sc score-blue"><div class="sl"> Blue Euler score</div>
+    <div class="sc score-blue"><div class="sl"> Blue Euler number</div>
 <div class="sv b" id="cb">—</div>
     <div class="colorPlayerInfo blueInfo" id="bluePlayerInfo">Blue: —</div><div class="delta" id="db"></div></div>
-    <div class="sc score-turn"><div class="sl">🎮 Current Turn</div>
+    <div class="sc score-turn"><div class="sl">🎮 Current turn</div>
   <div id="roleStatus" aria-label="Swap info">
-    <span class="roleBadge swapPending" id="swapStateBadge">Swap: pending</span>
+    <span class="roleBadge swapPending" id="swapStateBadge">Swap: undecided</span>
     <button id="swapBtn" class="swapInlineBtn" disabled>Swap!</button>
   </div>
   <div id="swapHintBox" aria-live="polite"></div>
 <div id="tb">Blue turn</div></div>
-    <div class="sc score-red"><div class="sl"> Red Euler score</div><div class="sv r" id="cr">—</div>
+    <div class="sc score-red"><div class="sl"> Red Euler number</div><div class="sv r" id="cr">—</div>
     <div class="colorPlayerInfo redInfo" id="redPlayerInfo">Red: —</div><div class="delta" id="dr"></div></div>
-    <div class="sc score-moves"><div class="sl">⬡ Moves Left</div><div class="sv" id="mv">81</div></div>
+    <div class="sc score-moves"><div class="sl">⬡ Moves left</div><div class="sv" id="mv">81</div></div>
   </div>
-<div id="pairTabs" class="modelTabs" aria-label="Model pair switch">
+<div id="pairTabs" class="modelTabs" aria-label="Model combination">
     <button id="tabSphereDisk" class="active" type="button">Sphere + Disk</button>
     <button id="tabSphereBoy" type="button">Sphere + Cross-cap</button>
     <button id="tabDiskBoy" type="button">Disk + Cross-cap</button>
   </div>
 
-  <div id="singleModelTabs" class="modelTabs" aria-label="Model switch">
+  <div id="singleModelTabs" class="modelTabs" aria-label="Switch model">
     <button id="tabOnly3d" class="active" type="button">Sphere</button>
     <button id="tabOnlyDisk" type="button">Disk</button>
     <button id="tabOnlyBoy" type="button">Cross-cap</button>
@@ -3134,65 +3505,66 @@ body.eg-playing .delta{
 
 <div id="views">
     <div class="vwrap" id="wrap3d">
-      <div id="cw3d"><canvas id="tc"></canvas></div>
+      <div id="cw3d"><canvas id="tc"></canvas><div class="modelPanControls" aria-label="Move sphere model"><button type="button" class="panBtn panUp" data-model="sphere" data-pan="up">↑</button><button type="button" class="panBtn panLeft" data-model="sphere" data-pan="left">←</button><button type="button" class="panBtn panHome" data-model="sphere" data-pan="reset">◎</button><button type="button" class="panBtn panRight" data-model="sphere" data-pan="right">→</button><button type="button" class="panBtn panDown" data-model="sphere" data-pan="down">↓</button></div><div class="modelZoomControls" aria-label="Sphere model zoom"><button type="button" class="zoomBtn" data-model="sphere" data-zoom="in">＋</button><button type="button" class="zoomBtn" data-model="sphere" data-zoom="out">−</button><button type="button" class="zoomBtn zoomResetBtn" data-model="sphere" data-zoom="reset">Reset</button></div></div>
       <div class="vlbl">Sphere model</div>
     </div>
     <div class="vwrap" id="wrap2d">
-      <div id="cw2d"><canvas id="cv2d"></canvas></div>
+      <div id="cw2d"><canvas id="cv2d"></canvas><div class="modelPanControls" aria-label="Move disk model"><button type="button" class="panBtn panUp" data-model="disk" data-pan="up">↑</button><button type="button" class="panBtn panLeft" data-model="disk" data-pan="left">←</button><button type="button" class="panBtn panHome" data-model="disk" data-pan="reset">◎</button><button type="button" class="panBtn panRight" data-model="disk" data-pan="right">→</button><button type="button" class="panBtn panDown" data-model="disk" data-pan="down">↓</button></div><div class="modelZoomControls" aria-label="Disk model zoom"><button type="button" class="zoomBtn" data-model="disk" data-zoom="in">＋</button><button type="button" class="zoomBtn" data-model="disk" data-zoom="out">−</button><button type="button" class="zoomBtn zoomResetBtn" data-model="disk" data-zoom="reset">Reset</button></div></div>
       <div class="vlbl">Disk model</div>
     </div>
     <div class="vwrap" id="wrapBoy">
-      <div id="cwBoy"><canvas id="boyCanvas"></canvas></div>
-      <div class="vlbl">Cross-cap<span class="tabModelSuffix"> model</span></div>
+      <div id="cwBoy"><canvas id="boyCanvas"></canvas><div class="modelPanControls" aria-label="Move cross-cap model"><button type="button" class="panBtn panUp" data-model="cross" data-pan="up">↑</button><button type="button" class="panBtn panLeft" data-model="cross" data-pan="left">←</button><button type="button" class="panBtn panHome" data-model="cross" data-pan="reset">◎</button><button type="button" class="panBtn panRight" data-model="cross" data-pan="right">→</button><button type="button" class="panBtn panDown" data-model="cross" data-pan="down">↓</button></div><div class="modelZoomControls" aria-label="Cross-cap model zoom"><button type="button" class="zoomBtn" data-model="cross" data-zoom="in">＋</button><button type="button" class="zoomBtn" data-model="cross" data-zoom="out">−</button><button type="button" class="zoomBtn zoomResetBtn" data-model="cross" data-zoom="reset">Reset</button></div></div>
+      <div class="vlbl">Cross-cap<span class="tabModelSuffix">Model</span></div>
     </div>
   </div>
 
   <div id="cnRobotBottom" aria-live="polite">
     <span id="cnRobotMiniFace">・‿・</span>
-    <span id="cnRobotBottomText">AI is reading the board…</span>
+    <span id="cnRobotBottomText">AI is reading the board...</span>
   </div>
 
   <div id="wb"></div>
 
 
   <div id="endActions" aria-live="polite">
-    <div id="endTitle">Title: Euler Hunter</div>
-    <div id="endNote">Scored by Euler characteristic, not by area.</div>
+    <div id="endTitle">Title: Euler Number Hunter</div>
+    <div id="endNote">Measured by Euler number, not area.</div>
     <div class="endActionButtons">
       <button id="playAgainBtn" type="button">Play Again</button>
       <button id="endCopyBtn" type="button">Copy Result</button>
+      <button id="endShareBtn" type="button">Share</button>
     </div>
   </div>
 
   <div id="rules">
     <details>
-  <summary>Rules & How to Read the Board</summary>
+  <summary>Rules and Board Guide</summary>
   <ul>
-<li>Players take turns choosing cells. The chosen cell and its paired cell become your color.</li>
-<li>Your score is the Euler characteristic of your territory.</li>
-<li>At the end, the player with the larger Euler characteristic wins.</li>
-<li>After 3 moves, the second player may swap colors.</li>
-<li>You can view the same board as a Sphere model, Disk model, or Cross-cap model.</li>
+<li>Players take turns choosing cells. The chosen cell and its corresponding cell become your color.</li>
+<li>Your score is the Euler number of your colored region.</li>
+<li>At the end, the larger Euler number wins.</li>
+<li>After move 3, the second player can swap colors.</li>
+<li>You can view the same board as Sphere, Disk, or Cross-cap<span class="tabModelSuffix">Model</span> to view it.</li>
 </ul>
 </details>
 
     <details>
       <summary>What is the projective plane?</summary>
       <p>
-        The projective plane is a surface that can be described by gluing edges of a square.
-        For example, gluing opposite edges of a square in the same direction gives a torus, the surface of a donut.
+        The projective plane is a surface that can be made by gluing edges of a square.
+        For example, gluing the left and right edges of a square in the same direction and the top and bottom edges in the same direction gives a torus, a donut-shaped world.
       </p>
       <p>
-        A Klein bottle is obtained by reversing one of those gluings.
-        It is a twisted world where going out through one side brings you back on the other side with orientation reversed.
+        A Klein bottle is obtained by reversing one of these gluings.
+        It is a slightly twisted world where going off one edge brings you back on the opposite side with orientation reversed.
       </p>
       <p>
-        The projective plane uses another gluing pattern, identifying both pairs of opposite edges with reversed direction.
-        This game represents the projective plane by treating opposite points on a sphere as the same place.
+        The projective plane uses a different gluing: left-right and top-bottom are both matched in opposite directions.
+        In this game, instead of using a square diagram, we represent it by treating opposite places on the sphere as the same.
       </p>
       <p>
-        The technical term for opposite points on a sphere is antipodal points.
-        In the game, it is enough to think of them as <b>the same cell on the opposite side</b>, or an <b>opposite pair</b>.
+        The technical name for such opposite points is antipodal points.
+        In the game, however, <b>Same cell on the opposite side</b> or <b>Opposite pair</b>is enough to keep in mind.。
       </p>
     </details>
 
@@ -3200,55 +3572,56 @@ body.eg-playing .delta{
       <summary>What is topology?</summary>
       <p>
         Topology studies properties of shapes that do not change when they are stretched or bent.
-        It cares less about distances and angles, and more about connectedness, holes, and loops.
+        It cares more about connections, holes, and loops than distances or angles.
       </p>
       <p>
         For example, a coffee cup and a donut can both be viewed as shapes with one hole.
-        Topology focuses on this broad pattern of connectedness rather than small geometric details.
+        Topology focuses on this broad pattern of connectedness rather than fine details of shape.
       </p>
       <p>
-        In Euler Getter, the connectedness of your stones becomes the score.
-        So while playing on the board, you are competing over a topological quantity.
+        In Euler Getter, your score comes from how your stones are connected.
+        In other words, you are competing for a topological quantity while playing on the board.
       </p>
     </details>
 
     <details>
-      <summary>What is Euler characteristic?</summary>
+      <summary>What is the Euler number?</summary>
       <p>
-        Euler characteristic is a number that roughly measures how a shape is connected.
-        The basic formula is <b>vertices − edges + faces</b>.
+        Roughly speaking, the Euler number measures how a shape is organized.
+        The basic formula is <b>vertices − edges + cells</b> .
         For polyhedra and subdivided surfaces, this number helps distinguish types of shapes.
       </p>
       <p>
-        In Euler Getter, connected regions can raise the score, while loops and holes can lower it.
-        Roughly, <b>making separate islands can increase it</b>, while <b>connecting regions into loops or holes can change it</b>.
+        In Euler Getter, the faces in the formula are counted as colored cells.
+        Intuitively, the Euler number is <b>connected pieces − loops</b>.
+        Making isolated islands tends to increase it, while connecting your region into loops or holes can decrease it.
       </p>
       <p>
-        You do not need to calculate it mentally. Watch the <b>+1</b> and <b>-1</b> effects on the screen,
-        and observe what happens when you place cells apart or connect them. Gradually, you will learn to read the shape.
+        No mental calculation is needed. Watch the on-screen <b>+1</b> and <b>-1</b> animations and 
+        Observe whether separated moves increase it and how connecting regions changes it. You will gradually get a feel for it.
       </p>
     </details>
 
     <details>
-      <summary>For further reading</summary>
+      <summary>For more information</summary>
       <p>
-        Euler Getter is related to ideas such as the projective plane, the torus, the Klein bottle, topology, and Euler characteristic.
-        These ideas connect to university-level mathematics.
+        The ideas used in Euler Getter connect to the projective plane, torus, Klein bottle, topology, Euler number, and more.
+        it connects to ideas in university mathematics.
       </p>
       <p>
-        A gentle introduction to these ideas through games and puzzles is
-        <b>Takehiko Yasuda, Introduction to University Mathematics Through Games</b>.
-        Through the Tower of Hanoi, Sprouts, Nim, topology games, the projective plane, and Euler Getter,
-        the book introduces the fun of mathematics beyond calculation.
+        A friendly introduction to these ideas through games and puzzles is
+        <b>Takehiko Yasuda, Introduction to University Mathematics through Games: From Sprouts to Euler Getter</b>.
+        Through Towers of Hanoi, Sprouts, Nim, topology games, the projective plane, and Euler Getter,
+        It introduces the fun of mathematics beyond calculation.
       </p>
       <p>
-        Mathematics is not only about calculation; it can also expand how we see the world.
-        If this game sparks your interest, please also look at the book and related lecture materials.
+        Mathematics is not only calculation. It also broadens how we see the world.
+        If this game sparks your interest, please also take a look at the book and public lecture materials.
       </p>
       <p class="refs">
-        References:
+        Reference:
         <a href="https://w.atwiki.jp/euler_getter/" target="_blank" rel="noopener">Euler Getter Wiki</a> /
-        <a href="https://www.kyoritsu-pub.co.jp/book/b10003131.html" target="_blank" rel="noopener">Book information page</a>
+        <a href="https://www.kyoritsu-pub.co.jp/book/b10003131.html" target="_blank" rel="noopener">Book page: Introduction to University Mathematics through Games</a>
       </p>
     </details>
     <details>
@@ -3259,22 +3632,22 @@ body.eg-playing .delta{
           © 2026 Takehiko Yasuda
         </p>
         <p>
-          <b>License:</b> This game is released under the <b>MIT License</b>.
-          The code, in-game text, UI, and browser-generated BGM/sound effects are covered by the MIT License.
+          <b>License:</b>This entire game is released under <b>MIT License</b> .
+          The code, in-game text, UI, and browser-generated BGM/SFX are all covered by the MIT License.
         </p>
         <p>
-          The MIT License permits use, modification, redistribution, and commercial use, provided that the copyright notice and license text are preserved.
+          The MIT License is a simple license allowing use, modification, redistribution, and commercial use, provided the copyright notice and license text are kept.
         </p>
         <p>
-          <b>Production:</b> This game was created and improved with the help of ChatGPT and Claude.
+          <b>About this game:</b>This game was created and improved using ChatGPT and Claude.
           The 3D display uses Three.js.
         </p>
         <p>
-          <b>BGM and sound effects:</b> No external audio files or recorded materials are used.
-          They are original sounds generated in real time in the browser.
+          <b>BGM / SFX:</b>No external audio files or recorded materials are used.
+          The sounds are generated in real time in the browser from frequencies.
         </p>
         <p>
-          <b>Attribution example:</b><br>
+          <b>Example:</b><br>
           Euler Getter<br>
           © 2026 Takehiko Yasuda<br>
           Released under the MIT License.<br>
@@ -3282,7 +3655,7 @@ body.eg-playing .delta{
           BGM and sound effects are procedurally generated in the browser. No external audio files are used.
         </p>
         <p class="refs">
-          References:
+          Reference:
           <a href="https://opensource.org/license/mit" target="_blank" rel="noopener">MIT License</a> /
           <a href="https://threejs.org/" target="_blank" rel="noopener">Three.js</a>
         </p>
@@ -3296,7 +3669,7 @@ body.eg-playing .delta{
     Euler Getter © 2026 Takehiko Yasuda — Released under the MIT License. Built with ChatGPT, Claude, and Three.js. BGM/SFX are generated in the browser.
   </div>
 
-  <div id="logPanel"><div id="lg">Blue starts. Projective plane RP²: antipodal cells are identified.</div></div>
+  <div id="logPanel"><div id="lg">Blue starts. Projective plane RP²: opposite cells are the same cell.</div></div>
 </div>
 
 
@@ -3429,13 +3802,13 @@ function updateRoleStatus(){
     }
     if(ai){
       const who = (HUMAN_COLOR===c) ? 'You' : 'AI';
-      return who + ' / ' + (first ? 'first' : 'second');
+      return who + ' / ' + (first ? 'First' : 'Second');
     }
-    return first ? 'first side' : 'second side';
+    return first ? 'First side' : 'Second side';
   }
 
-  if(blueEl) blueEl.textContent='Blue: '+roleForColor(BLUE);
-  if(redEl) redEl.textContent='Red: '+roleForColor(RED);
+  if(blueEl) blueEl.textContent='Blue:'+roleForColor(BLUE);
+  if(redEl) redEl.textContent='Red:'+roleForColor(RED);
 
   if(swapEl){
     swapEl.classList.remove('swapPending','swapDone','swapNone','swapDecisionEmphasis','swapDecisionDone','swapDecisionNone');
@@ -3453,7 +3826,7 @@ function updateRoleStatus(){
       swapEl.textContent='Swap: none';
       swapEl.classList.add('swapNone');
     }else{
-      swapEl.textContent='Swap: pending';
+      swapEl.textContent='Swap: undecided';
       swapEl.classList.add('swapPending');
     }
   }
@@ -3475,11 +3848,30 @@ function updateSwapHintBox(){
   if(roleStatus) roleStatus.classList.toggle('humanSwapReady',show);
 
   if(show){
-    hint.innerHTML='<div class="swapHintMain">Swap available!</div><div class="swapHintSub">Press this button to swap</div><div class="swapHintArrow">↑</div>';
+    hint.innerHTML='<div class="swapHintMain">Swap available</div><div class="swapHintArrow">➜</div>';
+    if(typeof updateSwapHintArrow==='function') requestAnimationFrame(updateSwapHintArrow);
   }else{
     hint.innerHTML='';
   }
 }
+
+function updateSwapHintArrow(){
+  const hint=document.getElementById('swapHintBox');
+  const arrow=hint ? hint.querySelector('.swapHintArrow') : null;
+  const btn=document.getElementById('swapBtn');
+  if(!hint || !arrow || !btn || !hint.classList.contains('show')) return;
+  const hr=hint.getBoundingClientRect();
+  const br=btn.getBoundingClientRect();
+  if(!hr.width || !hr.height || !br.width || !br.height) return;
+  const hx=hr.left+hr.width/2, hy=hr.top+hr.height/2;
+  const bx=br.left+br.width/2, by=br.top+br.height/2;
+  const angle=Math.atan2(by-hy,bx-hx)*180/Math.PI;
+
+  // The arrow is positioned by CSS at the center just above the
+  // "Swap available" notice.  Only its direction is updated here.
+  arrow.style.setProperty('--swap-arrow-angle', angle+'deg');
+}
+window.addEventListener('resize',()=>{ if(typeof updateSwapHintArrow==='function') updateSwapHintArrow(); });
 
 function updateReadableTurnLabel(){
   const tb=document.getElementById('tb');
@@ -3536,6 +3928,8 @@ const dbEl=document.getElementById('db'), drEl=document.getElementById('dr');
 const mvEl=document.getElementById('mv'), wbEl=document.getElementById('wb'), lgEl=document.getElementById('lg');
 const c3=document.getElementById('tc'), w3=document.getElementById('cw3d'), c2=document.getElementById('cv2d'), w2=document.getElementById('cw2d');
 const cBoy=document.getElementById('boyCanvas'), wBoy=document.getElementById('cwBoy');
+let zoomSphere=1, zoomDisk=1, zoomCross=1;
+let panSphereX=0, panSphereY=0, panDiskX=0, panDiskY=0, panCrossX=0, panCrossY=0;
 const fxLayer=document.getElementById('fxLayer'), bigMsg=document.getElementById('bigMsg'), bigTitle=document.getElementById('bigTitle'), bigSub=document.getElementById('bigSub'), screenDim=document.getElementById('screenDim');
 const modeSel=document.getElementById('modeSel'), firstSel=document.getElementById('firstSel');
 const rb=document.getElementById('rb');
@@ -3546,6 +3940,7 @@ const musicBtn=document.getElementById('musicBtn');
 const copyResultBtn=document.getElementById('copyResultBtn');
 const playAgainBtn=document.getElementById('playAgainBtn');
 const endCopyBtn=document.getElementById('endCopyBtn');
+const endShareBtn=document.getElementById('endShareBtn');
 const downloadLogBtn=document.getElementById('downloadLogBtn');
 const turnFlash=document.getElementById('turnFlash'), turnFlashCard=document.getElementById('turnFlashCard');
 
@@ -3573,7 +3968,7 @@ function setLogHeader(lines){
 function downloadGameLog(){
   // CraftNova edition: file downloads are disabled by the platform guidelines.
   // Keep the button harmless if older UI code refers to it.
-  log('Log saving is disabled in this mobile version.');
+  log('Log saving is disabled in the CraftNova version.');
 }
 function clampRotX(){
   const limit=Math.PI/2-0.12;
@@ -3844,6 +4239,15 @@ function crossCapPointFromDisk(x,y,W,H){
 
 function boyPointFromSphereVec(v){ return crossCapPointFromSphereVec(v); }
 
+function equalizeCrossCapCellPolygon(center,poly){
+  // Keep the original Cross-cap cell polygons.  The previous display-only
+  // equalization made small cells easier to see, but it opened visible gaps
+  // between cells.  Tap usability is handled instead by the fallback picker
+  // in installBoyPointerRotation().
+  return poly;
+}
+
+
 function initBoy(){
   if(!cBoy || !wBoy) return;
   const W=wBoy.clientWidth||390,H=wBoy.clientHeight||390;
@@ -3851,20 +4255,20 @@ function initBoy(){
   sceneBoy.background=new THREE.Color(0x05070d);
     addSceneStarfield(sceneBoy);
 cameraBoy=new THREE.PerspectiveCamera(44,W/H,0.1,100);
-  cameraBoy.position.set(0,0,5.45);
+  cameraBoy.position.set(0,0,5.45/Math.max(0.7,zoomCross||1));
   rendererBoy=new THREE.WebGLRenderer({canvas:cBoy,antialias:true,alpha:false,preserveDrawingBuffer:true});
   rendererBoy.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
   rendererBoy.setSize(W,H,false);
   rendererBoy.toneMapping=THREE.ACESFilmicToneMapping;
-  rendererBoy.toneMappingExposure=0.88;
-  sceneBoy.add(new THREE.AmbientLight(0xfff0c0,0.28));
-  const dl=new THREE.DirectionalLight(0xffffff,0.95);dl.position.set(4,5,6);sceneBoy.add(dl);
-  const dl2=new THREE.DirectionalLight(0x99aadd,0.35);dl2.position.set(-4,-3,3);sceneBoy.add(dl2);
+  rendererBoy.toneMappingExposure=1.12;
+  sceneBoy.add(new THREE.AmbientLight(0xfff0c0,0.45));
+  const dl=new THREE.DirectionalLight(0xffffff,0.98);dl.position.set(4,5,6);sceneBoy.add(dl);
+  const dl2=new THREE.DirectionalLight(0x99aadd,0.30);dl2.position.set(-4,-3,3);sceneBoy.add(dl2);
   // CrossCapExtraKey: stronger oblique lighting to emphasize valleys and folds.
-  const dlCrossKey=new THREE.DirectionalLight(0xffd37a,0.42);
+  const dlCrossKey=new THREE.DirectionalLight(0xffd37a,0.44);
   dlCrossKey.position.set(-4,5,3);
   sceneBoy.add(dlCrossKey);
-  const dlCrossRim=new THREE.DirectionalLight(0x5f7dff,0.22);
+  const dlCrossRim=new THREE.DirectionalLight(0x8fa8ff,0.26);
   dlCrossRim.position.set(4,-2,-5);
   sceneBoy.add(dlCrossRim);
   const dl3=new THREE.DirectionalLight(0xffd6a0,0.38);dl3.position.set(-5,3,-4);sceneBoy.add(dl3);
@@ -3906,10 +4310,11 @@ function buildMeshBoy(){
       ]);
       return boyPointFromSphereVec(p);
     });
+    const visualPoly=equalizeCrossCapCellPolygon(center,poly);
 
     const arr=[];
-    for(let i=0;i<poly.length;i++){
-      const p0=poly[i],p1=poly[(i+1)%poly.length];
+    for(let i=0;i<visualPoly.length;i++){
+      const p0=visualPoly[i],p1=visualPoly[(i+1)%visualPoly.length];
       if(p0.distanceTo(p1)>2.8) continue; // avoid misleading long self-intersection chords
       arr.push(center.x,center.y,center.z,p0.x,p0.y,p0.z,p1.x,p1.y,p1.z);
     }
@@ -3934,14 +4339,14 @@ function buildMeshBoy(){
     cellMeshesBoy.push(mesh);
 
     const lineVerts=[];
-    for(let i=0;i<poly.length;i++){
-      const a=poly[i],b=poly[(i+1)%poly.length];
+    for(let i=0;i<visualPoly.length;i++){
+      const a=visualPoly[i],b=visualPoly[(i+1)%visualPoly.length];
       if(a.distanceTo(b)>2.8) continue;
       lineVerts.push(a.x,a.y,a.z,b.x,b.y,b.z);
     }
     const lgeo=new THREE.BufferGeometry();
     lgeo.setAttribute('position',new THREE.Float32BufferAttribute(lineVerts,3));
-    pivotBoy.add(new THREE.LineSegments(lgeo,new THREE.LineBasicMaterial({color:0x3e2b10,transparent:true,opacity:0.62})));
+    pivotBoy.add(new THREE.LineSegments(lgeo,new THREE.LineBasicMaterial({color:0x80613a,transparent:true,opacity:0.72})));
 
     const labelPair=crossCapCombinedPairForLabel(labelNumberOfVi(vi));
     const labelTxt=crossCapCombinedLabelText(vi);
@@ -3964,6 +4369,7 @@ function buildMeshBoy(){
   pivotBoy.rotation.x=0.2;
   pivotBoy.rotation.y=-0.35;
   sceneBoy.add(pivotBoy);
+  applyModelPan('cross');
   updateColorsBoy();
   updateCrossCapLabelVisibility();
 }
@@ -4117,11 +4523,36 @@ function rotateBoyByScreenDrag(dx,dy){
   pivotBoy.quaternion.premultiply(qx);
 }
 
+
+function nearestCrossCapCellByScreenTap(clientX,clientY,maxPx){
+  if(!cameraBoy || !cBoy || !cellMeshesBoy || !cellMeshesBoy.length) return -1;
+  const rect=cBoy.getBoundingClientRect();
+  let bestVi=-1, bestD2=maxPx*maxPx;
+  const v=new THREE.Vector3();
+  for(const mesh of cellMeshesBoy){
+    const vi=mesh.userData && mesh.userData.vi;
+    if(typeof vi!=='number' || owner[vi]!==0) continue;
+    const p=boyPointFromSphereVec(verts3d[vi]);
+    v.copy(p).applyMatrix4(pivotBoy.matrixWorld).project(cameraBoy);
+    if(v.z<-1 || v.z>1) continue;
+    const sx=(v.x*0.5+0.5)*rect.width+rect.left;
+    const sy=(-v.y*0.5+0.5)*rect.height+rect.top;
+    const dx=sx-clientX, dy=sy-clientY;
+    const d2=dx*dx+dy*dy;
+    if(d2<bestD2){ bestD2=d2; bestVi=vi; }
+  }
+  return bestVi;
+}
+
 function installBoyPointerRotation(){
   if(!wBoy || wBoy.__egPointerInstalled) return;
   wBoy.__egPointerInstalled=true;
   let pDown=false,pMoved=false,px=0,py=0,psx=0,psy=0;
   wBoy.addEventListener('pointerdown',e=>{
+    if(egIsMobileTouchUI && egIsMobileTouchUI() && e.pointerType==='touch'){
+      pDown=false;
+      return;
+    }
     if(e.pointerType==='mouse' && e.button!==0) return;
     pDown=true;targetBoyRotX=null;targetBoyRotY=null;pMoved=false;px=psx=e.clientX;py=psy=e.clientY;
     
@@ -4130,6 +4561,10 @@ try{wBoy.setPointerCapture(e.pointerId)}catch(_){}
     e.preventDefault();
   },{passive:false});
   wBoy.addEventListener('pointermove',e=>{
+    if(egIsMobileTouchUI && egIsMobileTouchUI() && e.pointerType==='touch'){
+      pDown=false;
+      return;
+    }
     if(pDown){
       const dx=e.clientX-px,dy=e.clientY-py;
       if(Math.abs(e.clientX-psx)+Math.abs(e.clientY-psy)>4) pMoved=true;
@@ -4144,6 +4579,7 @@ try{wBoy.setPointerCapture(e.pointerId)}catch(_){}
     setHoverRoot(hits.length?pairRoot(hits[0].object.userData.vi):-1);
   },{passive:false});
   function endPointer(e){
+    if(egIsMobileTouchUI && egIsMobileTouchUI() && e.pointerType==='touch') return;
     if(!pDown) return;
     pDown=false;
     try{wBoy.releasePointerCapture(e.pointerId)}catch(_){}
@@ -4153,7 +4589,12 @@ try{wBoy.setPointerCapture(e.pointerId)}catch(_){}
       const y=-((e.clientY-rect.top)/rect.height)*2+1;
       raycasterBoy.setFromCamera(new THREE.Vector2(x,y),cameraBoy);
       const hits=raycasterBoy.intersectObjects(cellMeshesBoy,false);
-      if(hits.length) placeStone(hits[0].object.userData.vi);
+      if(hits.length){
+        placeStone(hits[0].object.userData.vi);
+      }else{
+        const vi=nearestCrossCapCellByScreenTap(e.clientX,e.clientY,38);
+        if(vi>=0) placeStone(vi);
+      }
     }
     e.preventDefault();
   }
@@ -4439,7 +4880,7 @@ function activeCrossCapCombinedLabels(){
   // 81-cell board: the old difficult crossing labels.
   // 46-cell board: the corresponding crossings are 19/25 and 32/39.
   if(typeof cellSubdivisionK==='function' && cellSubdivisionK()===3){
-    return new Map([[19,25],[32,39]]);
+    return new Map([[19,25],[32,39],[43,45]]);
   }
   return new Map([[35,45],[56,68],[76,79]]);
 }
@@ -4592,6 +5033,7 @@ function buildMesh3d(){
   pivot.rotation.x=rotX; pivot.rotation.y=rotY;
   scene.add(pivot);
   updatePivotScale();
+  applyModelPan('sphere');
 }
 
 function latLon(v){return {lat:Math.asin(Math.max(-1,Math.min(1,v[2]))),lon:Math.atan2(v[1],v[0])};}
@@ -5129,6 +5571,11 @@ function draw2d(){
   ctx.fillStyle='#05070d';
   ctx.fillRect(0,0,W,H);
   drawCanvasStarfield(ctx,W,H);
+
+  ctx.save();
+  ctx.translate(W/2 + (panDiskX||0),H/2 + (panDiskY||0));
+  ctx.scale(Math.max(1,zoomDisk||1),Math.max(1,zoomDisk||1));
+  ctx.translate(-W/2,-H/2);
   drawDiskBoundaryGuide(ctx,W,H);
 
   for(const cell of cellPolys2d){
@@ -5180,6 +5627,7 @@ function draw2d(){
     ctx.fillText(txt,labelX,labelY);
     ctx.restore();
   }
+  ctx.restore();
 }
 
 function pairRoot(i){return Math.min(i,pairId[i]);}
@@ -5233,7 +5681,7 @@ function startBgm(){
   bgmOn=true;
   if(musicBtn){
     musicBtn.classList.add('playing');
-    musicBtn.textContent='♪ BGM Playing';
+    musicBtn.textContent='♪ BGM on';
   }
   playEulerBgmStep();
   if(bgmTimer) clearInterval(bgmTimer);
@@ -5450,7 +5898,7 @@ function maybeEnableSwap(){
 
   if(moveCount===sm){
     swapAvailable=true;
-    log(sm+' moves until swap: the second side may exchange colors.');
+    log(sm+' moves later: the second side can swap assigned colors.');
     updateRoleStatus();
     updateSwapButton();
     if(GAME_MODE==='ai2' || (GAME_MODE==='ai' && turn===AI_COLOR)){
@@ -5464,9 +5912,9 @@ function maybeEnableSwap(){
 function swapColors(){
   if(!swapAvailable || swapUsed || gameOver) return;
 
-  // Swap rule: 
-  // Keep board colors unchanged; only exchange which player controls which color.
-  // If owners are flipped here, it cancels out the player-color exchange.
+  // Swap rule:
+  // 盤面のRedBlueはそのままにして、「どのプレイヤーがどちらの色を担当するか」だけを入れ替える。
+  // ここで owner までRedBlue反転すると、担当色の入れ替えと相殺されてしまう。
   swapUsed=true;
   swapAvailable=false;
 
@@ -5477,7 +5925,7 @@ function swapColors(){
   }
 
   egSwapFirstSecond();
-  log('Swap: player colors were exchanged. The board colors stay as they are.');
+  log('Swap: players switched their assigned colors. The board colors stay as they are.');
   showSwapDecisionBadge('done');
   updateColors3d();
   draw2d();
@@ -5604,7 +6052,7 @@ function placeStone(vi){
     egSetSwapState('none');
     showSwapDecisionBadge('none');
     updateRoleStatus();
-    log('No swap: continuing without exchanging colors.');
+    log('No swap: continued without switching.');
     updateSwapButton();
   }
   const placedColor=turn;
@@ -5613,7 +6061,7 @@ function placeStone(vi){
   playClickSound(placedColor);
   let mover=turn===BLUE?'Blue':'Red';
   if(GAME_MODE==='ai' && turn===AI_COLOR) mover+='AI';
-  log(mover+' placed at #'+pairLabel[r]);
+  log(mover+' placed on #'+pairLabel[r]);
   moveCount++;
   turn=turn===BLUE?RED:BLUE;
   updateColors3d(); draw2d(); updateUI();
@@ -5729,7 +6177,7 @@ function winRuleMode(){
 }
 
 function winRuleLabel(){
-  return winRuleMode()==='min' ? 'Smaller Euler score wins' : 'Larger Euler score wins';
+  return winRuleMode()==='min' ? 'Smaller Euler number wins' : 'Larger Euler number wins';
 }
 
 function scoreBetter(a,b){
@@ -5838,7 +6286,7 @@ function declineSwap(){
   swapUsed=true;
   swapAvailable=false;
   egSetSwapState('none');
-  log('No swap: continuing without exchanging colors.');
+  log('No swap: continued without switching.');
   showSwapDecisionBadge('none');
   updateSwapButton();
   updateUI();
@@ -5911,23 +6359,43 @@ function bestMove(color){
     candidates.push({r,score});
   }
 
-  // Negative strength = a pleasantly beatable beginner AI.
-  // It tends to choose from the worse-looking half, but sometimes finds a decent
-  // move or simply plays randomly, so it does not look like it is deliberately
-  // throwing the game by always making the Euler number worse.
+  // Negative strength = a deliberately beginner-like AI.
+  // For "Very weak" (-160), make it clearly weaker than "Weak":
+  // it strongly prefers moves with low playout win-rate and also bad immediate
+  // score difference, while keeping a little randomness so it still feels human.
   if(strength<0){
-    candidates.sort((a,b)=>a.score-b.score); // lower AI win-rate first
+    for(const c of candidates){
+      owner[c.r]=color; owner[pairId[c.r]]=color;
+      const diff=scoreDiffFor(color); // positive is good for this AI
+      owner[c.r]=0; owner[pairId[c.r]]=0;
+      c.score += Math.max(-5,Math.min(5,diff))*0.075;
+    }
+
+    candidates.sort((a,b)=>a.score-b.score); // lower = worse for AI
+    const weakness=Math.min(1,Math.abs(strength)/160);
     const roll=Math.random();
-    if(roll<0.18){
+
+    if(weakness>=0.95){
+      if(roll<0.72){
+        const n=Math.max(1,Math.ceil(candidates.length*0.08));
+        return candidates[Math.floor(Math.random()*n)].r;
+      }
+      if(roll<0.92){
+        const n=Math.max(1,Math.ceil(candidates.length*0.18));
+        return candidates[Math.floor(Math.random()*n)].r;
+      }
+      const n=Math.max(1,Math.ceil(candidates.length*0.45));
+      return candidates[Math.floor(Math.random()*n)].r;
+    }
+
+    // Mildly weak negative values: bad, but not comically so.
+    if(roll < 0.12*(1-weakness)){
       return roots[Math.floor(Math.random()*roots.length)];
     }
-    if(roll<0.28){
-      const upper=candidates.slice(Math.max(0,Math.floor(candidates.length*0.55)));
-      return (upper.length?upper:candidates)[Math.floor(Math.random()*(upper.length?upper.length:candidates.length))].r;
-    }
-    const poolSize=Math.max(1,Math.ceil(candidates.length*0.58));
+    const poolFrac=0.42 - 0.24*weakness;
+    const poolSize=Math.max(1,Math.ceil(candidates.length*poolFrac));
     const pool=candidates.slice(0,poolSize);
-    const idx=Math.min(pool.length-1,Math.floor(Math.pow(Math.random(),1.35)*pool.length));
+    const idx=Math.min(pool.length-1,Math.floor(Math.pow(Math.random(),1.6+1.8*weakness)*pool.length));
     return pool[idx].r;
   }
 
@@ -6161,41 +6629,41 @@ function updateUI(){
 
     if(winner===BLUE){
       wbEl.className='b';
-      wbEl.textContent=blueName+' wins!  Blue Euler score='+fmtChi(ec)+', Red Euler score='+fmtChi(er);
+      wbEl.textContent=blueName+' wins! Blue Euler number='+fmtChi(ec)+', Red Euler number='+fmtChi(er);
       if(GAME_MODE==='human' || GAME_MODE==='ai2'){
-        showBigMessage('win',resultTitleHtml('Blue wins!','human','joy'),GAME_MODE==='ai2'?'Blue AI wins':'Blue player wins. Euler master! 🎉',0);
+        showBigMessage('win',resultTitleHtml('Blue wins!','human','joy'),GAME_MODE==='ai2'?'Blue AI wins':'Blue player, congratulations! Euler number master! 🎉',0);
         launchConfetti();
       }else if(HUMAN_COLOR===BLUE){
-        showBigMessage('win',resultTitleHtml('You win!','human','joy'),'Congratulations! You are an Euler master! 🎉',0);
+        showBigMessage('win',resultTitleHtml('You win!','human','joy'),'Congratulations! You are an Euler number master! 🎉',0);
         launchConfetti();
       }else{
-        showBigMessage('lose',resultTitleHtml('You lose','human','sad'),'Try again next time 💪',0);
+        showBigMessage('lose',resultTitleHtml('You lose','human','sad'),'Revenge next time 💪',0);
         launchTohoho();
       }
     }
     else if(winner===RED){
       wbEl.className='r';
-      wbEl.textContent=redName+' wins!  Red Euler score='+fmtChi(er)+', Blue Euler score='+fmtChi(ec);
+      wbEl.textContent=redName+' wins! Red Euler number='+fmtChi(er)+', Blue Euler number='+fmtChi(ec);
       if(GAME_MODE==='human' || GAME_MODE==='ai2'){
-        showBigMessage('win',resultTitleHtml('Red wins!','human','joy'),GAME_MODE==='ai2'?'Red AI wins':'Red player wins. Euler master! 🎉',0);
+        showBigMessage('win',resultTitleHtml('Red wins!','human','joy'),GAME_MODE==='ai2'?'Red AI wins':'Red player, congratulations! Euler number master! 🎉',0);
         launchConfetti();
       }else if(HUMAN_COLOR===RED){
-        showBigMessage('win',resultTitleHtml('You win!','human','joy'),'Congratulations! You are an Euler master! 🎉',0);
+        showBigMessage('win',resultTitleHtml('You win!','human','joy'),'Congratulations! You are an Euler number master! 🎉',0);
         launchConfetti();
       }else{
-        showBigMessage('lose',resultTitleHtml('You lose','human','sad'),'Try again next time 💪',0);
+        showBigMessage('lose',resultTitleHtml('You lose','human','sad'),'Revenge next time 💪',0);
         launchTohoho();
       }
     }
     else{
       wbEl.className='b';
-      wbEl.textContent='Draw: Euler score='+fmtChi(ec);
-      showBigMessage('draw','DRAW!','A beautiful balance in its own way',0);
+      wbEl.textContent='Tie: Euler number='+fmtChi(ec);
+      showBigMessage('draw','DRAW!','This is a beautiful balance in its own way',0);
     }
     playEndSound(winner);
     updateOpponentRobot(winner);
     tbEl.textContent='Game over'; tbEl.className='';
-    log('Game over: Blue Euler score='+fmtChi(ec)+', Red Euler score='+fmtChi(er)+', Rule='+winRuleLabel());
+    log('Game over: Blue Euler number='+fmtChi(ec)+', Red Euler number='+fmtChi(er)+', rule='+winRuleLabel());
     if(copyResultBtn) copyResultBtn.classList.add('ready');
     revealEndActions();
   }else if(!gameOver){
@@ -6225,7 +6693,15 @@ function setHoverRoot(root){
   }
 }
 
+function unzoomDiskPoint(cx,cy){
+  const z=Math.max(1,zoomDisk||1);
+  if(z===1) return {x:cx,y:cy};
+  const W=c2.width,H=c2.height;
+  return {x:W/2+(cx-W/2)/z,y:H/2+(cy-H/2)/z};
+}
+
 function findCell2d(cx,cy){
+  const zp=unzoomDiskPoint(cx,cy); cx=zp.x; cy=zp.y;
   let best=-1,bestDist=Infinity;
   for(const cell of cellPolys2d){
     if(!cell.wrapped){
@@ -6243,6 +6719,7 @@ function findCell2d(cx,cy){
 }
 
 function click2d(cx,cy){
+  const zp=unzoomDiskPoint(cx,cy); cx=zp.x; cy=zp.y;
   if(gameOver || GAME_MODE==='ai2' || (GAME_MODE==='ai' && turn===AI_COLOR)) return;
 
   // First determine the cell that was actually clicked, regardless of
@@ -6329,6 +6806,118 @@ w3.addEventListener('mouseup',e=>{
   drag=false;
 });
 
+function clampModelZoom(z){ return Math.max(1,Math.min(2.35,z)); }
+function clampPanValue(v,maxAbs){ return Math.max(-maxAbs,Math.min(maxAbs,v)); }
+function getModelPanLimit(model){
+  if(model==='sphere') return Math.max(0,(zoomSphere||1)-1)*0.95;
+  if(model==='cross') return Math.max(0,(zoomCross||1)-1)*1.05;
+  if(model==='disk'){
+    const W=c2 ? c2.width : 390, H=c2 ? c2.height : 390;
+    return Math.max(0,(zoomDisk||1)-1)*Math.min(W,H)*0.42;
+  }
+  return 0;
+}
+function clampModelPan(model){
+  const m=getModelPanLimit(model);
+  if(model==='sphere'){
+    panSphereX=clampPanValue(panSphereX,m);
+    panSphereY=clampPanValue(panSphereY,m);
+  }else if(model==='cross'){
+    panCrossX=clampPanValue(panCrossX,m);
+    panCrossY=clampPanValue(panCrossY,m);
+  }else if(model==='disk'){
+    panDiskX=clampPanValue(panDiskX,m);
+    panDiskY=clampPanValue(panDiskY,m);
+  }
+}
+function updatePanButtonStates(){
+  const eps=0.001;
+  document.querySelectorAll('.panBtn').forEach(btn=>{
+    const model=btn.dataset.model, dir=btn.dataset.pan;
+    const lim=getModelPanLimit(model);
+    let x=0,y=0;
+    if(model==='sphere'){ x=panSphereX||0; y=panSphereY||0; }
+    else if(model==='cross'){ x=panCrossX||0; y=panCrossY||0; }
+    else if(model==='disk'){ x=panDiskX||0; y=panDiskY||0; }
+    let disabled=false;
+    if(dir==='reset') disabled=(Math.abs(x)<eps && Math.abs(y)<eps);
+    else if(lim<=eps) disabled=true;
+    else if(dir==='left') disabled=x<=-lim+eps;
+    else if(dir==='right') disabled=x>=lim-eps;
+    else if(dir==='up') disabled=y>=lim-eps;
+    else if(dir==='down') disabled=y<=-lim+eps;
+    btn.disabled=disabled;
+    btn.setAttribute('aria-disabled', disabled?'true':'false');
+  });
+}
+function applyModelPan(model){
+  clampModelPan(model);
+  if(model==='sphere' && pivot){
+    pivot.position.set(panSphereX||0,panSphereY||0,0);
+  }else if(model==='cross' && pivotBoy){
+    pivotBoy.position.set(panCrossX||0,panCrossY||0,0);
+  }else if(model==='disk'){
+    draw2d();
+  }
+  updatePanButtonStates();
+}
+function applyModelZoom(model){
+  clampModelPan(model);
+  if(model==='sphere' && camera){
+    fitCameraToView();
+    applyModelPan('sphere');
+  }else if(model==='cross' && cameraBoy){
+    cameraBoy.position.z=5.45/Math.max(0.7,zoomCross||1);
+    cameraBoy.updateProjectionMatrix();
+    applyModelPan('cross');
+  }else if(model==='disk'){
+    draw2d();
+    updatePanButtonStates();
+  }
+}
+function changeModelZoom(model,mode){
+  const step=1.18;
+  if(model==='sphere'){
+    if(mode==='reset'){ zoomSphere=1; panSphereX=0; panSphereY=0; }
+    else zoomSphere = clampModelZoom(zoomSphere*(mode==='in'?step:1/step));
+  }else if(model==='disk'){
+    if(mode==='reset'){ zoomDisk=1; panDiskX=0; panDiskY=0; }
+    else zoomDisk = clampModelZoom(zoomDisk*(mode==='in'?step:1/step));
+  }else if(model==='cross'){
+    if(mode==='reset'){ zoomCross=1; panCrossX=0; panCrossY=0; }
+    else zoomCross = clampModelZoom(zoomCross*(mode==='in'?step:1/step));
+  }
+  applyModelZoom(model);
+}
+function changeModelPan(model,dir){
+  const step3=0.18;
+  if(model==='sphere'){
+    if(dir==='reset'){ panSphereX=0; panSphereY=0; }
+    else { panSphereX += (dir==='left'?-step3:dir==='right'?step3:0); panSphereY += (dir==='up'?step3:dir==='down'?-step3:0); }
+  }else if(model==='cross'){
+    if(dir==='reset'){ panCrossX=0; panCrossY=0; }
+    else { panCrossX += (dir==='left'?-step3:dir==='right'?step3:0); panCrossY += (dir==='up'?step3:dir==='down'?-step3:0); }
+  }else if(model==='disk'){
+    const step2=Math.max(28,Math.min(c2.width||390,c2.height||390)*0.12);
+    if(dir==='reset'){ panDiskX=0; panDiskY=0; }
+    else { panDiskX += (dir==='left'?-step2:dir==='right'?step2:0); panDiskY += (dir==='up'?step2:dir==='down'?-step2:0); }
+  }
+  applyModelPan(model);
+}
+function installModelControlButton(btn,handler){
+  btn.addEventListener('click',ev=>{ ev.preventDefault(); ev.stopPropagation(); handler(btn); });
+  btn.addEventListener('pointerdown',ev=>ev.stopPropagation());
+  btn.addEventListener('mousedown',ev=>ev.stopPropagation());
+  btn.addEventListener('touchstart',ev=>ev.stopPropagation(),{passive:true});
+}
+document.querySelectorAll('.zoomBtn').forEach(btn=>{
+  installModelControlButton(btn,()=>changeModelZoom(btn.dataset.model,btn.dataset.zoom));
+});
+document.querySelectorAll('.panBtn').forEach(btn=>{
+  installModelControlButton(btn,()=>changeModelPan(btn.dataset.model,btn.dataset.pan));
+});
+updatePanButtonStates();
+
 document.getElementById('rb').addEventListener('click',reset);
 swapBtn.addEventListener('click',swapColors);
 if(musicBtn) musicBtn.addEventListener('click',toggleBgm);
@@ -6358,7 +6947,7 @@ function fitCameraToView(){
   const limitingFov=Math.min(vFov,hFov);
   const z=radius/Math.sin(limitingFov/2);
 
-  camera.position.set(0,0,Math.max(mobile?5.85:5.55,z));
+  camera.position.set(0,0,Math.max(mobile?5.85:5.55,z)/Math.max(0.7,zoomSphere||1));
   camera.lookAt(0,0,0);
   camera.updateProjectionMatrix();
 }
@@ -6538,6 +7127,7 @@ function resizeViews(){
     cBoy.style.height='100%';
     rendererBoy.setSize(BW,BH,false);
     cameraBoy.aspect=BW/BH;
+    cameraBoy.position.z=5.45/Math.max(0.7,zoomCross||1);
     cameraBoy.updateProjectionMatrix();
   }
 }
@@ -6554,8 +7144,8 @@ function cellRuleLabel(){
 }
 
 function expectedCellCount(){
-  // For subdivided icosahedral triangles, the number of vertices on the sphere is 10K^2+2.
-  // On the projective plane, antipodal points are identified, so the number of cells is half.
+  // 20面体の三角形細分ではSphere上の頂点数が 10K^2+2。
+  // Projective planeでは対蹠点を同一視するので半分がCellsになる。
   const k=cellSubdivisionK();
   return (10*k*k+2)/2;
 }
@@ -6575,8 +7165,8 @@ function swapRuleLabel(){
 
 function swapStartDescription(){
   const n=swapMoveNumber();
-  if(n===0) return 'Playing without swap.';
-  return 'After '+n+' moves, the second side may choose to swap.';
+  if(n===0) return 'Play without swap.';
+  return n+' moves: the second side may choose swap.';
 }
 
 function aiStrengthPlayouts(){
@@ -6620,11 +7210,11 @@ function buildResultShareText(){
   const winner=gameOver ? finalWinner() : null;
   const lines=[
     'Euler Getter Result',
-    'Mode: '+modeLabelForShare(),
-    'Settings: '+cellRuleLabel()+' / '+swapRuleLabel()+' / '+winRuleLabel(),
-    'Blue Euler score='+fmtChi(ec)+' / Red Euler score='+fmtChi(er),
-    gameOver ? 'Winner: '+winnerNameForShare(winner) : 'In progress',
-    'Title: '+resultTitle(),
+    'Mode:'+modeLabelForShare(),
+    'Settings:'+cellRuleLabel()+' / '+swapRuleLabel()+' / '+winRuleLabel(),
+    'Blue Euler number='+fmtChi(ec)+' / Red Euler number='+fmtChi(er),
+    gameOver ? 'Winner:'+winnerNameForShare(winner) : 'Progress',
+    'Title:'+resultTitle(),
     resultOneLine(),
     '#EulerGetter'
   ].filter(Boolean);
@@ -6666,23 +7256,23 @@ function resultTitle(){
   const ec=rpChi(BLUE), er=rpChi(RED);
   const winner=gameOver ? finalWinner() : 0;
   const spread=Math.abs(ec-er);
-  if(!gameOver) return 'Euler Explorer';
+  if(!gameOver) return 'Euler Number Explorer';
   if(winner===0) return 'Perfect Balance';
-  if(winRuleMode()==='min') return spread>=3 ? 'Complexity Wizard' : 'Low-Euler Tactician';
+  if(winRuleMode()==='min') return spread>=3 ? 'Complexity Wizard' : 'Low Euler Strategist';
   if(spread>=4) return 'Euler Ruler';
-  if(spread>=2) return 'Euler Hunter';
-  return 'Topology Puzzle Master';
+  if(spread>=2) return 'Euler Number Hunter';
+  return 'Topology Tactician';
 }
 
 function resultOneLine(){
   const ec=rpChi(BLUE), er=rpChi(RED);
   if(winRuleMode()==='min'){
-    return 'Smaller Euler score wins. Loops and holes can sometimes help.';
+    return 'Smaller Euler number wins. Shapes with loops or holes can be advantageous.';
   }
   if(Math.abs(ec-er)<=1){
-    return 'A close Euler-score battle. Euler characteristic does not change under bending or stretching.';
+    return 'A razor-thin Euler number battle. Euler number survives bending and stretching.';
   }
-  return 'Scored by Euler characteristic, not by area.';
+  return 'Measured by Euler number, not area.';
 }
 
 function revealEndActions(){
@@ -6697,7 +7287,7 @@ function revealEndActions(){
 
   window.__egEndActionsTimer=setTimeout(()=>{
     if(hasResultMessage && typeof hideBigMessage==='function') hideBigMessage();
-    if(title) title.textContent='Title: '+resultTitle();
+    if(title) title.textContent='Title:'+resultTitle();
     if(note) note.textContent=resultOneLine();
     box.classList.add('show');
     scrollEndActionsIntoView();
@@ -6714,35 +7304,35 @@ function hideEndActions(){
 }
 
 function robotOriginComment(){
-  return 'I heard Euler Getter was once popular among math graduate students in Tokyo.';
+  return 'Was Euler Getter popular among grad students at the University of Tokyo in the early days?';
 }
 
 function robotApplicationComment(){
   const arr=[
-    'Finding holes in point clouds: persistent homology feels a bit like Euler Getter.','Topology also appears in physics. Topological insulators have a strong name.','Topology appeared in the 2016 Nobel Prize in Physics.','DNA gets tangled too. Knot theory enters the stage.','Holes in data, holes in matter, holes on the board. Busy world.'
+    'Finding holes in point clouds: persistent homology feels a bit like Euler Getter.','Topology appears in physics too. Topological insulators sound powerful.','Topology appeared in the 2016 Nobel Prize in Physics.','DNA gets tangled too. Knot theory enters.','There are holes in data, materials, and boards. Busy world.'
   ];
   const idx=Math.abs(((robotSpeechTick||0)*7 + moveCount*3 + Math.max(0,lastMoveRoot))) % arr.length;
   return arr[idx];
 }
 
 function robotBookComment(){
-  return 'The Euler-score calculation is explained in Introduction to University Mathematics Through Games.';
+  return 'Check how to compute Euler number in the book.';
 }
 
 function robotSituationComment(){
   const diff=scoreDiffFor(AI_COLOR);
   const aiName=AI_COLOR===BLUE?'Blue AI':'Red AI';
-  const ruleText=winRuleMode()==='min' ? 'Since smaller Euler score wins, ' : 'Since larger Euler score wins, ';
+  const ruleText=winRuleMode()==='min' ? 'Since smaller Euler number wins, ' : 'Since larger Euler number wins, ';
   if(turn===AI_COLOR){
-    if(diff>=2) return aiName+' is ahead and wants to extend safely.';
-    if(diff<=-2) return aiName+' is struggling and looking for a comeback shape.';
-    return aiName+' is in a close game. The next move may change the flow.';
+    if(diff>=2) return aiName+' is ahead. Let us extend safely.';
+    if(diff<=-2) return aiName+' is struggling. Looking for a comeback shape.';
+    return aiName+' is close. The next move may change the flow.';
   }
-  if(diff>=3) return ruleText+aiName+' looks quite ahead.';
-  if(diff>=1) return ruleText+aiName+' has a slight advantage.';
-  if(diff<=-3) return ruleText+aiName+' is in serious trouble.';
-  if(diff<=-1) return ruleText+aiName+' is struggling a little.';
-  return 'Almost even. One Euler-score move can matter a lot.';
+  if(diff>=3) return ruleText+aiName+' looks very favorable.';
+  if(diff>=1) return ruleText+aiName+' has a little room.';
+  if(diff<=-3) return ruleText+aiName+' looks quite tough.';
+  if(diff<=-1) return ruleText+aiName+' is struggling a bit.';
+  return 'Almost even. One Euler-number move can matter a lot.';
 }
 
 function robotLineForState(state,forceSituation=false){
@@ -6751,71 +7341,71 @@ function robotLineForState(state,forceSituation=false){
   }
   const modelHint = (typeof CURRENT_SINGLE_MODEL!=='undefined') ? CURRENT_SINGLE_MODEL : '';
   const general=[
-    'Scored by Euler characteristic, not by area.',
-    'Euler characteristic stays the same under bending and stretching.',
+    'Measured by Euler number, not area.',
+    'Euler number does not change under bending or stretching.',
     'How many connected regions are there?',
-    'Collapse the region to one dimension and count.',
+    'Try contracting the region to one dimension.',
     robotBookComment(),
-    'Checking loops and holes…',
-    'Euler characteristic can even be negative.',
-    'The projective plane is related to perspective in art.',
-    'Measuring by Euler characteristic is even related to motivic integration.',
-    'Topology traces back to the bridges of Königsberg.',
-    'Euler’s polyhedron formula is in the background here.',
-    'This recalls the work of Poincaré.',
-    'To me, a mug and a donut look the same.',
+    'Checking loops and holes...',
+    'Euler number can even be negative.',
+    'The projective plane is related to perspective in painting.',
+    'Measuring by Euler number is even related to motivic integration, apparently.',
+    'Topology began with the bridges of Konigsberg problem.',
+    'Euler polyhedron formula is in the air here.',
+    'This reminds me of Poincare.',
+    'A mug and a donut look the same to me.',
     'What is the topology type of a trumpet?'
   ];
   const model=[
     'In the sphere model, opposite points are identified.',
-    'In the disk model, boundary points are glued to opposite boundary points.',
-    'The Cross-cap looks self-intersecting, but the true projective plane is not self-intersecting.',
+    'In the disk model, each boundary point is glued to the opposite boundary point.',
+    'The Cross-cap looks self-intersecting, but the actual projective plane does not self-intersect.',
     'Sphere, Disk, and Cross-cap are different views of the same board.',
-    'The name projective plane also hints at perspective.'
+    'The name projective plane carries a shadow of perspective.'
   ];
   const application=[
     'Finding holes in point clouds: persistent homology feels a bit like Euler Getter.',
-    'Topology also appears in physics. Topological insulators have a strong name.',
+    'Topology appears in physics too. Topological insulators sound powerful.',
     'Topology appeared in the 2016 Nobel Prize in Physics.',
-    'DNA gets tangled too. Knot theory enters the stage.',
-    'Holes in data, holes in matter, holes on the board. Busy world.'
+    'DNA gets tangled too. Knot theory enters.',
+    'There are holes in data, materials, and boards. Busy world.'
   ];
   const mood={
     thinking:[
-      'Thinking… the next move may change the Euler score.',
-      'Collapsing regions to one dimension and calculating.',
-      'Recounting loops now.',
+      'Thinking... the next move may change the Euler number.',
+      'Calculating after contracting the region to one dimension.',
+      'Recounting the loops now.',
       robotSituationComment()
     ],
     confident:[
-      'This position has some breathing room.',
+      'This has a little room.',
       'This shape looks strong even under continuous deformation.',
-      'The Euler-score flow looks fine.',
+      'The Euler number trend is not bad.',
       robotSituationComment()
     ],
     worried:[
-      'Struggling. Reading the shape is getting hard.',
-      'This is a bit bad. The number of connected regions matters.',
-      'I want to rethink this with a spherical cow model.',
+      'Struggling. The shape is getting hard to read.',
+      'This is a bit bad. Connected components are worrying.',
+      'I want to reconsider this with a spherical cow model.',
       robotSituationComment()
     ],
     neutral:[
       'Observing the board.',
-      'Searching for the Euler-score pattern.',
-      'Topology sees a different landscape from area.',
+      'Looking for signs of Euler number.',
+      'Topology shows a view different from area.',
       robotSituationComment()
     ],
     win:[
-      'Just as planned by Euler score!',
+      'The Euler number says it all!',
       'This victory survives continuous deformation.',
-      'Even the spherical cow is applauding.',
+      'Even the spherical cow applauds.',
       'Measured by topology.'
     ],
     lose:[
-      'Topology is hard…',
+      'Topology is hard...',
       'I missed a loop.',
-      'The Euler-score plan collapsed…',
-      'I got sucked into the trumpet hole.'
+      'The Euler number plan has collapsed...',
+      'Sucked into the trumpet hole.'
     ]
   };
   let arr=[...(mood[state]||mood.neutral)];
@@ -6880,24 +7470,24 @@ function reset(){
   const redRole = GAME_MODE==='ai2' ? 'AI' : (GAME_MODE==='ai' ? (HUMAN_COLOR===RED?'Human':'AI') : 'Human');
   const headerLines=[
     'Euler Getter Play Log',
-    'Mode: '+(GAME_MODE==='human'?'Human vs Human':(GAME_MODE==='ai2'?'AI vs AI':'Human vs AI')),
-    'Blue: '+blueRole,
-    'Red: '+redRole,
-    'Swap rule: '+swapRuleLabel(),
-    'Cells：'+cellRuleLabel(),
-    'Win rule: '+winRuleLabel(),
-    'AI strength: '+(GAME_MODE==='human'?'—':aiStrengthLabel()),
+    'Mode:'+(GAME_MODE==='human'?'Human vs Human':(GAME_MODE==='ai2'?'AI vs AI':'Human vs AI')),
+    'Blue:'+blueRole,
+    'Red:'+redRole,
+    'Swap rule:'+swapRuleLabel(),
+    'Cells:'+cellRuleLabel(),
+    'Win rule:'+winRuleLabel(),
+    'AI strength:'+(GAME_MODE==='human'?'—':aiStrengthLabel()),
     '---'
   ];
   setLogHeader(headerLines);
 
   clearEffects();
   const swapDesc=swapStartDescription();
-  const cellDesc='Board: '+cellRuleLabel()+' .'+winRuleLabel()+'。';
+  const cellDesc='Board: '+cellRuleLabel()+'. '+winRuleLabel()+'.';
   const startSub = GAME_MODE==='human'
-    ? 'Human vs Human. Blue starts.'+swapDesc+cellDesc
+    ? 'Human vs Human mode. Blue starts.'+swapDesc+cellDesc
     : (GAME_MODE==='ai2'
-      ? 'AI vs AI. Blue AI starts.'+swapDesc+cellDesc
+      ? 'AI vs AI mode. Blue AI starts.'+swapDesc+cellDesc
       : (HUMAN_COLOR===BLUE
         ? 'You are first (Blue).'+swapDesc+cellDesc
         : 'You are second (Red).'+swapDesc+cellDesc));
@@ -7004,6 +7594,7 @@ function installPointerRotation(){
   let px=0,py=0,psx=0,psy=0;
 
   w3.addEventListener('pointerdown',e=>{
+    if(egIsMobileTouchUI && egIsMobileTouchUI() && e.pointerType==='touch') return;
     if(e.pointerType==='mouse' && e.button!==0) return;
     pDown=true;
     targetRotX=null; targetRotY=null; targetSphereQuat=null;
@@ -7015,6 +7606,7 @@ function installPointerRotation(){
   },{passive:false});
 
   w3.addEventListener('pointermove',e=>{
+    if(egIsMobileTouchUI && egIsMobileTouchUI() && e.pointerType==='touch') return;
     if(!pDown) return;
     const dx=e.clientX-px;
     const dy=e.clientY-py;
@@ -7028,6 +7620,7 @@ function installPointerRotation(){
   },{passive:false});
 
   function endPointer(e){
+    if(egIsMobileTouchUI && egIsMobileTouchUI() && e.pointerType==='touch') return;
     if(!pDown) return;
     pDown=false;
     try{ w3.releasePointerCapture(e.pointerId); }catch(_){}
@@ -7384,8 +7977,8 @@ function cnStartGame(){
 function cnUpdateMiniStatus(){
   const st=document.getElementById('craftGameStatus');
   if(!st) return;
-  const modeText=GAME_MODE==='ai'?'Human vs AI':(GAME_MODE==='human'?'Human vs Human':'AI vs AI');
-  const ruleText=(winRuleSel && winRuleSel.value==='min')?'reverse rule':'normal';
+  const modeText=GAME_MODE==='ai'?'vs AI':(GAME_MODE==='human'?'Human vs Human':'AI vs AI');
+  const ruleText=(winRuleSel && winRuleSel.value==='min')?'Reverse rule':'Normal';
   st.textContent=modeText+' / '+ruleText;
 }
 const cnMode=document.getElementById('cnModeSel');
@@ -7432,11 +8025,199 @@ cnCopyGameToSetup();
 cnSyncSetupMode();
 
 
+function egIsMobileTouchUI(){
+  return !!(window.matchMedia && window.matchMedia('(max-width:900px)').matches);
+}
+function egTouchDistance(t1,t2){
+  const dx=t2.clientX-t1.clientX, dy=t2.clientY-t1.clientY;
+  return Math.max(1,Math.hypot(dx,dy));
+}
+function egTouchCenter(t1,t2){
+  return {x:(t1.clientX+t2.clientX)/2,y:(t1.clientY+t2.clientY)/2};
+}
+function egSetModelZoomDirect(model,z){
+  z=clampModelZoom(z);
+  if(model==='sphere') zoomSphere=z;
+  else if(model==='cross') zoomCross=z;
+  else if(model==='disk') zoomDisk=z;
+  applyModelZoom(model);
+}
+function egSetModelPanDirect(model,x,y){
+  if(model==='sphere'){ panSphereX=x; panSphereY=y; }
+  else if(model==='cross'){ panCrossX=x; panCrossY=y; }
+  else if(model==='disk'){ panDiskX=x; panDiskY=y; }
+  applyModelPan(model);
+}
+function egGetModelZoom(model){
+  if(model==='sphere') return zoomSphere||1;
+  if(model==='cross') return zoomCross||1;
+  if(model==='disk') return zoomDisk||1;
+  return 1;
+}
+function egGetModelPan(model){
+  if(model==='sphere') return {x:panSphereX||0,y:panSphereY||0};
+  if(model==='cross') return {x:panCrossX||0,y:panCrossY||0};
+  if(model==='disk') return {x:panDiskX||0,y:panDiskY||0};
+  return {x:0,y:0};
+}
+function installMobileTouchGestures(){
+  function install(el,model,opts){
+    if(!el || el.__egMobileGestureInstalled) return;
+    el.__egMobileGestureInstalled=true;
+    let mode='none';
+    let startX=0,startY=0,lastX=0,lastY=0,moved=false;
+    let startDist=1,startCenter={x:0,y:0},startZoom=1,startPan={x:0,y:0};
+
+    function stop(ev){
+      ev.preventDefault && ev.preventDefault();
+      ev.stopPropagation && ev.stopPropagation();
+      ev.stopImmediatePropagation && ev.stopImmediatePropagation();
+    }
+    function panScale(){
+      if(model==='disk') return 1;
+      const r=el.getBoundingClientRect();
+      return 2.15/Math.max(260,Math.min(r.width||360,r.height||360));
+    }
+    el.addEventListener('touchstart',ev=>{
+      if(!egIsMobileTouchUI()) return;
+      if(ev.touches.length>=2){
+        mode='gesture';
+        const t1=ev.touches[0], t2=ev.touches[1];
+        startDist=egTouchDistance(t1,t2);
+        startCenter=egTouchCenter(t1,t2);
+        startZoom=egGetModelZoom(model);
+        startPan=egGetModelPan(model);
+        moved=true;
+        stop(ev);
+      }else if(ev.touches.length===1){
+        mode='single'; moved=false;
+        startX=lastX=ev.touches[0].clientX;
+        startY=lastY=ev.touches[0].clientY;
+        if(model==='sphere'){ targetRotX=null; targetRotY=null; targetSphereQuat=null; }
+        if(model==='cross'){ targetBoyRotX=null; targetBoyRotY=null; }
+        stop(ev);
+      }
+    },{capture:true,passive:false});
+
+    el.addEventListener('touchmove',ev=>{
+      if(!egIsMobileTouchUI() || mode==='none') return;
+      if(ev.touches.length>=2){
+        mode='gesture';
+        const t1=ev.touches[0], t2=ev.touches[1];
+        const dist=egTouchDistance(t1,t2);
+        const center=egTouchCenter(t1,t2);
+        const rawRatio=dist/startDist;
+        const dampedRatio=Math.max(0.25,1+(rawRatio-1)*0.45);
+        const z=clampModelZoom(startZoom*dampedRatio);
+        const scale=panScale();
+        egSetModelZoomDirect(model,z);
+        const panDy=(center.y-startCenter.y)*scale;
+        egSetModelPanDirect(model,startPan.x+(center.x-startCenter.x)*scale, model==='disk' ? startPan.y+panDy : startPan.y-panDy);
+        moved=true;
+        stop(ev);
+        return;
+      }
+      if(ev.touches.length===1 && mode==='single'){
+        const t=ev.touches[0];
+        const dx=t.clientX-lastX, dy=t.clientY-lastY;
+        if(Math.abs(t.clientX-startX)+Math.abs(t.clientY-startY)>5) moved=true;
+        if(model==='sphere') rotatePivotByScreenDrag(dx,dy);
+        else if(model==='cross') rotateBoyByScreenDrag(dx,dy);
+        // Disk keeps one-finger movement free for tapping; pan is two-finger only.
+        lastX=t.clientX; lastY=t.clientY;
+        stop(ev);
+      }
+    },{capture:true,passive:false});
+
+    el.addEventListener('touchend',ev=>{
+      if(!egIsMobileTouchUI() || mode==='none') return;
+      const wasMode=mode;
+      if(ev.touches.length>0){
+        if(ev.touches.length>=2){
+          mode='gesture';
+          const t1=ev.touches[0], t2=ev.touches[1];
+          startDist=egTouchDistance(t1,t2);
+          startCenter=egTouchCenter(t1,t2);
+          startZoom=egGetModelZoom(model);
+          startPan=egGetModelPan(model);
+        }else{
+          mode='single';
+          startX=lastX=ev.touches[0].clientX;
+          startY=lastY=ev.touches[0].clientY;
+        }
+        stop(ev);
+        return;
+      }
+      mode='none';
+      if(wasMode==='single' && !moved){
+        const t=ev.changedTouches && ev.changedTouches[0];
+        if(t && !gameOver && GAME_MODE!=='ai2' && !(GAME_MODE==='ai' && turn===AI_COLOR)){
+          if(model==='sphere'){
+            const rect=c3.getBoundingClientRect();
+            const x=((t.clientX-rect.left)/rect.width)*2-1;
+            const y=-((t.clientY-rect.top)/rect.height)*2+1;
+            raycaster.setFromCamera(new THREE.Vector2(x,y),camera);
+            const hits=raycaster.intersectObjects(cellMeshes3d,false);
+            if(hits.length) placeStone(hits[0].object.userData.vi);
+          }else if(model==='cross'){
+            const rect=cBoy.getBoundingClientRect();
+            const x=((t.clientX-rect.left)/rect.width)*2-1;
+            const y=-((t.clientY-rect.top)/rect.height)*2+1;
+            raycasterBoy.setFromCamera(new THREE.Vector2(x,y),cameraBoy);
+            const hits=raycasterBoy.intersectObjects(cellMeshesBoy,false);
+            if(hits.length) placeStone(hits[0].object.userData.vi);
+            else{
+              const vi=nearestCrossCapCellByScreenTap(t.clientX,t.clientY,38);
+              if(vi>=0) placeStone(vi);
+            }
+          }else if(model==='disk'){
+            const rect=c2.getBoundingClientRect();
+            click2d((t.clientX-rect.left)*c2.width/rect.width,(t.clientY-rect.top)*c2.height/rect.height);
+          }
+        }
+      }
+      stop(ev);
+    },{capture:true,passive:false});
+
+    el.addEventListener('touchcancel',ev=>{mode='none'; if(egIsMobileTouchUI()) stop(ev);},{capture:true,passive:false});
+  }
+  install(w3,'sphere');
+  install(wBoy,'cross');
+  install(c2,'disk');
+}
+installMobileTouchGestures();
+
+
 if(copyResultBtn) copyResultBtn.addEventListener('click',copyResultShare);
 
 
 if(playAgainBtn) playAgainBtn.addEventListener('click',()=>{ pressButtonFeedback(playAgainBtn); setTimeout(reset,120); });
 if(endCopyBtn) endCopyBtn.addEventListener('click',copyResultShare);
+
+async function shareResultNative(){
+  const activeBtn=(document.activeElement && document.activeElement.tagName==='BUTTON') ? document.activeElement : document.getElementById('endShareBtn');
+  if(typeof pressButtonFeedback==='function') pressButtonFeedback(activeBtn);
+  const text=buildResultShareText();
+  const shareData={title:'Euler Getter', text:text};
+  try{
+    if(navigator.share){
+      await navigator.share(shareData);
+      return;
+    }
+  }catch(e){
+    if(e && e.name==='AbortError') return;
+  }
+  try{
+    if(navigator.clipboard && window.isSecureContext){
+      await navigator.clipboard.writeText(text);
+      alert('Result copied.');
+      return;
+    }
+  }catch(e){}
+  if(typeof copyResultShare==='function') return copyResultShare();
+}
+
+if(endShareBtn) endShareBtn.addEventListener('click',shareResultNative);
 
 
 // CraftNova revision: after a finished game, "Play Again" returns to the setup screen.
@@ -7833,7 +8614,7 @@ body.eg-playing .score-turn .miniRobotAntenna{
 }
 
 
-/* CraftNova mobile UI: keep turn text such as "Your turn（Red）" on one line. */
+/* CraftNova mobile UI: keep turn text such as "Your turn (Red)" on one line. */
 body.eg-playing .score-turn #tb,
 body.eg-playing .score-turn #tb.aiMiniTurn,
 body.eg-playing .score-turn #tb.humanMiniTurn{
@@ -8023,9 +8804,9 @@ body.eg-playing #cnRobotBottom.show{
   if(!bottom || !txt || !face) return;
   let lastFallbackTick=0;
   const fallbackLines=[
-    'AI is reading the board connections…',
-    'Looking at holes and loops.',
-    'The next move may change the Euler score.',
+    'AI is reading the board connections...',
+    'Reading holes and loops.',
+    'The next move may change the Euler number.',
     'Shape matters more than area.'
   ];
   function currentMode(){
@@ -8167,6 +8948,52 @@ body.eg-playing.eg-game-over #endActions.show{
   });
   setInterval(applyEndState,50);
   applyEndState();
+})();
+
+
+// Start-screen explanations and in-game help.
+(function(){
+  const overlay=document.getElementById('craftHelpOverlay');
+  if(!overlay) return;
+  const title=document.getElementById('craftHelpTitle');
+  const closeBtn=document.getElementById('craftHelpClose');
+  const how=document.getElementById('craftHelpHow');
+  const explain=document.getElementById('craftHelpExplain');
+  const tabHow=document.getElementById('craftHelpTabHow');
+  const tabExplain=document.getElementById('craftHelpTabExplain');
+  const body=document.getElementById('craftHelpBody');
+  function setTab(kind){
+    const isExplain=kind==='explain';
+    if(title) title.textContent=isExplain?'Guide':'How to Play';
+    if(how) how.classList.toggle('active',!isExplain);
+    if(explain) explain.classList.toggle('active',isExplain);
+    if(tabHow) tabHow.classList.toggle('active',!isExplain);
+    if(tabExplain) tabExplain.classList.toggle('active',isExplain);
+    if(body) body.scrollTop=0;
+  }
+  function openHelp(kind){
+    setTab(kind||'how');
+    overlay.classList.add('show');
+    overlay.setAttribute('aria-hidden','false');
+  }
+  function closeHelp(){
+    overlay.classList.remove('show');
+    overlay.setAttribute('aria-hidden','true');
+  }
+  window.egOpenHelp=openHelp;
+  [['craftHowBtn','how'],['craftExplainBtn','explain'],['craftHelpBtn','how']].forEach(([id,kind])=>{
+    const el=document.getElementById(id);
+    if(!el) return;
+    const handler=(e)=>{ e && e.preventDefault && e.preventDefault(); e && e.stopPropagation && e.stopPropagation(); if(typeof pressButtonFeedback==='function') pressButtonFeedback(el); openHelp(kind); };
+    el.addEventListener('click',handler,{passive:false});
+    el.addEventListener('touchend',handler,{passive:false});
+  });
+  if(tabHow) tabHow.addEventListener('click',(e)=>{e.preventDefault();setTab('how');},{passive:false});
+  if(tabExplain) tabExplain.addEventListener('click',(e)=>{e.preventDefault();setTab('explain');},{passive:false});
+  if(closeBtn) closeBtn.addEventListener('click',(e)=>{e.preventDefault();closeHelp();},{passive:false});
+  overlay.addEventListener('click',(e)=>{ if(e.target===overlay) closeHelp(); },{passive:false});
+  document.addEventListener('keydown',(e)=>{ if(e.key==='Escape') closeHelp(); });
+  setTab('how');
 })();
 </script>
 
